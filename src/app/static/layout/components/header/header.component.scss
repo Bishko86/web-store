@@ -1,0 +1,11 @@
+.header {
+display: flex;
+justify-content: space-between;
+padding: 10px;
+
+  .example-button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 120px;
+  }
+}

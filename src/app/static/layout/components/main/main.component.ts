@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
@@ -7,10 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent implements OnInit {
+  form: FormGroup;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      name: new FormControl('user', [
+        Validators.required
+      ])
+    });
   }
-
 }

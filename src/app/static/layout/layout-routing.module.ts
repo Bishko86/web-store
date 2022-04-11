@@ -1,0 +1,33 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RoleGuard } from 'src/app/core/guards/role.guard';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import { CartComponent } from 'src/app/features/user/components/cart/cart.component';
+import { OrdersComponent } from 'src/app/features/user/components/orders/orders.component';
+import { LayoutComponent } from './layout.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'cart', component: CartComponent, canActivate: [AuthGuard, RoleGuard] },
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard, RoleGuard] },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('../../features/admin/admin.module').then(
+            (mod) => mod.AdminModule
+          ),
+        canActivate: [AuthGuard, RoleGuard],
+      },
+    ],
+  },
+];
+
+@NgModule({
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class LayoutRoutingModule {}

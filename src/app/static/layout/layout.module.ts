@@ -4,11 +4,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { MainComponent } from './components/main/main.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LayoutComponent } from './layout.component';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  {path: '', component: LayoutComponent}
-]
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LayoutRoutingModule } from './layout-routing.module';
+import { UserModule } from 'src/app/features/user/user.module';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,12 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LayoutRoutingModule,
+    UserModule,
   ],
-  exports: [RouterModule]
+  exports: [LayoutRoutingModule]
 })
 export class LayoutModule { }
