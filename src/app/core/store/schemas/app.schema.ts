@@ -1,67 +1,58 @@
+import { OrderStatus } from "../../enums/order-status.enum";
+import { UserRole } from "../../enums/user-role.enum";
+
 export interface User {
-  id: string; // firebase
+  id: string;
   name: string;
   email: string;
   role: UserRole;
-  createdAt: number; // Date.now
+  createdAt: number;
   isLoggedIn: boolean;
   cart?: Cart;
   orderHistory?: Order[];
 }
 
 export interface Product {
-  id: string; // firebase
+  id: string;
   name: string;
   description: string;
   price: number;
   photo?: string;
-  categoryId: string; // firebase
-  createdAt: number; // Date.now
+  categoryId: string;
+  createdAt: number;
 }
 
 export interface Category {
-  id: string; // firebase
+  id: string;
   name: string;
-  createdAt: number; // Date.now
+  createdAt: number;
 }
 
 export interface Cart {
-  id: string; // firebase
+  id: string;
   clientId: string;
-  products: string[]; // product ids
+  products: string[];
 }
 
 export interface Order {
-  id: string; // firebase
+  id: string;
   orderNumber: number;
-  clientId: string; // firebase
-  products: string[]; // product ids
+  clientId: string;
+  products: string[];
   total: number;
   status: OrderStatus;
-  createdAt: number; // Date.now
+  createdAt: number;
 }
 
 export interface SupportChat {
-  id: string; // firebase
+  id: string;
   clientId: string;
   messages: SupportMessage[];
-  createdAt: number; // Date.now
+  createdAt: number;
 }
 
 export interface SupportMessage {
   userId: string;
   text: string;
-  createdAt: number; // Date.now
-}
-
-export  enum OrderStatus {
-  NEW,
-  IN_PROGRESS,
-  DONE,
-  CANCELED
-}
-
-export enum UserRole {
-  ADMIN,
-  CLIENT
+  createdAt: number;
 }

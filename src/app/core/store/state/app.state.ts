@@ -1,4 +1,5 @@
-import { Category, Product, User, UserRole } from '../schemas/app.schema';
+import { UserRole } from '../../enums/user-role.enum';
+import { Category, Product, User } from '../schemas/app.schema';
 export interface IAppState {
   user: User;
   product?: Product;
