@@ -13,6 +13,9 @@ import { MaterialModule } from '../material.module';
     CommonModule,
     MaterialModule,
   ],
-  exports: [MaterialModule]
+  exports: [
+    MaterialModule,
+    SpinnerComponent
+  ]
 })
 export class SharedModule { }
