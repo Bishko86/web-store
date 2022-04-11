@@ -10,6 +10,8 @@ import { appReducer } from './core/store/reducers/app.reducer';
 import { AppEffects } from './core/store/effects/app.effects';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from './static/layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
+    LayoutModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument(),

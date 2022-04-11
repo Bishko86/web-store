@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from './static/layout/layout.component';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./static/layout/layout.module').then((mod) => mod.LayoutModule),
+    component: LayoutComponent,
   },
   {
     path: 'login',
