@@ -17,16 +17,16 @@ export const initialState: IAppState = {
     isLoggedIn: false,
   },
   product: {
-    id: '', // firebase
+    id: '',
     name: '',
     description: '',
     price: 0,
     photo: '',
-    categoryId: '', // firebase
+    categoryId: '',
     createdAt: 0,
   },
   category: {
-    id: '', // firebase
+    id: '',
     name: '',
     createdAt: 0,
   },

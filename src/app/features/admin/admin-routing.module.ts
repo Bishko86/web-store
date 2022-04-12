@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { ProductsComponent } from './components/products/products.component';
+import { CategoryListComponent } from './components/category-list/category-list.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/admin/products', pathMatch: 'full' },
-  { path: 'products', component: ProductsComponent },
-  { path: 'categories', component: CategoriesComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: 'categories', component: CategoryListComponent },
   { path: '**', redirectTo: '/admin/products' },
 ];
 
