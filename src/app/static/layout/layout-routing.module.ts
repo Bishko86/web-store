@@ -20,13 +20,8 @@ const routes: Routes = [
         canActivate: [AuthGuard, RoleGuard],
       },
       {
-        path: 'cart',
-        component: CartComponent,
-        canActivate: [AuthGuard, RoleGuard],
-      },
-      {
-        path: 'orders',
-        component: OrdersComponent,
+        path: 'user',
+        loadChildren: () => import('../../features/user/user.module').then((mod) => mod.UserModule),
         canActivate: [AuthGuard, RoleGuard],
       },
     ],

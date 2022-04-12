@@ -24,13 +24,12 @@ export class RoleGuard implements CanActivate {
 
     if (this.url === UserRole.ADMIN && this.role === UserRole.ADMIN) {
       return true;
-    } else if ((this.url === 'orders' || this.url === 'cart') && this.role === UserRole.CLIENT) {
+    } else if ((this.url === 'user') && this.role === UserRole.CLIENT) {
       return true;
     } else {
       this.router.navigate(['']);
       this.openSnackBar(
-        `Your role is ${this.role}. 
-      You dont have access to ${this.url} route!`,
+        `Your role is ${this.role}. You dont have access to ${this.url} route!`,
         'Forbidden'
       );
       return false;
