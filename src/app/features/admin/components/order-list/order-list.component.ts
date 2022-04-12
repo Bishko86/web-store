@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss'],
+  selector: 'app-order-list',
+  templateUrl: './order-list.component.html',
+  styleUrls: ['./order-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CategoryComponent implements OnInit {
+export class OrderListComponent implements OnInit {
 
   constructor() { }
 

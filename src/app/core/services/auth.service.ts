@@ -22,4 +22,8 @@ export class AuthService {
   registrate({username, email, password}: IRegistrCreds): Observable<any> {
     return this.http.post<any>('/registrate', { username, email, password });
   }
+
+  logout(userId: string): Observable<any> {
+    return this.http.get(`/logout${userId}`);
+  }
 }
