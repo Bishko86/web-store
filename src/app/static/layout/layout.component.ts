@@ -4,7 +4,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
 

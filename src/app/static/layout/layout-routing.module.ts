@@ -12,14 +12,21 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'cart', component: CartComponent, canActivate: [AuthGuard, RoleGuard] },
-      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard, RoleGuard] },
       {
-        path: 'admin',
-        loadChildren: () =>
-          import('../../features/admin/admin.module').then(
-            (mod) => mod.AdminModule
-          ),
+        path: '', loadChildren: () => import('../../features/shop/shop.module').then((mod) => mod.ShopModule)
+      },
+      {
+        path: 'admin', loadChildren: () => import('../../features/admin/admin.module').then((mod) => mod.AdminModule),
+        canActivate: [AuthGuard, RoleGuard],
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
+        canActivate: [AuthGuard, RoleGuard],
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
         canActivate: [AuthGuard, RoleGuard],
       },
     ],
