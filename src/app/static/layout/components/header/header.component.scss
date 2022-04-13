@@ -1,0 +1,18 @@
+@import 'src/scss/colors';
+.header {
+display: flex;
+justify-content: space-between;
+padding: 10px;
+
+  .right-header-side {
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 120px;
+
+    .indicator{
+      position: absolute;
+      right: 3px;
+      color: $dark-slate-blue;
+    }
+  }
+}
