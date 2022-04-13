@@ -19,7 +19,7 @@ export class RoleGuard implements CanActivate {
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):| Observable<boolean |  UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.role = UserRole.ADMIN;
+    this.role = UserRole.CLIENT;
     this.url = route.routeConfig?.path || '';
 
     if (this.url === UserRole.ADMIN && this.role === UserRole.ADMIN) {
@@ -29,7 +29,7 @@ export class RoleGuard implements CanActivate {
     } else {
       this.router.navigate(['']);
       this.openSnackBar(
-        `Your role is ${this.role}. You dont have access to ${this.url} route!`,
+        `Your role is ${this.role}. You dont have access to "${this.url}" route!`,
         'Forbidden'
       );
       return false;

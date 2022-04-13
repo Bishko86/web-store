@@ -1,9 +1,10 @@
+@import 'src/scss/colors';
 .header {
 display: flex;
 justify-content: space-between;
 padding: 10px;
 
-  .example-button-container {
+  .right-header-side {
     display: flex;
     justify-content: space-evenly;
     min-width: 120px;
@@ -11,6 +12,7 @@ padding: 10px;
     .indicator{
       position: absolute;
       right: 3px;
+      color: $dark-slate-blue;
     }
   }
 }

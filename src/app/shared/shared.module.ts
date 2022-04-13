@@ -17,7 +17,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
   ],
   exports: [
     MaterialModule,
-    SpinnerComponent
+    SpinnerComponent,
+    ConfirmComponent,
   ]
 })
 export class SharedModule { }
