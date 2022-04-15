@@ -9,7 +9,7 @@ import { MaterialService } from "../services/material.service";
 })
 
 export class AdminGuard implements CanActivate {
-  private role = UserRole.CLIENT;
+  private role = UserRole.ADMIN;
   private url: string;
   constructor(private router: Router, private matServise: MaterialService) {}
 
