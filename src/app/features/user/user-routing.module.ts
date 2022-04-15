@@ -13,6 +13,7 @@ const routes: Routes = [
     children: [
       { path: 'cart', component: CartComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: '**', redirectTo: ''}
     ],
   },
 ];

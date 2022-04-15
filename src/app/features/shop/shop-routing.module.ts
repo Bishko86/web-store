@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'category/:name', component: CategoryComponent },
       { path: 'product/:name', component: ProductComponent },
+      { path: '**', redirectTo: ''}
     ],
   },
 ];

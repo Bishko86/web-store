@@ -24,11 +24,13 @@ const routes: Routes = [
         loadChildren: () => import('../../features/user/user.module').then((mod) => mod.UserModule),
         canActivate: [AuthGuard, UserGuard],
       },
+      { path: '**', redirectTo: ''}
     ],
   },
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class LayoutRoutingModule {}
