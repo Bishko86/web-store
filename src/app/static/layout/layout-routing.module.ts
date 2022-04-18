@@ -24,6 +24,7 @@ const routes: Routes = [
         loadChildren: () => import('../../features/user/user.module').then((mod) => mod.UserModule),
         canActivate: [AuthGuard, UserGuard],
       },
+      { path: '**', redirectTo: '/'}
     ],
   },
 ];
