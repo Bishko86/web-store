@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderStatus } from 'src/app/core/enums/order-status.enum';
-import { Product } from 'src/app/core/store/schemas/app.schema';
+import { Product } from 'src/app/core/models';
 
 @Injectable()
 export class OrderService {
