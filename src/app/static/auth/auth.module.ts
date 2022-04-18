@@ -18,6 +18,5 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports:[RouterModule],
 })
 export class AuthModule { }
