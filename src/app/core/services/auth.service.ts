@@ -1,13 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../store/schemas/app.schema';
-
-interface IRegistrCreds {
-  username: string;
-  email: string;
-  password: string;
-}
+import { User } from '../models';
+import { IAuthCredentials } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +10,11 @@ interface IRegistrCreds {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login({email, password}: {email: string; password: string}): Observable<User> {
+  login({email, password}: IAuthCredentials): Observable<User> {
     return this.http.post<User>('/login', { email, password });
   }
 
-  registrate({username, email, password}: IRegistrCreds): Observable<any> {
+  registrate({username, email, password}: IAuthCredentials): Observable<any> {
     return this.http.post<any>('/registrate', { username, email, password });
   }
 

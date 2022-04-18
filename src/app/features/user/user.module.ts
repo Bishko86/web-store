@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartComponent } from './components/cart/cart.component';
-import { OrdersComponent } from './components/orders/orders.component';
 import { UserComponent } from './user.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserRoutingModule } from './user-routing.module';
+import { OrderService } from './services/order.service';
+import { CartService } from './services/cart.service';
 
 @NgModule({
-  declarations: [UserComponent, CartComponent, OrdersComponent],
+  declarations: [UserComponent],
   imports: [CommonModule, UserRoutingModule, SharedModule],
-  exports: [UserRoutingModule],
+  providers: [OrderService, CartService]
 })
 export class UserModule {}
