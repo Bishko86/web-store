@@ -1,0 +1,14 @@
+@import "colors";
+
+.shop-wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 3fr 9fr;
+  grid-gap: 10px;
+  .sidebar {
+    background-color: $bg-yellow;
+  }
+  .main {
+    background-color: $dusk-blue;
+  }
+}
