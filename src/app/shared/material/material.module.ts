@@ -12,7 +12,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatSnackBarModule,
     MatProgressSpinnerModule,
   ],
   exports: [
@@ -20,7 +19,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatSnackBarModule,
     MatProgressSpinnerModule,
   ],
 })

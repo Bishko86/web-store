@@ -9,13 +9,14 @@ import { appReducer } from './store/reducers/app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     HttpClientModule,
-    SharedModule,
+    MatSnackBarModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument(),
