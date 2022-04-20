@@ -4,12 +4,14 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MaterialModule } from './material/material.module';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 
-
+const SHARED_COMPONENNTS = [
+  SpinnerComponent,
+  ConfirmComponent
+]
 
 @NgModule({
   declarations: [
-    SpinnerComponent,
-    ConfirmComponent,
+    ...SHARED_COMPONENNTS
   ],
   imports: [
     CommonModule,
@@ -17,8 +19,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
   ],
   exports: [
     MaterialModule,
-    SpinnerComponent,
-    ConfirmComponent,
+    ...SHARED_COMPONENNTS
   ]
 })
 export class SharedModule { }
