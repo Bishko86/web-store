@@ -3,23 +3,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+const MAT_MODULES = [
+  MatDialogModule,
+  MatMenuModule,
+  MatIconModule,
+  MatButtonModule,
+  MatProgressSpinnerModule,
+];
 @NgModule({
-  imports: [
-    MatDialogModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-  ],
-  exports: [
-    MatDialogModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [...MAT_MODULES],
+  exports: [...MAT_MODULES],
 })
 export class MaterialModule {}
