@@ -2,3 +2,13 @@
   background-color: $dusk-blue;
   color: $bg-yellow
 }
+
+mat-form-field {
+  width: 300px;
+}
+
+.mat-button {
+  background-color: $dusk-blue-hover;
+  width: 100px;
+  height: 40px;
+}
