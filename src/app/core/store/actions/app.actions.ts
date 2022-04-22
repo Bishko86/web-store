@@ -1,29 +1,29 @@
 import { createAction, props } from '@ngrx/store';
 
 export enum AppActions {
-  LOGOUT = '[Auth] Logout',
-  LOGIN = '[Auth] Login',
-  LOGIN_SUCCESS = '[Auth] Login Success',
-  LOGIN_FAILURE = '[Auth] Login Failure',
-  REGISTRATION = '[Auth] Registration',
-  REGISTRATION_SUCCESS = '[Auth] Registration Success',
-  REGISTRATION_FAILURE = '[Auth] Registration Failure',
-  IS_FETCHING = '[Auth] Auth Is Fetching',
+  LOGOUT = '[User] Logout',
+  LOGIN = '[User] Login',
+  LOGIN_SUCCESS = '[User] Login Success',
+  LOGIN_FAILURE = '[User] Login Failure',
+  REGISTRATION = '[User] Registration',
+  REGISTRATION_SUCCESS = '[User] Registration Success',
+  REGISTRATION_FAILURE = '[User] Registration Failure',
+  IS_FETCHING = '[Common] Is Fetching',
 }
 
 export const login = createAction(
   AppActions.LOGIN,
-  props<{credentials: {email: string; password: string; } }>()
+  props<{email: string; password: string }>()
 );
 
 export const loginSuccess = createAction(
   AppActions.LOGIN_SUCCESS,
-  props<{user:{}}>()
+  props<{user: any}>()
 );
 
 export const loginFailure = createAction(
-  AppActions.LOGIN_SUCCESS,
-  props<{error:{}}>()
+  AppActions.LOGIN_FAILURE,
+  props<{error: Error}>()
 );
 
 export const registrate = createAction(
@@ -33,12 +33,12 @@ export const registrate = createAction(
 
 export const registrateSuccess = createAction(
   AppActions.REGISTRATION_SUCCESS,
-  props<{user: {}}>()
+  props<{user: any}>()
 );
 
 export const registrateFailure = createAction(
   AppActions.REGISTRATION_FAILURE,
-  props<{error: {}}>()
+  props<{error: Error}>()
 );
 
 export const isFetching = createAction(
