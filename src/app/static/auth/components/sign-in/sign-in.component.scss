@@ -1,7 +1,17 @@
-.sing-in {
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.sign-form {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  .container {
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }

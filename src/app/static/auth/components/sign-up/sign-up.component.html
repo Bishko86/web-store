@@ -1,51 +1,56 @@
-<div class="sing-up">
-  <form [formGroup]="signUpForm" (submit)="submit()">
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your email</mat-label>
-      <input
-        matInput
-        placeholder="pat@example.com"
-        formControlName="email"
-        required
-      />
-      <mat-error *ngIf="email.invalid">{{ getErrorMessage(email) }}</mat-error>
-    </mat-form-field>
+<div class="sign-form">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <form [formGroup]="signUpForm" (submit)="submit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          formControlName="email"
+          required
+        />
+        <mat-error *ngIf="email.invalid">{{
+          getErrorMessage(email)
+        }}</mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input
-        matInput
-        [type]="hidePass1 ? 'password' : 'text'"
-        formControlName="password"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="hidePass1 = !hidePass1"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePass1"
-      >
-        <mat-icon>{{ hidePass1 ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
-    
-    <mat-form-field appearance="fill">
-      <mat-label>Confirm your password</mat-label>
-      <input
-        matInput
-        [type]="hidePass2 ? 'password' : 'text'"
-        formControlName="confirmPassword"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="hidePass2 = !hidePass2"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hidePass2"
-      >
-        <mat-icon>{{ hidePass2 ? "visibility_off" : "visibility" }}</mat-icon>
-      </button>
-    </mat-form-field>
-    <button mat-button [disabled]="signUpForm.invalid">Sign up</button>
-  </form>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hidePass1 ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePass1 = !hidePass1"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePass1"
+        >
+          <mat-icon>{{ hidePass1 ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm your password</mat-label>
+        <input
+          matInput
+          [type]="hidePass2 ? 'password' : 'text'"
+          formControlName="confirmPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePass2 = !hidePass2"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePass2"
+        >
+          <mat-icon>{{ hidePass2 ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-button [disabled]="signUpForm.invalid">Sign up</button>
+    </form>
+  </div>
 </div>
