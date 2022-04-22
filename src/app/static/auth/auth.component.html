@@ -1,3 +1,16 @@
-<p>auth works!</p>
-<app-sign-in></app-sign-in>
-<app-sign-up></app-sign-up>
+<div class="auth">
+  <ng-container *ngIf="isAuthPage">
+    <h1>Auth</h1>
+    <p class="text">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus rerum saepe
+      eveniet quidem maiores sequi minus illo ipsum in, debitis eum rem
+      doloribus repellendus officia commodi optio nihil accusamus est repellat
+      architecto alias.
+    </p>
+    <div class="to-sign">
+      <button mat-stroked-button (click)="signIn()">Sign In</button>
+      <button mat-stroked-button (click)="signUp()">Sign Up</button>
+    </div>
+  </ng-container>
+  <router-outlet></router-outlet>
+</div>

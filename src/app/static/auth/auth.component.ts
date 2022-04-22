@@ -1,4 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -7,7 +14,29 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent implements OnInit {
-  constructor() {}
+  isAuthPage = true;
 
-  ngOnInit(): void {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+
+ ngOnInit(): void {
+    this.routeListener();
+  }
+
+  private routeListener(): void {
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationStart))
+      .subscribe((event) => {
+        this.isAuthPage = event.url === '/auth';
+        this.cdr.markForCheck();
+      });
+    this.isAuthPage = this.router.url === '/auth';
+  }
+
+  signIn(): void {
+    this.router.navigate(['auth/sign-in']);
+  }
+
+  signUp(): void {
+    this.router.navigate(['auth/sign-up']);
+  }
 }
