@@ -8,22 +8,25 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 const routes: Routes = [
-  { path: '', component: AuthComponent },
-  { path: '**', redirectTo: '/login' }
-]
+  {
+    path: '',
+    component: AuthComponent,
+    children: [
+      { path: 'sign-in', component: SignInComponent },
+      { path: 'sign-up', component: SignUpComponent },
+    ],
+  },
+  { path: '**', redirectTo: '/auth' },
+];
 
 @NgModule({
-  declarations: [
-    AuthComponent,
-    SignInComponent,
-    SignUpComponent,
-  ],
+  declarations: [AuthComponent, SignInComponent, SignUpComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
 })
-export class AuthModule { }
+export class AuthModule {}
