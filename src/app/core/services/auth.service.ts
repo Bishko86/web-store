@@ -1,24 +1,38 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from '../models';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { IAuthCredentials } from '../models/auth.model';
+import firebase from 'firebase/compat'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
-
-  login({email, password}: IAuthCredentials): Observable<User> {
-    return this.http.post<User>('/login', { email, password });
+  constructor(private afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        localStorage.setItem('user', 'null');
+      }
+    });
   }
 
-  registrate({username, email, password}: IAuthCredentials): Observable<any> {
-    return this.http.post<any>('/registrate', { username, email, password });
+  login({ email, password }: IAuthCredentials): Promise<firebase.auth.UserCredential> {
+    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  logout(userId: string): Observable<any> {
-    return this.http.get(`/logout${userId}`);
+  async registrate({email, password, username}: IAuthCredentials): Promise<firebase.User | null> {
+    await this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((d) => d.user?.updateProfile({ displayName: username }));
+
+    const user = await this.afAuth.currentUser;
+    return user;
+  }
+
+  logout(): Promise<void> {
+   return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+    });
   }
 }
