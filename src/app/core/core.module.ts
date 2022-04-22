@@ -5,6 +5,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppInterceptor } from './interceptors/app.interceptor';
 import { NgRxModule } from './store/ngrx.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @NgModule({
   declarations: [],
@@ -13,6 +14,7 @@ import { NgRxModule } from './store/ngrx.module';
     HttpClientModule,
     MatSnackBarModule,
     NgRxModule,
+    FirebaseModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true}
