@@ -1,14 +1,13 @@
-import { UserRole } from "../enums/user-role.enum";
-import { Cart } from "./cart.model";
-import { Order } from "./order.model";
+import { UserRole } from '../enums/user-role.enum';
+import { Cart } from './cart.model';
+import { Order } from './order.model';
 
-export interface User {
+export interface IUser {
   id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  createdAt: number;
-  isLoggedIn: boolean;
-  cart?: Cart;
-  orderHistory?: Order[];
+    name: string;
+    email: string;
+    role: UserRole | null;
+    createdAt: number;
+    cart?: Cart;
+    orderHistory?: Order[];
 }
