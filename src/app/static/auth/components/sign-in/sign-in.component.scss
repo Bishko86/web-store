@@ -1,9 +1,15 @@
+@import "colors";
+
 .sign-form {
   height: 100vh;
   display: flex;
   align-items: center;
 
   .container {
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 0 30px 25px;
+
     h1 {
       text-align: center;
     }

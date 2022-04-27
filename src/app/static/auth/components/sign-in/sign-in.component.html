@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Sign In</h1>
     <form [formGroup]="signInForm" (submit)="submit()">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Enter your email</mat-label>
         <input
           matInput
@@ -15,7 +15,7 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Enter your password</mat-label>
         <input
           matInput
@@ -28,11 +28,12 @@
           (click)="hide = !hide"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide"
+          (click)="$event.preventDefault()"
         >
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
-      <button mat-button [disabled]="signInForm.invalid">Sign in</button>
+      <button type="submit" class="submit" mat-button [disabled]="signInForm.invalid">Sign in</button>
     </form>
   </div>
 </div>

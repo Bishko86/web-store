@@ -2,7 +2,20 @@
   <div class="container">
     <h1>Sign Up</h1>
     <form [formGroup]="signUpForm" (submit)="submit()">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your name</mat-label>
+        <input
+          matInput
+          placeholder="username"
+          formControlName="username"
+          required
+        />
+        <mat-error *ngIf="username.invalid">{{
+          'You must enter username'
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
         <mat-label>Enter your email</mat-label>
         <input
           matInput
@@ -15,7 +28,7 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Enter your password</mat-label>
         <input
           matInput
@@ -28,12 +41,13 @@
           (click)="hidePass1 = !hidePass1"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hidePass1"
+          (click)="$event.preventDefault()"
         >
-          <mat-icon>{{ hidePass1 ? "visibility_off" : "visibility" }}</mat-icon>
+          <mat-icon (click)="$event.preventDefault()">{{ hidePass1 ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Confirm your password</mat-label>
         <input
           matInput
@@ -46,11 +60,12 @@
           (click)="hidePass2 = !hidePass2"
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hidePass2"
+          (click)="$event.preventDefault()"
         >
           <mat-icon>{{ hidePass2 ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
       </mat-form-field>
-      <button mat-button [disabled]="signUpForm.invalid">Sign up</button>
+      <button type="submit" class="submit" mat-button [disabled]="signUpForm.invalid">Sign up</button>
     </form>
   </div>
 </div>

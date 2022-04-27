@@ -18,6 +18,10 @@ export class SignUpComponent implements OnInit {
     this.initForm();
   }
 
+  get username(): AbstractControl {
+    return this.signUpForm.controls['username'];
+  }
+
   get email(): AbstractControl {
     return this.signUpForm.controls['email'];
   }
@@ -28,6 +32,7 @@ export class SignUpComponent implements OnInit {
 
   private initForm(): void {
     this.signUpForm = new FormGroup({
+      username: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required),
@@ -42,7 +47,7 @@ export class SignUpComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.password);
+    console.log('Submit',this.signUpForm.value);
   }
 
 }
