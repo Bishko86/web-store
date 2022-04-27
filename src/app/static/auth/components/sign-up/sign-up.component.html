@@ -68,7 +68,7 @@
           'wrong password'
         }}</mat-error>
       </mat-form-field>
-      <button type="submit" class="submit" mat-button [disabled]="signUpForm.invalid">Sign up</button>
+      <button type="submit" class="submit" mat-button [disabled]="signUpForm.invalid || (isFetching$ | async)">Sign up</button>
     </form>
   </div>
 </div>

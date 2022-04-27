@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { registrate } from 'src/app/core/store/actions/user.actions';
+import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
@@ -14,6 +15,8 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   hidePass1 = true;
   hidePass2 = true;
+
+  isFetching$ = this.store.pipe(select(selectIsFetching));
 
   constructor(private store: Store<IAppState>) {}
 

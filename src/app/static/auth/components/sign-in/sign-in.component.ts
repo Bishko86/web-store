@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { login } from 'src/app/core/store/actions/user.actions';
+import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
@@ -13,6 +14,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
   hide = true;
+  isFetching$ = this.store.pipe(select(selectIsFetching));
 
   constructor(private store: Store<IAppState>) {}
 
