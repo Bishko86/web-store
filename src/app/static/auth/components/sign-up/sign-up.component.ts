@@ -1,5 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { registrate } from 'src/app/core/store/actions/user.actions';
+import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,7 +15,7 @@ export class SignUpComponent implements OnInit {
   hidePass1 = true;
   hidePass2 = true;
 
-  constructor() {}
+  constructor(private store: Store<IAppState>) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -28,6 +31,9 @@ export class SignUpComponent implements OnInit {
 
   get password(): AbstractControl {
     return this.signUpForm.controls['password'];
+  }
+  get confirmPassword(): AbstractControl {
+    return this.signUpForm.controls['confirmPassword'];
   }
 
   private initForm(): void {
@@ -47,7 +53,12 @@ export class SignUpComponent implements OnInit {
   }
 
   submit(): void {
-    console.log('Submit',this.signUpForm.value);
+    const {username, email, password, confirmPassword} = this.signUpForm.value;
+    if(password === confirmPassword) {
+      this.store.dispatch(registrate({username, email, password}))
+    } else {
+      this.signUpForm.controls['confirmPassword'].setErrors({'incorrect': true});
+    }
   }
 
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/core/store/actions/user.actions';
+import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,7 +14,7 @@ export class SignInComponent implements OnInit {
   signInForm: FormGroup;
   hide = true;
 
-  constructor() {}
+  constructor(private store: Store<IAppState>) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -40,6 +43,8 @@ export class SignInComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.password);
+    console.log(this.signInForm.value);
+    const {email, password} = this.signInForm.value;
+    this.store.dispatch(login({email, password}))
   }
 }

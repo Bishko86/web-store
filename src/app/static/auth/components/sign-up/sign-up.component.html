@@ -64,6 +64,9 @@
         >
           <mat-icon>{{ hidePass2 ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
+        <mat-error *ngIf="confirmPassword.invalid">{{
+          'wrong password'
+        }}</mat-error>
       </mat-form-field>
       <button type="submit" class="submit" mat-button [disabled]="signUpForm.invalid">Sign up</button>
     </form>
