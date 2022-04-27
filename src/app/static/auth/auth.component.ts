@@ -3,9 +3,10 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -13,8 +14,9 @@ import { filter } from 'rxjs';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isAuthPage = true;
+  private $destroy = new Subject<boolean>();
 
   constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -24,7 +26,7 @@ export class AuthComponent implements OnInit {
 
   private routeListener(): void {
     this.router.events
-      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationStart))
+      .pipe(takeUntil(this.$destroy), filter((e): e is NavigationEnd => e instanceof NavigationStart))
       .subscribe((event) => {
         this.isAuthPage = event.url === '/auth';
         this.cdr.markForCheck();
@@ -38,5 +40,10 @@ export class AuthComponent implements OnInit {
 
   signUp(): void {
     this.router.navigate(['auth/sign-up']);
+  }
+
+  ngOnDestroy(): void {
+    this.$destroy.next(true);
+    this.$destroy.complete();
   }
 }
