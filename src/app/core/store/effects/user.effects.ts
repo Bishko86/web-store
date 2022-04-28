@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, from, map, of, switchMap } from 'rxjs';
 import { User } from '../../models';
-import { AuthService } from '../../services/auth.service';
+import AuthService from '../../services/auth.service';
 import { isFetching } from '../actions/common.actions';
 import * as UserActionCreators from '../actions/user.actions';
 import { IAppState } from '../state/app.state';
@@ -50,6 +50,19 @@ export class UserEffects {
           catchError((error) => {
             this.store.dispatch(isFetching({isFetching: false}));
             return of(UserActionCreators.registrateFailure({ error }))})
+        );
+      })
+    );
+  });
+
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActionCreators.logout),
+      switchMap(() => {
+        this.store.dispatch(isFetching({ isFetching: true }));
+        return from(this.authService.logout()).pipe(
+          map(() => UserActionCreators.logoutSuccess()),
+          catchError((error) => of(UserActionCreators.loginFailure({ error })))
         );
       })
     );

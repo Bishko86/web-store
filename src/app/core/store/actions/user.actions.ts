@@ -1,8 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../models';
 
-export enum AppActions {
+export enum UserActions {
   LOGOUT = '[User] Logout',
+  LOGOUT_SUCCESS = '[User] Logout Success',
+  LOGOUT_FAILURE = '[User] Logout Failure',
   LOGIN = '[User] Login',
   LOGIN_SUCCESS = '[User] Login Success',
   LOGIN_FAILURE = '[User] Login Failure',
@@ -12,31 +14,44 @@ export enum AppActions {
 }
 
 export const login = createAction(
-  AppActions.LOGIN,
+  UserActions.LOGIN,
   props<{email: string; password: string }>()
 );
 
 export const loginSuccess = createAction(
-  AppActions.LOGIN_SUCCESS,
+  UserActions.LOGIN_SUCCESS,
   props<{user: IUser}>()
 );
 
 export const loginFailure = createAction(
-  AppActions.LOGIN_FAILURE,
+  UserActions.LOGIN_FAILURE,
   props<{error: Error}>()
 );
 
 export const registrate = createAction(
-  AppActions.REGISTRATION,
+  UserActions.REGISTRATION,
   props<{username: string; email: string; password: string}>()
 );
 
 export const registrateSuccess = createAction(
-  AppActions.REGISTRATION_SUCCESS,
+  UserActions.REGISTRATION_SUCCESS,
   props<{user: IUser}>()
 );
 
 export const registrateFailure = createAction(
-  AppActions.REGISTRATION_FAILURE,
+  UserActions.REGISTRATION_FAILURE,
+  props<{error: Error}>()
+);
+
+export const logout = createAction(
+  UserActions.LOGOUT
+);
+
+export const logoutSuccess = createAction(
+  UserActions.LOGOUT_SUCCESS,
+);
+
+export const logoutFailure = createAction(
+  UserActions.LOGOUT_FAILURE,
   props<{error: Error}>()
 );

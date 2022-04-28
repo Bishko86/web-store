@@ -26,5 +26,17 @@ export const userReducer = createReducer(
     ...state,
     user: null,
     error,
+  })),
+  
+  on(UserAppActions.logoutSuccess,(state) => ({
+    ...state,
+    user: null,
+    error: null
+  })),
+
+  on(UserAppActions.logoutFailure,(state, {error}) => ({
+    ...state,
+    user: null,
+    error
   }))
 );
