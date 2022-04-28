@@ -16,7 +16,7 @@ export class SignUpComponent implements OnInit {
   hidePass1 = true;
   hidePass2 = true;
 
-  isFetching$ = this.store.pipe(select(selectIsFetching));
+  readonly isFetching$ = this.store.pipe(select(selectIsFetching));
 
   constructor(private store: Store<IAppState>) {}
 
@@ -35,6 +35,7 @@ export class SignUpComponent implements OnInit {
   get password(): AbstractControl {
     return this.signUpForm.controls['password'];
   }
+
   get confirmPassword(): AbstractControl {
     return this.signUpForm.controls['confirmPassword'];
   }
@@ -63,5 +64,4 @@ export class SignUpComponent implements OnInit {
       this.signUpForm.controls['confirmPassword'].setErrors({'incorrect': true});
     }
   }
-
 }

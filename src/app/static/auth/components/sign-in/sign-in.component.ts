@@ -14,7 +14,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
   hide = true;
-  isFetching$ = this.store.pipe(select(selectIsFetching));
+  readonly isFetching$ = this.store.pipe(select(selectIsFetching));
 
   constructor(private store: Store<IAppState>) {}
 

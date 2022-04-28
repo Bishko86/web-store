@@ -34,14 +34,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.isAuthPage = this.router.url === '/auth';
   }
 
-  signIn(): void {
-    this.router.navigate(['auth/sign-in']);
-  }
-
-  signUp(): void {
-    this.router.navigate(['auth/sign-up']);
-  }
-
   ngOnDestroy(): void {
     this.$destroy.next(true);
     this.$destroy.complete();

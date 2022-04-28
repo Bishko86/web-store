@@ -13,7 +13,7 @@ import { IAppState } from '../store/state/app.state';
 @Injectable({
   providedIn: 'root',
 })
-export default class AuthService {
+export class AuthService {
   userIsLog: IUser | null;
 
   constructor(
@@ -21,7 +21,7 @@ export default class AuthService {
     private store: Store<IAppState>
   ) {
     this.store.select(selectUser).subscribe((user) => (this.userIsLog = user));
-    
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));

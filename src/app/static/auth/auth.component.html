@@ -8,8 +8,8 @@
       architecto alias.
     </p>
     <div class="to-sign">
-      <button mat-stroked-button (click)="signIn()">Sign In</button>
-      <button mat-stroked-button (click)="signUp()">Sign Up</button>
+      <a mat-raised-button routerLink="/auth/sign-in">Sign in</a>
+      <a mat-raised-button routerLink="/auth/sign-up">Sign up</a>
     </div>
   </ng-container>
   <router-outlet></router-outlet>

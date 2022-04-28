@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, from, map, of, switchMap } from 'rxjs';
 import { User } from '../../models';
-import AuthService from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { isFetching } from '../actions/common.actions';
 import * as UserActionCreators from '../actions/user.actions';
 import { IAppState } from '../state/app.state';
