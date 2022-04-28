@@ -1,7 +1,7 @@
 <header class="header">
   <div class="left-header-side">
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-    <mat-menu #menu="matMenu">
+    <button mat-button [matMenuTriggerFor]="userMenu">Menu</button>
+    <mat-menu #userMenu="matMenu">
       <button mat-menu-item>Item 1</button>
       <button mat-menu-item>Item 2</button>
       <button mat-menu-item>Item 3</button>
@@ -19,11 +19,11 @@
       <small class="indicator">{{ 6 }}</small>
     </button>
 
-    <div class="logged-in" *ngIf="true; else logouted">
-      <button mat-button [matMenuTriggerFor]="menu1" (click)="showCart()">
-        {{ "Hi, Roman" }}
+    <div class="logged-in" *ngIf="user$ | async as user; else logouted">
+      <button mat-button [matMenuTriggerFor]="authMenu">
+        Hi, {{ user.name }}
       </button>
-      <mat-menu #menu1="matMenu">
+      <mat-menu #authMenu="matMenu">
         <button mat-menu-item>Settings</button>
         <button mat-menu-item (click)="signOut()">Sign out</button>
       </mat-menu>
