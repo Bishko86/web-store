@@ -1,23 +1,38 @@
 <header class="header">
   <div class="left-header-side">
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-    <button mat-menu-item>Item 3</button>
-  </mat-menu>
-</div>
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+      <button mat-menu-item>Item 3</button>
+    </mat-menu>
+  </div>
   <div class="right-header-side">
-    <button mat-mini-fab color="secondary" aria-label="Cart icon button" class="cart-btn" (click)="showCart()">
+    <button
+      mat-mini-fab
+      color="secondary"
+      aria-label="Cart icon button"
+      class="cart-btn"
+      (click)="showCart()"
+    >
       <mat-icon>add_shopping_cart</mat-icon>
       <small class="indicator">{{ 6 }}</small>
     </button>
-    <button mat-button [matMenuTriggerFor]="menu1">
-      <mat-icon>person</mat-icon>
-      {{ "user name" }}
-    </button>
-    <mat-menu #menu1="matMenu">
-      <button mat-menu-item>logout</button>
-    </mat-menu>
+
+    <div class="logged-in" *ngIf="true; else logouted">
+      <button mat-button [matMenuTriggerFor]="menu1" (click)="showCart()">
+        {{ "Hi, Roman" }}
+      </button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item (click)="signOut()">Sign out</button>
+      </mat-menu>
+    </div>
+    <ng-template #logouted>
+      <div class="logged-out">
+        <a mat-raised-button routerLink="/auth/sign-in">Sign in</a>
+        <a mat-raised-button routerLink="/auth/sign-up">Sign up</a>
+      </div>
+    </ng-template>
   </div>
 </header>
