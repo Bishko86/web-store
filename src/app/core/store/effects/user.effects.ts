@@ -67,6 +67,7 @@ export class UserEffects {
         return from(this.authService.logout()).pipe(
           map(() => {
             this.store.dispatch(isFetching({ isFetching: false }));
+            this.router.navigateByUrl('/');
             return UserActionCreators.logoutSuccess();
           }),
           catchError((error) => {

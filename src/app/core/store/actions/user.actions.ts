@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../models';
+import firebase from 'firebase/compat';
 
 export enum UserActions {
   LOGOUT = '[User] Logout',
@@ -25,7 +26,7 @@ export const loginSuccess = createAction(
 
 export const loginFailure = createAction(
   UserActions.LOGIN_FAILURE,
-  props<{error: Error}>()
+  props<{error: firebase.FirebaseError}>()
 );
 
 export const registrate = createAction(
@@ -40,7 +41,7 @@ export const registrateSuccess = createAction(
 
 export const registrateFailure = createAction(
   UserActions.REGISTRATION_FAILURE,
-  props<{error: Error}>()
+  props<{error: firebase.FirebaseError}>()
 );
 
 export const logout = createAction(
@@ -53,5 +54,5 @@ export const logoutSuccess = createAction(
 
 export const logoutFailure = createAction(
   UserActions.LOGOUT_FAILURE,
-  props<{error: Error}>()
+  props<{error: firebase.FirebaseError}>()
 );
