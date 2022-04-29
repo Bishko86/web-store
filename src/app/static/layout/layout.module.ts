@@ -17,8 +17,6 @@ import { UserModule } from 'src/app/features/user/user.module';
     CommonModule,
     SharedModule,
     LayoutRoutingModule,
-    UserModule,
   ],
-  exports: [LayoutRoutingModule]
 })
 export class LayoutModule { }

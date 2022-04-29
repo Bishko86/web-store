@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: AuthComponent },
+  { path: '**', redirectTo: '/login' }
 ]
 
 @NgModule({
@@ -18,6 +19,5 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports:[RouterModule],
 })
 export class AuthModule { }

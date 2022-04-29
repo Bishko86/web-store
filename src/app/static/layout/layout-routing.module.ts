@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoleGuard } from 'src/app/core/guards/role.guard';
+
+import { AdminGuard } from 'src/app/core/guards/admin.guard';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
-import { CartComponent } from 'src/app/features/user/components/cart/cart.component';
-import { OrdersComponent } from 'src/app/features/user/components/orders/orders.component';
+import { UserGuard } from 'src/app/core/guards/user.guard';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
@@ -17,12 +17,12 @@ const routes: Routes = [
       },
       {
         path: 'admin', loadChildren: () => import('../../features/admin/admin.module').then((mod) => mod.AdminModule),
-        canActivate: [AuthGuard, RoleGuard],
+        canActivate: [AuthGuard, AdminGuard],
       },
       {
         path: 'user',
         loadChildren: () => import('../../features/user/user.module').then((mod) => mod.UserModule),
-        canActivate: [AuthGuard, RoleGuard],
+        canActivate: [AuthGuard, UserGuard],
       },
     ],
   },
@@ -30,6 +30,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class LayoutRoutingModule {}
