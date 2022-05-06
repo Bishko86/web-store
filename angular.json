@@ -65,6 +65,20 @@
               ],
               "outputHashing": "all"
             },
+            "custom": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.custom.ts"
+                }
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -84,6 +98,9 @@
             },
             "development": {
               "browserTarget": "web-store:build:development"
+            },
+            "custom": {
+              "browserTarget": "web-store:build:custom"
             }
           },
           "defaultConfiguration": "development"
