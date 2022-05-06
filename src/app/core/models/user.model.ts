@@ -8,7 +8,6 @@ export interface IUser {
   email: string;
   role: UserRole | null;
   createdAt: number;
-  cart?: string;
   orderHistory?: Order[];
 }
 
