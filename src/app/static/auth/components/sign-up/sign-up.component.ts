@@ -1,7 +1,24 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { registrate } from 'src/app/core/store/actions/user.actions';
+import { Subject, takeUntil } from 'rxjs';
+import { IUser } from 'src/app/core/models';
+import { UserService } from 'src/app/core/services/user.service';
+import {
+  registrate,
+  UserActions,
+} from 'src/app/core/store/actions/user.actions';
 import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
@@ -9,19 +26,25 @@ import { IAppState } from 'src/app/core/store/state/app.state';
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['../sign-in/sign-in.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<boolean>();
   signUpForm: FormGroup;
   hidePass1 = true;
   hidePass2 = true;
 
   readonly isFetching$ = this.store.pipe(select(selectIsFetching));
 
-  constructor(private store: Store<IAppState>) {}
+  constructor(
+    private store: Store<IAppState>,
+    private updates$: Actions,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.saveUser();
   }
 
   get username(): AbstractControl {
@@ -59,9 +82,22 @@ export class SignUpComponent implements OnInit {
   submit(): void {
     const {username, email, password, confirmPassword} = this.signUpForm.value;
     if(password === confirmPassword) {
-      this.store.dispatch(registrate({username, email, password}))
+      this.store.dispatch(registrate({username, email, password}));
     } else {
-      this.signUpForm.controls['confirmPassword'].setErrors({'incorrect': true});
+      this.signUpForm.controls['confirmPassword'].setErrors({incorrect: true});
     }
+  }
+
+  private saveUser(): void {
+    this.updates$
+      .pipe(ofType(UserActions.REGISTRATION_SUCCESS), takeUntil(this.destroy$))
+      .subscribe((action: { user: IUser; type: string }) => {
+        this.userService.create(action.user);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
