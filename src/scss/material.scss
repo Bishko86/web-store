@@ -1,4 +1,21 @@
 .color-snackbar {
   background-color: $dusk-blue;
-  color: $bg-yellow
+  color: $bg-yellow;
 }
+
+mat-form-field {
+  width: 300px;
+}
+
+.mat-button.submit{
+  background-color: $white;
+  border: 1px solid $lightgrey;
+  width: 300px;
+  height: 50px;
+  transition: .3s;
+  
+  &:hover {
+    background-color: $aliceblue;
+  }
+}
+

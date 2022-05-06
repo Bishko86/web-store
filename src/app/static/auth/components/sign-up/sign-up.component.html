@@ -1,1 +1,74 @@
-<p>sign-up works!</p>
+<div class="sign-form">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <form [formGroup]="signUpForm" (submit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your name</mat-label>
+        <input
+          matInput
+          placeholder="username"
+          formControlName="username"
+          required
+        />
+        <mat-error *ngIf="username.invalid">{{
+          'You must enter username'
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your email</mat-label>
+        <input
+          matInput
+          placeholder="pat@example.com"
+          formControlName="email"
+          required
+        />
+        <mat-error *ngIf="email.invalid">{{
+          getErrorMessage(email)
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hidePass1 ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePass1 = !hidePass1"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePass1"
+          (click)="$event.preventDefault()"
+        >
+          <mat-icon (click)="$event.preventDefault()">{{ hidePass1 ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm your password</mat-label>
+        <input
+          matInput
+          [type]="hidePass2 ? 'password' : 'text'"
+          formControlName="confirmPassword"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePass2 = !hidePass2"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePass2"
+          (click)="$event.preventDefault()"
+        >
+          <mat-icon>{{ hidePass2 ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="confirmPassword.invalid">{{
+          'wrong password'
+        }}</mat-error>
+      </mat-form-field>
+      <button type="submit" class="submit" mat-button [disabled]="signUpForm.invalid || (isFetching$ | async)">Sign up</button>
+    </form>
+  </div>
+</div>
