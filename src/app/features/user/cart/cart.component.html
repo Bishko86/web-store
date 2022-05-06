@@ -1,1 +1,8 @@
-<p>cart works!</p>
+<h1>USER CART</h1>
+<button (click)="addToCart()">Add</button>
+
+  <div *ngFor="let prod of products">
+    <span>{{prod}}</span> <span class="delete-item" (click)="removeFromCart(prod)">&#10005;</span>
+  </div>
+
+
