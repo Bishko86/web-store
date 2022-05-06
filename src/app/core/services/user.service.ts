@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { Cart, IUser } from '../models';
+import { SnackBarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,23 +13,24 @@ export class UserService {
   usersRef: AngularFirestoreCollection<IUser>;
   cartRef: AngularFirestoreCollection<Cart>;
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private snackBar: SnackBarService,
+    ) {
     this.usersRef = this.firestore.collection('/users');
     this.cartRef = this.firestore.collection('/cart');
   }
 
-  getAll(): AngularFirestoreCollection<IUser> {
+  getAllUsers(): AngularFirestoreCollection<IUser> {
     return this.usersRef;
   }
 
-  async createUser(user: IUser): Promise<DocumentReference<IUser>> {
+  async createUser(user: IUser): Promise<void> {
     try {
-      const userCart = await this.cartRef.add({ products: [], clientId: ''});
-      const userDocument = await this.usersRef.add({ ...user, cart: userCart.id });
-      await this.cartRef.doc(userCart.id).update({ clientId: userDocument.id });
-      return userDocument;
+      await this.cartRef.doc(user.id).set({ products: []});
+      await this.usersRef.doc(user.id).set({ ...user });
     } catch (err: any) {
-      return err;
+      this.snackBar.openSnackBar('Something went wrong', 'Error');
     }
   }
 
