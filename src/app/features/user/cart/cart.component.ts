@@ -29,8 +29,8 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.addToCart(Date.now().toString());
   }
 
-  removeFromCart(id: string): void {
-    this.cartService.removeFromCart(id);
+  removeFromCart(productId: string): void {
+    this.cartService.removeFromCart(productId);
   }
 
   ngOnDestroy(): void {
