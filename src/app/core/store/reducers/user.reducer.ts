@@ -4,25 +4,21 @@ import * as UserAppActions from '../actions/user.actions';
 
 export const userReducer = createReducer(
   initialState.user,
-  on(UserAppActions.loginSuccess, (state, { user }) => ({
+  on(
+    UserAppActions.updateUser,
+    UserAppActions.loginSuccess,
+    UserAppActions.registrateSuccess,
+    (state, { user }) => ({
     ...state,
     user,
     error: null,
   })),
 
-  on(UserAppActions.loginFailure, (state, { error }) => ({
-    ...state,
-    user: null,
-    error,
-  })),
-
-  on(UserAppActions.registrateSuccess, (state, { user }) => ({
-    ...state,
-    user,
-    error: null,
-  })),
-
-  on(UserAppActions.registrateFailure, (state, { error }) => ({
+  on(
+    UserAppActions.loginFailure,
+    UserAppActions.registrateFailure,
+    UserAppActions.logoutFailure,
+    (state, { error }) => ({
     ...state,
     user: null,
     error,
@@ -33,10 +29,4 @@ export const userReducer = createReducer(
     user: null,
     error: null
   })),
-
-  on(UserAppActions.logoutFailure,(state, {error}) => ({
-    ...state,
-    user: null,
-    error
-  }))
 );

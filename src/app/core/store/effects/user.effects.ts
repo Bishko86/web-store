@@ -72,7 +72,7 @@ export class UserEffects {
           }),
           catchError((error) => {
             this.store.dispatch(isFetching({ isFetching: false }));
-            return of(UserActionCreators.loginFailure({ error }))})
+            return of(UserActionCreators.logoutFailure({ error }))})
         );
       })
     );
