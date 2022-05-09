@@ -24,4 +24,4 @@ export const selectUserRole = createSelector(
   (state: IUserState) => {
     return state.user?.role
   }
-)
+);
