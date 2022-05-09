@@ -45,7 +45,6 @@ export class SignInComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.signInForm.value);
     const { email, password } = this.signInForm.value;
     this.store.dispatch(login({ email, password }));
   }
