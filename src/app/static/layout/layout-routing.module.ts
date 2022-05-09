@@ -20,8 +20,8 @@ const routes: Routes = [
         canActivate: [AuthGuard, AdminGuard],
       },
       {
-        path: 'user',
-        loadChildren: () => import('../../features/user/user.module').then((mod) => mod.UserModule),
+        path: 'client',
+        loadChildren: () => import('../../features/client/client.module').then((mod) => mod.ClientModule),
         canActivate: [AuthGuard, UserGuard],
       },
     ],

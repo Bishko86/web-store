@@ -27,7 +27,7 @@ export class UserGuard implements CanActivate {
     this.url = route.routeConfig?.path || '';
     return this.store.select(selectUserRole).pipe(
       map((role) => {
-        if (this.url === 'user' && role === 1) {
+        if (this.url === 'client' && role === 1) {
           return true;
         } else {
           this.router.navigate(['']);
