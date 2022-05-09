@@ -1,11 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
+
 import { logout } from 'src/app/core/store/actions/user.actions';
-import { selectUser } from 'src/app/core/store/selectors/user.selector';
+import { selectUser, selectUserRole } from 'src/app/core/store/selectors/user.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
-import { CartService } from 'src/app/features/user/services/cart.service';
+import { CartService } from 'src/app/features/client/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +16,13 @@ import { CartService } from 'src/app/features/user/services/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CartService]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  readonly roles = ['Admin', 'Client'];
+  public userRole: string
   public amountCartProducts: number;
   private destroy$ = new Subject();
   readonly user$ = this.store.select(selectUser);
+  readonly role$ = this.store.select(selectUserRole);
 
 
   constructor(
@@ -27,6 +32,20 @@ export class HeaderComponent implements OnInit {
     private cdr: ChangeDetectorRef
     ) { }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
+  private getUserRole() {
+    this.role$.pipe(takeUntil(this.destroy$)).subscribe((role) => {
+      if(typeof role === 'number') {
+      this.userRole = this.roles[role]
+      }
+      
+    })
+  }
+  
   ngOnInit(): void {
     this.cartService.getCart().pipe(takeUntil(this.destroy$)).subscribe(data => {
       if(data && Array.isArray(data.products)) {
@@ -34,13 +53,19 @@ export class HeaderComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
+
+    this.getUserRole()
   }
 
   showCart() {
-    this.router.navigate(['user/cart']);
+    this.router.navigate(['client/cart']);
   }
 
   signOut() {
     this.store.dispatch(logout());
+  }
+
+  toPersonalCabinet() {
+    this.router.navigateByUrl(this.userRole.toLowerCase());
   }
 }

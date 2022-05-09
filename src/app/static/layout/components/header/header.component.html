@@ -24,6 +24,7 @@
         Hi, {{ user.name }}
       </button>
       <mat-menu #authMenu="matMenu">
+        <button mat-menu-item (click)="toPersonalCabinet()">{{userRole}} Cabinet</button>
         <button mat-menu-item>Settings</button>
         <button mat-menu-item (click)="signOut()">Sign out</button>
       </mat-menu>
