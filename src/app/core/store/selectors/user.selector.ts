@@ -18,3 +18,10 @@ export const selectError = createSelector(
   selectFeature,
   (state: IUserState) => state.error
 );
+
+export const selectUserRole = createSelector(
+  selectFeature,
+  (state: IUserState) => {
+    return state.user?.role
+  }
+);

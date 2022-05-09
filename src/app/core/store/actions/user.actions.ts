@@ -12,36 +12,42 @@ export enum UserActions {
   REGISTRATION = '[User] Registration',
   REGISTRATION_SUCCESS = '[User] Registration Success',
   REGISTRATION_FAILURE = '[User] Registration Failure',
+  UPDATE_USER_DATA = '[User} Update User Data',
 }
+
+export const updateUser = createAction(
+  UserActions.UPDATE_USER_DATA,
+  props<{ user: IUser }>()
+)
 
 export const login = createAction(
   UserActions.LOGIN,
-  props<{email: string; password: string }>()
+  props<{ email: string; password: string }>()
 );
 
 export const loginSuccess = createAction(
   UserActions.LOGIN_SUCCESS,
-  props<{user: IUser}>()
+  props<{ user: IUser }>()
 );
 
 export const loginFailure = createAction(
   UserActions.LOGIN_FAILURE,
-  props<{error: firebase.FirebaseError}>()
+  props<{ error: firebase.FirebaseError }>()
 );
 
 export const registrate = createAction(
   UserActions.REGISTRATION,
-  props<{username: string; email: string; password: string}>()
+  props<{ username: string; email: string; password: string }>()
 );
 
 export const registrateSuccess = createAction(
   UserActions.REGISTRATION_SUCCESS,
-  props<{user: IUser}>()
+  props<{ user: IUser }>()
 );
 
 export const registrateFailure = createAction(
   UserActions.REGISTRATION_FAILURE,
-  props<{error: firebase.FirebaseError}>()
+  props<{ error: firebase.FirebaseError }>()
 );
 
 export const logout = createAction(
@@ -49,10 +55,10 @@ export const logout = createAction(
 );
 
 export const logoutSuccess = createAction(
-  UserActions.LOGOUT_SUCCESS,
+  UserActions.LOGOUT_SUCCESS
 );
 
 export const logoutFailure = createAction(
   UserActions.LOGOUT_FAILURE,
-  props<{error: firebase.FirebaseError}>()
+  props<{ error: firebase.FirebaseError }>()
 );
