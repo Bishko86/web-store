@@ -7,7 +7,7 @@ export interface IUser {
   id: string | undefined;
   name: string;
   email: string;
-  role: UserRole | null;
+  role: UserRole | undefined;
   createdAt: number;
   cart?: Cart;
   orderHistory?: Order[];
@@ -17,16 +17,16 @@ export class User implements IUser {
   id: string | undefined;
   name: string;
   email: string;
-  role: UserRole;
+  role: UserRole | undefined;
   createdAt: number;
   cart: Cart | undefined;
   orderHistory: Order[] | undefined;
 
-  constructor(dto: firebase.User | null) {
+  constructor(dto: firebase.User | null, role?: UserRole) {
     this.id = dto?.uid;
     this.name = dto?.displayName || '';
     this.email = dto?.email || '';
-    this.role = UserRole.CLIENT;
+    this.role = role;
     this.createdAt = Date.parse(dto?.metadata.creationTime || '');
   }
 }
