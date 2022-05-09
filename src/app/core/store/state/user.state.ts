@@ -6,7 +6,12 @@ export interface IUserState {
   error: firebase.FirebaseError | null;
 }
 
+const setInitialState = () => {
+  const data = localStorage.getItem('user');
+  return  data ? JSON.parse(data) : null
+}
+
 export const initialUserState = {
-  user: JSON.parse(localStorage['user'] ? localStorage['user'] : null),
+  user: setInitialState(),
   error: null,
 };
