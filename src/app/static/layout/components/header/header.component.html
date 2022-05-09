@@ -16,7 +16,7 @@
       (click)="showCart()"
     >
       <mat-icon>add_shopping_cart</mat-icon>
-      <small class="indicator">{{ 6 }}</small>
+      <small class="indicator">{{ amountCartProducts }}</small>
     </button>
 
     <div class="logged-in" *ngIf="user$ | async as user; else logouted">

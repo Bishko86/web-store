@@ -1,5 +1,5 @@
+import firebase from 'firebase/compat';
+
 export interface Cart {
-  id: string;
-  clientId: string;
-  products: string[];
+  products: string[] | firebase.firestore.FieldValue;
 }

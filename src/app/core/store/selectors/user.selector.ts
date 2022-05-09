@@ -9,6 +9,11 @@ export const selectUser = createSelector(
   (state: IUserState) => state.user
 );
 
+export const selectUserId = createSelector(
+  selectFeature,
+  (state: IUserState) => state.user?.id
+)
+
 export const selectError = createSelector(
   selectFeature,
   (state: IUserState) => state.error

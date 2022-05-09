@@ -14,6 +14,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { IUser } from 'src/app/core/models';
+import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { UserService } from 'src/app/core/services/user.service';
 import {
   registrate,
@@ -39,7 +40,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<IAppState>,
     private updates$: Actions,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: SnackBarService,
   ) {}
 
   ngOnInit(): void {
@@ -80,19 +82,24 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    const {username, email, password, confirmPassword} = this.signUpForm.value;
+    const { username, email, password, confirmPassword } = this.signUpForm.value;
     if(password === confirmPassword) {
-      this.store.dispatch(registrate({username, email, password}));
+      this.store.dispatch(registrate({ username, email, password }));
     } else {
-      this.signUpForm.controls['confirmPassword'].setErrors({incorrect: true});
+      this.signUpForm.controls['confirmPassword'].setErrors({ incorrect: true });
     }
   }
 
   private saveUser(): void {
     this.updates$
       .pipe(ofType(UserActions.REGISTRATION_SUCCESS), takeUntil(this.destroy$))
-      .subscribe((action: { user: IUser; type: string }) => {
-        this.userService.create(action.user);
+      .subscribe({
+        next: (action: { user: IUser; type: string }) => {
+          this.userService.createUser(action.user);
+        },
+        error: () => {
+          this.snackBar.openSnackBar('Something went wrong', 'Error');
+        },
       });
   }
 
