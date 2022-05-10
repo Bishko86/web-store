@@ -8,8 +8,9 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
+      {path: '', redirectTo: 'users'},
       {
-        path: '', 
+        path: 'users', 
         loadChildren: () => import('./users/users.module').then((mod) => mod.UsersModule)
       },
       {
@@ -25,7 +26,7 @@ const routes: Routes = [
       {
         path: 'categories', loadChildren: () => import('./category/category-admin.module').then((mod) => mod.CategoryAdminModule),
       },
-      { path: '**', redirectTo: '/admin' },
+      { path: '**', redirectTo: '/admin/users' },
     ],
   },
   
