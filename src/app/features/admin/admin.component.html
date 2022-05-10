@@ -4,12 +4,13 @@
     mat-align-tabs="start"
     bodyClass="my_class"
     (selectedTabChange)="redirectTo($event)"
+    [(selectedIndex)]="currentTabIndex"
   >
     <ng-container *ngFor="let tab of tabs">
       <mat-tab [label]="tab | titlecase">
         <h3>{{ tab | titlecase }}</h3>
-        <router-outlet></router-outlet>
       </mat-tab>
     </ng-container>
   </mat-tab-group>
+  <router-outlet></router-outlet>
 </div>

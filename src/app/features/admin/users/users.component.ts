@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { IUser } from 'src/app/core/models';
-import { getUsers } from 'src/app/core/store/actions/users.actions';
 import { selectGetUsers } from 'src/app/core/store/selectors/users.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
@@ -23,6 +22,5 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(getUsers());
   }
 }
