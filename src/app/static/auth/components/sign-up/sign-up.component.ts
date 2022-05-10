@@ -18,8 +18,8 @@ import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { UserService } from 'src/app/core/services/user.service';
 import {
   registrate,
-  UserActions,
-} from 'src/app/core/store/actions/user.actions';
+  AuthActions,
+} from 'src/app/core/store/actions/auth.actions';
 import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
@@ -92,7 +92,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   private saveUser(): void {
     this.updates$
-      .pipe(ofType(UserActions.REGISTRATION_SUCCESS), takeUntil(this.destroy$))
+      .pipe(ofType(AuthActions.REGISTRATION_SUCCESS), takeUntil(this.destroy$))
       .subscribe({
         next: (action: { user: IUser; type: string }) => {
           this.userService.createUser(action.user);

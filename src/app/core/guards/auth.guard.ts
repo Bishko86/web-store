@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { selectUser } from '../store/selectors/user.selector';
+import { selectUser } from '../store/selectors/auth.selector';
 import { IAppState } from '../store/state/app.state';
 
 @Injectable({

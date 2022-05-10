@@ -8,7 +8,7 @@ import {
 import firebase from 'firebase/compat/app';
 
 import { Cart } from 'src/app/core/models';
-import { selectUserId } from 'src/app/core/store/selectors/user.selector';
+import { selectUserId } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 import { Observable } from 'rxjs';
 

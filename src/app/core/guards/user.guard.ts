@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { UserRole } from '../enums/user-role.enum';
 import { SnackBarService } from '../services/snackbar.service';
-import { selectUserRole } from '../store/selectors/user.selector';
+import { selectUserRole } from '../store/selectors/auth.selector';
 import { IAppState } from '../store/state/app.state';
 
 @Injectable({

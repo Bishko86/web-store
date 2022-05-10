@@ -3,7 +3,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './reducers/app.reducer';
-import { UserEffects } from './effects/user.effects';
+import { AuthEffects } from './effects/auth.effects';
 
 
 
@@ -11,7 +11,7 @@ import { UserEffects } from './effects/user.effects';
   declarations: [],
   imports: [
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument(),
   ]
 })

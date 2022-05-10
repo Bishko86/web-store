@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { login } from 'src/app/core/store/actions/user.actions';
+import { login } from 'src/app/core/store/actions/auth.actions';
 import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 

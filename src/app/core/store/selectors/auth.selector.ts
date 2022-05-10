@@ -1,27 +1,27 @@
 import { createSelector } from "@ngrx/store";
 import { IAppState } from "../state/app.state";
-import { IUserState } from "../state/user.state";
+import { IAuthState } from "../state/auth.state";
 
-export const selectFeature = (state: IAppState) => state.user;
+export const selectFeature = (state: IAppState) => state.auth;
  
 export const selectUser = createSelector(
   selectFeature,
-  (state: IUserState) => state.user
+  (state: IAuthState) => state.user
 );
 
 export const selectUserId = createSelector(
   selectFeature,
-  (state: IUserState) => state.user?.id
+  (state: IAuthState) => state.user?.id
 )
 
 export const selectError = createSelector(
   selectFeature,
-  (state: IUserState) => state.error
+  (state: IAuthState) => state.error
 );
 
 export const selectUserRole = createSelector(
   selectFeature,
-  (state: IUserState) => {
+  (state: IAuthState) => {
     return state.user?.role
   }
 );

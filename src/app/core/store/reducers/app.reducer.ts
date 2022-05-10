@@ -1,9 +1,9 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { IAppState } from '../state/app.state';
 import { commonReducer } from './common.reducer';
-import { userReducer } from './user.reducer';
+import { authReducer } from './auth.reducer';
 
 export const appReducer: ActionReducerMap<IAppState, any> = {
-  user: userReducer,
+  auth: authReducer,
   common: commonReducer,
 }

@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 
-import { logout } from 'src/app/core/store/actions/user.actions';
-import { selectUser, selectUserRole } from 'src/app/core/store/selectors/user.selector';
+import { logout } from 'src/app/core/store/actions/auth.actions';
+import { selectUser, selectUserRole } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 import { CartService } from 'src/app/features/client/services/cart.service';
 

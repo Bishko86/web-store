@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 
 import { User } from '../models';
 import { IAuthCredentials } from '../models/auth.model';
-import { updateUser } from '../store/actions/user.actions';
+import { updateUser } from '../store/actions/auth.actions';
 import { IAppState } from '../store/state/app.state';
 
 @Injectable({

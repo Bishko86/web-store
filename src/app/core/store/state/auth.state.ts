@@ -1,9 +1,9 @@
 import { IUser } from '../../models';
-import firebase from 'firebase/compat';
+import { FirebaseError } from 'firebase/app';
 
-export interface IUserState {
+export interface IAuthState {
   user: IUser | null;
-  error: firebase.FirebaseError | null;
+  error: FirebaseError | null;
 }
 
 const setInitialState = () => {
@@ -11,7 +11,7 @@ const setInitialState = () => {
   return  data ? JSON.parse(data) : null
 }
 
-export const initialUserState = {
+export const initialAuthState = {
   user: setInitialState(),
   error: null,
 };
