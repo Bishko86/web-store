@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UsersComponent } from './users.component';
 import { RouterModule } from '@angular/router';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -10,7 +11,8 @@ import { UserItemComponent } from './components/user-item/user-item.component';
   declarations: [UsersComponent, UserItemComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([{path: '', component: UsersComponent}])
+    RouterModule.forChild([{path: '', component: UsersComponent}]),
+    SharedModule
   ]
 })
 export class UsersModule { }
