@@ -2,7 +2,7 @@ import { createSelector } from "@ngrx/store";
 import { IAppState } from "../state/app.state";
 import { IAuthState } from "../state/auth.state";
 
-export const selectFeature = (state: IAppState) => state.auth;
+const selectFeature = (state: IAppState) => state.auth;
  
 export const selectUser = createSelector(
   selectFeature,
