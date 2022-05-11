@@ -1,10 +1,12 @@
 .table-wrap {
   table {
     width: 100%;
+
     tr {
       &.element-row:hover {
         background: whitesmoke;
       }
+
       &.element-row:active {
         background: #efefef;
       }

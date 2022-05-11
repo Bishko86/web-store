@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit {
   }
 
   public redirectTo(tab: MatTabChangeEvent): void{
-    this.router.navigate([this.tabs[tab.index]], {relativeTo: this.route});
+    const url = [this.tabs[tab.index]];
+    this.router.navigate(url, {relativeTo: this.route});
   }
 }
