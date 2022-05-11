@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
 import { UserRole } from '../enums/user-role.enum';
 import { SnackBarService } from '../services/snackbar.service';
-import { selectUserRole } from '../store/selectors/user.selector';
+import { selectUserRole } from '../store/selectors/auth.selector';
 import { IAppState } from '../store/state/app.state';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class UserGuard implements CanActivate {
     this.url = route.routeConfig?.path || '';
     return this.store.select(selectUserRole).pipe(
       map((role) => {
-        if (this.url === 'user' && role === 1) {
+        if (this.url === 'client' && role === 1) {
           return true;
         } else {
           this.router.navigate(['']);

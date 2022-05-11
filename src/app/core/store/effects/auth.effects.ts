@@ -6,11 +6,11 @@ import { catchError, from, map, of, switchMap } from 'rxjs';
 import { User } from '../../models';
 import { AuthService } from '../../services/auth.service';
 import { isFetching } from '../actions/common.actions';
-import * as UserActionCreators from '../actions/user.actions';
+import * as AuthActions from '../actions/auth.actions';
 import { IAppState } from '../state/app.state';
 
 @Injectable()
-export class UserEffects {
+export class AuthEffects {
   constructor(
     private authService: AuthService,
     private actions$: Actions,
@@ -20,7 +20,7 @@ export class UserEffects {
 
   login$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(UserActionCreators.login),
+      ofType(AuthActions.login),
       switchMap(({email, password}) => {
         this.store.dispatch(isFetching({isFetching: true}));
         return from(this.authService.login({email, password})).pipe(
@@ -28,13 +28,13 @@ export class UserEffects {
             const userDto = data?.user;
             this.store.dispatch(isFetching({isFetching: false}));
             this.router.navigateByUrl('/');
-            return UserActionCreators.loginSuccess({
+            return AuthActions.loginSuccess({
               user: new User(userDto)
             });
           }),
           catchError((error) => {
             this.store.dispatch(isFetching({isFetching: false}));
-            return of(UserActionCreators.loginFailure({ error }))})
+            return of(AuthActions.loginFailure({ error }))})
         );
       })
     );
@@ -42,7 +42,7 @@ export class UserEffects {
 
   registrate$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(UserActionCreators.registrate),
+      ofType(AuthActions.registrate),
       switchMap((action) => {
         const {username, email, password} = action;
         this.store.dispatch(isFetching({isFetching: true}));
@@ -50,10 +50,10 @@ export class UserEffects {
           map((user) => {
             this.store.dispatch(isFetching({isFetching: false}));
             this.router.navigateByUrl('/');
-            return UserActionCreators.registrateSuccess({user: new User(user)})}),
+            return AuthActions.registrateSuccess({user: new User(user)})}),
           catchError((error) => {
             this.store.dispatch(isFetching({isFetching: false}));
-            return of(UserActionCreators.registrateFailure({ error }))})
+            return of(AuthActions.registrateFailure({ error }))})
         );
       })
     );
@@ -61,18 +61,18 @@ export class UserEffects {
 
   logout$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(UserActionCreators.logout),
+      ofType(AuthActions.logout),
       switchMap(() => {
         this.store.dispatch(isFetching({ isFetching: true }));
         return from(this.authService.logout()).pipe(
           map(() => {
             this.store.dispatch(isFetching({ isFetching: false }));
             this.router.navigateByUrl('/');
-            return UserActionCreators.logoutSuccess();
+            return AuthActions.logoutSuccess();
           }),
           catchError((error) => {
             this.store.dispatch(isFetching({ isFetching: false }));
-            return of(UserActionCreators.logoutFailure({ error }))})
+            return of(AuthActions.logoutFailure({ error }))})
         );
       })
     );

@@ -1,2 +1,15 @@
-<h1>Admin Cabinet</h1>
-<router-outlet></router-outlet>
+<div class="admin-page">
+  <mat-tab-group
+    animationDuration="0ms"
+    mat-align-tabs="start"
+    (selectedTabChange)="redirectTo($event)"
+    [(selectedIndex)]="currentTabIndex"
+  >
+    <ng-container *ngFor="let tab of tabs">
+      <mat-tab [label]="tab | titlecase">
+        <h3>{{ tab | titlecase }}</h3>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,22 @@
+.table-wrap {
+  table {
+    width: 100%;
+
+    tr {
+      &.element-row:hover {
+        background: whitesmoke;
+      }
+
+      &.element-row:active {
+        background: #efefef;
+      }
+    }
+
+    th,
+    td {
+      &.more-options {
+        text-align: right;
+      }
+    }
+  }
+}
