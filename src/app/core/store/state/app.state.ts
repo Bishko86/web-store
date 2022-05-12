@@ -6,7 +6,7 @@ export interface IAppState {
   auth: IAuthState;
   users: IUsersState;
   product?: Product[] | null;
-  category?: Category[] | null;
+  category: Category[];
   order?: Order[];
   common: {
     isFetching: boolean;
@@ -17,7 +17,7 @@ export const initialState: IAppState = {
   auth: initialAuthState,
   users: initialUsersState,
   product: null,
-  category: null,
+  category: [],
   common: {
     isFetching: false
   },
