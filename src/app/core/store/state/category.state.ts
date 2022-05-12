@@ -3,7 +3,7 @@ import { Category } from "../../models";
 
 export interface ICategoryState {
   categories: Category[];
-  error: FirebaseError;
+  error: FirebaseError | null;
   isLoading: boolean;
 }
 
