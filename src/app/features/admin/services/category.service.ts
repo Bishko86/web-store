@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Category } from 'src/app/core/models';
 
 @Injectable()
 export class CategoryService {
   categoryRef: AngularFirestoreCollection<Category>;
+  
   constructor(private firestore: AngularFirestore) { 
       this.categoryRef = this.firestore.collection('/categories');
     }
@@ -13,8 +14,16 @@ export class CategoryService {
     return this.categoryRef;
   }
 
-  addCategory(name: string): Promise<DocumentReference<Category>> {
-    return this.categoryRef.add({name, createdAt: Date.now()});
+  async addCategory(name: string): Promise<Category | undefined> {
+    const res = await this.categoryRef.add({name: name, createdAt: Date.now()});
+    
+    return  new Promise((resolve, reject) => {
+      res.onSnapshot((cat) => {
+        if(cat.exists) {
+          resolve(cat.data())
+        }else {reject ('Somethig went wrong')}
+      })
+    });
   }
 
   removeCategory(categoryId: string): Promise<void> {
