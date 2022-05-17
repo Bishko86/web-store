@@ -1,2 +1,35 @@
 <p>category-admin-works</p>
+<div *ngIf="categories$ | async as categories">
+  <div *ngFor="let category of categories">{{category?.name}} <span class="delete-item" (click)="remove(category.id)">&#10005;</span> </div> 
+</div>
+
+<button
+  *ngIf="visible"
+  mat-mini-fab
+  class="add_btn"
+  (click)="visible = !visible"
+>
+  &#65291;
+</button>
+<ng-container *ngIf="!visible">
+  <form [formGroup]="categoryForm" (submit)="submit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter category name</mat-label>
+      <input
+        matInput
+        placeholder="Enter category name"
+        formControlName="categoryName"
+        required
+      />
+    </mat-form-field>
+    <button
+      type="submit"
+      class="submit"
+      mat-button
+      [disabled]="categoryForm.invalid || (isLoading$ | async)"
+    >
+      Add category
+    </button>
+  </form>
+</ng-container>
 <router-outlet></router-outlet>
