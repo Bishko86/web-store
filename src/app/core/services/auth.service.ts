@@ -33,7 +33,7 @@ export class AuthService {
 
   private saveUser(userModel: firebase.User): void {
     this.subscription$ = this.firestore.collection('/users').doc(userModel.uid).valueChanges()
-    .pipe(filter((user: any) => !!user?.role))
+    .pipe(filter((user: any) => typeof user?.role !== undefined))
     .subscribe((data: IUser) => {
         const user = new User(userModel, data.role)
         this.store.dispatch(updateUser({user}));
