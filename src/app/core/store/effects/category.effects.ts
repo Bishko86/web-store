@@ -15,6 +15,9 @@ import {
   getCategories,
   getCategoriesFailure,
   getCategoriesSuccess,
+  removeCategory,
+  removeCategoryFailure,
+  removeCategorySuccess,
 } from '../actions/category.actions';
 import { IAppState } from '../state/app.state';
 
@@ -50,13 +53,33 @@ export class CategoryEffects {
       ofType(addCategory),
       tap(() => this.store.dispatch(categoryIsLoading({ isLoading: true }))),
       switchMap(({name}) => from(this.categoryService.addCategory(name)).pipe(
-        filter((data) => typeof data !== 'undefined')  as OperatorFunction<Category | undefined, Category>,
+        filter((data: Category) => typeof data !== 'undefined')  as OperatorFunction<Category | undefined, Category>,
         map((category: Category) => {
-          this.store.dispatch(categoryIsLoading({ isLoading: false }))
-            return addCategorySuccess({category})
+            this.store.dispatch(categoryIsLoading({ isLoading: false }));
+            return addCategorySuccess({category});
          }),
-         catchError((error) => of(addCategoryFailure({error})))
+         catchError((error) => {
+            this.store.dispatch(categoryIsLoading({ isLoading: false }));
+            return of(addCategoryFailure({error}));
+          })
       ))
-    )
-  })
+    );
+  });
+
+  removeCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(removeCategory),
+      tap(() => this.store.dispatch(categoryIsLoading({ isLoading: true }))),
+      switchMap(({categoryId}) => from(this.categoryService.removeCategory(categoryId)).pipe(
+        map(() => {
+          this.store.dispatch(categoryIsLoading({ isLoading: false }));
+          return removeCategorySuccess({categoryId});
+        }),
+        catchError((error) => {
+          this.store.dispatch(categoryIsLoading({ isLoading: false }))
+          return of(removeCategoryFailure({error}))
+        })
+      ))
+    );
+  });
 }
