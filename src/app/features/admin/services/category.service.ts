@@ -20,7 +20,7 @@ export class CategoryService {
     return  new Promise((resolve, reject) => {
       res.onSnapshot((cat) => {
         if(cat.exists) {
-          resolve(cat.data())
+          resolve({ ...cat.data(), id:cat.id } as Category );
         }else {reject ('Somethig went wrong')}
       })
     });
