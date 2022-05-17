@@ -1,18 +1,21 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+
 import { Category } from 'src/app/core/models';
 import {
   addCategory,
-  getCategories,
+  addCategorySuccess,
+  removeCategory,
 } from 'src/app/core/store/actions/category.actions';
 import {
   selectCategories,
   selectCategoryIsLoading,
 } from 'src/app/core/store/selectors/category.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
-import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-category-admin',
@@ -20,16 +23,17 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./category-admin-component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryAdminComponent implements OnInit {
+export class CategoryAdminComponent implements OnInit, OnDestroy {
   readonly categories$: Observable<Category[]>;
   readonly isLoading$: Observable<boolean>;
+  private destroy$ = new Subject<boolean>();
 
-  visible = true;
-  categoryForm: FormGroup;
+  public visible = true;
+  public categoryForm: FormGroup;
 
   constructor(
     private store: Store<IAppState>,
-    private categoryService: CategoryService
+    private actions: Actions
   ) {
     this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
     this.categories$ = this.store.pipe(select(selectCategories));
@@ -37,24 +41,31 @@ export class CategoryAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.initCategoryForm();
-    this.store.dispatch(getCategories());
   }
 
-  private initCategoryForm() {
+  private initCategoryForm(): void {
     this.categoryForm = new FormGroup({
       categoryName: new FormControl('', Validators.required),
     });
   }
 
-  submit() {
-    this.visible = true;
+  addCategory(): void {
     const { categoryName } = this.categoryForm.value;
     this.store.dispatch(addCategory({ name: categoryName }));
+    this.actions.pipe(ofType(addCategorySuccess), takeUntil(this.destroy$))
+    .subscribe(() => { 
+      this.categoryForm.reset();
+      this.visible = true;
+    })}
+
+  removeCategory(categoryId: string | undefined): void {
+    if (categoryId) {
+      this.store.dispatch(removeCategory({categoryId}))
+    }
   }
 
-  remove(id: string | undefined): void {
-    if (id) {
-      this.categoryService.removeCategory(id);
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
