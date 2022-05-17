@@ -1,7 +1,14 @@
-<p>category-admin-works</p>
-<div *ngIf="categories$ | async as categories">
-  <div *ngFor="let category of categories">{{category?.name}} <span class="delete-item" (click)="remove(category.id)">&#10005;</span> </div> 
+<ng-container *ngIf="categories$ | async as categories">
+  <div *ngIf="categories.length > 0; else noCategories">
+    <div *ngFor="let category of categories">
+      {{category?.name}}
+      <span class="delete-item" (click)="removeCategory(category.id)">&#10005;</span>
+    </div>
 </div>
+</ng-container>
+<ng-template #noCategories>
+  <p>Category list is empty</p>
+</ng-template>
 
 <button
   *ngIf="visible"
@@ -12,7 +19,7 @@
   &#65291;
 </button>
 <ng-container *ngIf="!visible">
-  <form [formGroup]="categoryForm" (submit)="submit()">
+  <form [formGroup]="categoryForm" (submit)="addCategory()">
     <mat-form-field appearance="outline">
       <mat-label>Enter category name</mat-label>
       <input
@@ -32,4 +39,5 @@
     </button>
   </form>
 </ng-container>
+
 <router-outlet></router-outlet>
