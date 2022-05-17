@@ -1,9 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  categoryIsLoading,
-  getCategoriesFailure,
-  getCategoriesSuccess,
-} from '../actions/category.actions';
+import { addCategorySuccess, categoryIsLoading, getCategoriesFailure, getCategoriesSuccess } from '../actions/category.actions';
 import { initialState } from '../state/app.state';
 
 export const categoryReducer = createReducer(
@@ -21,5 +17,10 @@ export const categoryReducer = createReducer(
   on(categoryIsLoading, (state, { isLoading }) => ({
     ...state,
     isLoading,
+  })),
+
+  on(addCategorySuccess, (state, {category}) => ({
+    ...state,
+    categories: [...state.categories, category]
   }))
 );

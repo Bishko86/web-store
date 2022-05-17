@@ -9,8 +9,8 @@ export enum CategoryActions {
   GET_CATEGORIES_FAILURE = '[Category] Get Categories Failure',
   
   ADD_CATEGORY = '[Category] Add Category',
-  ADD_CATEGORY_SUCCESS = '[Category] Add Category',
-  ADD_CATEGORY_FAILURE = '[Category] Add Category',
+  ADD_CATEGORY_SUCCESS = '[Category] Add Category Success',
+  ADD_CATEGORY_FAILURE = '[Category] Add Category Failure',
 
   REMOVE_CATEGORY = '[Category] Remove Category',
   REMOVE_CATEGORY_SUCCESS = '[Category] Remove Category Success',
@@ -40,7 +40,7 @@ export const addCategory = createAction(
 
 export const addCategorySuccess = createAction(
   CategoryActions.ADD_CATEGORY_SUCCESS,
-  props<{categories: Category[]}>() //?? I'm not sure which value returns firebase in this action
+  props<{category: Category}>() //?? I'm not sure which value returns firebase in this action
 );
 
 export const addCategoryFailure = createAction(
