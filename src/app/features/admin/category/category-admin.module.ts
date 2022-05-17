@@ -4,6 +4,8 @@ import { CategoryAdminFormComponent } from './category-admin-form/category-admin
 import { CategoryAdminItemComponent } from './category-admin-item/category-admin-item.component';
 import { CategoryAdminComponent } from './category-admin-component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,6 +19,9 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: CategoryAdminComponent}])
   ]
 })

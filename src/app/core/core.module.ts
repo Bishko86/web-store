@@ -6,6 +6,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppInterceptor } from './interceptors/app.interceptor';
 import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
+import { CategoryService } from '../features/admin/services/category.service';
 
 @NgModule({
   declarations: [],
@@ -17,7 +18,8 @@ import { FirebaseModule } from './firebase/firebase.module';
     FirebaseModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
+    CategoryService
   ]
 })
 export class CoreModule { }
