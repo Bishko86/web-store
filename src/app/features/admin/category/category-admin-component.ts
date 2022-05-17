@@ -30,6 +30,7 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
 
   public visible = true;
   public categoryForm: FormGroup;
+  public displayedColumns: string[] = ['categoryName', 'createdAt', 'categoryId', 'options'];
 
   constructor(
     private store: Store<IAppState>,
