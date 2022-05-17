@@ -50,12 +50,12 @@ export const addCategoryFailure = createAction(
 
 export const removeCategory = createAction(
   CategoryActions.REMOVE_CATEGORY,
-  props<{id: string}>()
+  props<{categoryId: string}>()
 );
 
 export const removeCategorySuccess = createAction(
   CategoryActions.REMOVE_CATEGORY_SUCCESS,
-  props<{categories: Category[]}>() //?? I'm not sure which value returns firebase in this action
+  props<{categoryId: string}>()
 );
 
 export const removeCategoryFailure = createAction(
