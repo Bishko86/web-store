@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import {  Observable, Subject, takeUntil } from 'rxjs';
 
 import { Category } from 'src/app/core/models';
 import {
@@ -28,13 +28,16 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
   readonly isLoading$: Observable<boolean>;
   private destroy$ = new Subject<boolean>();
 
+  public editedCategoryId: string | undefined;
+  public viewMode = true;
+  public editMode = false;
   public visible = true;
   public categoryForm: FormGroup;
   public displayedColumns: string[] = ['categoryName', 'createdAt', 'categoryId', 'options'];
 
   constructor(
     private store: Store<IAppState>,
-    private actions: Actions
+    private actions: Actions,
   ) {
     this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
     this.categories$ = this.store.pipe(select(selectCategories));
@@ -42,6 +45,20 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initCategoryForm();
+  }
+
+  toViewMode(): void {
+    this.editMode = false;
+    this.editedCategoryId = undefined;
+  }
+
+  editCategory(category: Category): void {
+    this.editedCategoryId = category.id
+    this.editMode = true;
+  }
+
+  updateCategory(event: string): void {
+    console.log(event);
   }
 
   private initCategoryForm(): void {
@@ -59,10 +76,8 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
       this.visible = true;
     })}
 
-  removeCategory(categoryId: string | undefined): void {
-    if (categoryId) {
-      this.store.dispatch(removeCategory({categoryId}))
-    }
+  removeCategory(categoryId: string): void {
+      this.store.dispatch(removeCategory({categoryId}));
   }
 
   ngOnDestroy(): void {

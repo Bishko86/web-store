@@ -6,6 +6,7 @@ import { CategoryAdminComponent } from './category-admin-component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UpdateCategoryComponent } from './components/rename-category/rename-category.component';
 
 
 
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CategoryAdminComponent,
     CategoryAdminFormComponent,
     CategoryAdminItemComponent,
+    UpdateCategoryComponent,
   ],
   imports: [
     CommonModule,
