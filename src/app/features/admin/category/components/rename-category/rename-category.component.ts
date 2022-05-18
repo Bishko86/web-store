@@ -5,6 +5,7 @@ import {
   ElementRef,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { filter, fromEvent, skip, Subject, take } from 'rxjs';
 
@@ -15,14 +16,14 @@ import { filter, fromEvent, skip, Subject, take } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateCategoryComponent implements OnInit {
-  private unsubscribe: Subject<void> = new Subject<void>();
+  private destroy$: Subject<void> = new Subject<void>();
   private get element() {
     return this.host.nativeElement;
   }
- 
-  public categoryName: string = '';
+
   public editMode$ = new Subject<boolean>();
 
+  @Input("name") categoryName: string;
   @Output() toViewMode = new EventEmitter<boolean>();
   @Output() update = new EventEmitter<string>();
 
@@ -38,13 +39,11 @@ export class UpdateCategoryComponent implements OnInit {
         skip(1),
         filter(({ target }) => !this.element.contains(target)),
         take(1)
-      )
-      .subscribe(() => this.viewMode());
+      ).subscribe(() => this.viewMode());
   }
 
   viewMode(): void {
     this.toViewMode.emit(true);
-    this.categoryName = '';
   }
 
   updateCategory(): void {
@@ -55,7 +54,7 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

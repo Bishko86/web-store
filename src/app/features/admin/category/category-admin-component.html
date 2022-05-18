@@ -5,9 +5,10 @@
       <ng-container matColumnDef="categoryName">
         <th mat-header-cell *matHeaderCellDef>Category Name</th>
         <td mat-cell *matCellDef="let category">
-          <span *ngIf="viewMode && category.id !== editedCategoryId">{{category.name}}</span>
+          <span *ngIf="category.id !== editedCategoryId">{{category.name}}</span>
           <app-update-category  
-          *ngIf="editMode && category.id === editedCategoryId" 
+          *ngIf="editMode && category.id === editedCategoryId"
+          [name]="category.name"
           (toViewMode)="toViewMode()"
           (update)="updateCategory($event)"
           ></app-update-category>
