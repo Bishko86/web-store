@@ -11,8 +11,8 @@ import { filter, fromEvent, skip, Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-update-category',
-  templateUrl: './rename-category.component.html',
-  styleUrls: ['./rename-category.component.scss'],
+  templateUrl: './update-category.component.html',
+  styleUrls: ['./update-category.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateCategoryComponent implements OnInit {
