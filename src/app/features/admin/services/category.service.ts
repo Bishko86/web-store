@@ -29,4 +29,8 @@ export class CategoryService {
   removeCategory(categoryId: string): Promise<void> {
     return this.categoryRef.doc(categoryId).delete();
   }
+
+  updateCategory(categoryName: string, categoryId: string) {
+    return this.categoryRef.doc(categoryId).update({name: categoryName})
+  }
 }
