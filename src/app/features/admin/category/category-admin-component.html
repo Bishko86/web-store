@@ -67,34 +67,6 @@
   <p>Category list is empty</p>
 </ng-template>
 
-<button
-  *ngIf="visible"
-  mat-mini-fab
-  class="add_btn"
-  (click)="visible = !visible"
->
-  &#65291;
-</button>
-<ng-container *ngIf="!visible">
-  <form [formGroup]="categoryForm" (submit)="addCategory()">
-    <mat-form-field appearance="outline">
-      <mat-label>Enter category name</mat-label>
-      <input
-        matInput
-        placeholder="Enter category name"
-        formControlName="categoryName"
-        required
-      />
-    </mat-form-field>
-    <button
-      type="submit"
-      class="submit"
-      mat-button
-      [disabled]="categoryForm.invalid || (isLoading$ | async)"
-    >
-      Add category
-    </button>
-  </form>
-</ng-container>
+<app-add-category-form></app-add-category-form>
 
 <router-outlet></router-outlet>

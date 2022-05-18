@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryAdminFormComponent } from './components/category-admin-form/category-admin-form.component';
+import { AddCategoryFormComponent } from './components/add-category-form/add-category-form.component';
 import { CategoryAdminComponent } from './category-admin-component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
+import { MoreOptionsComponent } from './components/more-options/more-options.component';
 
 
 
@@ -14,8 +15,9 @@ import { UpdateCategoryComponent } from './components/update-category/update-cat
 @NgModule({
   declarations: [
     CategoryAdminComponent,
-    CategoryAdminFormComponent,
+    AddCategoryFormComponent,
     UpdateCategoryComponent,
+    MoreOptionsComponent,
   ],
   imports: [
     CommonModule,

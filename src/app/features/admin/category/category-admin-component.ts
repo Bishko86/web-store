@@ -4,7 +4,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -12,8 +11,6 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 
 import { Category } from 'src/app/core/models';
 import {
-  addCategory,
-  addCategorySuccess,
   removeCategory,
   updateCategory,
   updateCategorySuccess,
@@ -32,13 +29,11 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 })
 export class CategoryAdminComponent implements OnInit, OnDestroy {
   readonly categories$: Observable<Category[]>;
-  readonly isLoading$: Observable<boolean>;
   private destroy$ = new Subject<boolean>();
 
   public editedCategoryId: string | undefined;
   public editMode = false;
-  public visible = true;
-  public categoryForm: FormGroup;
+
   public displayedColumns: string[] = [
     'categoryName',
     'createdAt',
@@ -47,12 +42,10 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private store: Store<IAppState>, private actions: Actions) {
-    this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
     this.categories$ = this.store.pipe(select(selectCategories));
   }
 
   ngOnInit(): void {
-    this.initCategoryForm();
     this.isCategoryUpdated();
   }
 
@@ -83,23 +76,6 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
         })
       );
     }
-  }
-
-  private initCategoryForm(): void {
-    this.categoryForm = new FormGroup({
-      categoryName: new FormControl('', Validators.required),
-    });
-  }
-
-  addCategory(): void {
-    const { categoryName } = this.categoryForm.value;
-    this.store.dispatch(addCategory({ name: categoryName }));
-    this.actions
-      .pipe(ofType(addCategorySuccess), takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.categoryForm.reset();
-        this.visible = true;
-      });
   }
 
   removeCategory(categoryId: string): void {
