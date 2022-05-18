@@ -12,6 +12,10 @@ export enum CategoryActions {
   ADD_CATEGORY_SUCCESS = '[Category] Add Category Success',
   ADD_CATEGORY_FAILURE = '[Category] Add Category Failure',
 
+  UPDATE_CATEGORY = '[Category] Update Category',
+  UPDATE_CATEGORY_SUCCESS = '[Category] Update Category Success',
+  UPDATE_CATEGORY_FAILURE = '[Category] Update Category Failure',
+
   REMOVE_CATEGORY = '[Category] Remove Category',
   REMOVE_CATEGORY_SUCCESS = '[Category] Remove Category Success',
   REMOVE_CATEGORY_FAILURE = '[Category] Remove Category Failure',
@@ -19,6 +23,7 @@ export enum CategoryActions {
   CATEGORY_IS_LOADING = '[Category] Category Is Loading',
 }
 
+//get categories
 export const getCategories = createAction(
   CategoryActions.GET_CATEGORIES,
 );
@@ -33,6 +38,7 @@ export const getCategoriesFailure = createAction(
   props<{error: FirebaseError}>()
 );
 
+//add category
 export const addCategory = createAction(
   CategoryActions.ADD_CATEGORY,
   props<{name: string}>()
@@ -40,7 +46,7 @@ export const addCategory = createAction(
 
 export const addCategorySuccess = createAction(
   CategoryActions.ADD_CATEGORY_SUCCESS,
-  props<{category: Category}>() //?? I'm not sure which value returns firebase in this action
+  props<{category: Category}>()
 );
 
 export const addCategoryFailure = createAction(
@@ -48,6 +54,24 @@ export const addCategoryFailure = createAction(
   props<{error: FirebaseError}>()
 );
 
+//update category
+export const updateCategory = createAction(
+  CategoryActions.UPDATE_CATEGORY,
+  props<{categoryName: string, categoryId: string}>()
+);
+
+export const updateCategorySuccess = createAction(
+  CategoryActions.UPDATE_CATEGORY_SUCCESS,
+  props<{categoryName: string, categoryId: string}>()
+);
+
+export const updateCategoryFailure = createAction(
+  CategoryActions.UPDATE_CATEGORY_FAILURE,
+  props<{error: FirebaseError}>()
+);
+
+
+//remove category
 export const removeCategory = createAction(
   CategoryActions.REMOVE_CATEGORY,
   props<{categoryId: string}>()
@@ -63,6 +87,7 @@ export const removeCategoryFailure = createAction(
   props<{error: FirebaseError}>()
 );
 
+//loading category
 export const categoryIsLoading = createAction(
   CategoryActions.CATEGORY_IS_LOADING,
   props<{isLoading: boolean}>()

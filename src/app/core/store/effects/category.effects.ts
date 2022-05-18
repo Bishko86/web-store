@@ -18,6 +18,9 @@ import {
   removeCategory,
   removeCategoryFailure,
   removeCategorySuccess,
+  updateCategory,
+  updateCategoryFailure,
+  updateCategorySuccess,
 } from '../actions/category.actions';
 import { IAppState } from '../state/app.state';
 
@@ -82,4 +85,21 @@ export class CategoryEffects {
       ))
     );
   });
+
+  updateCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateCategory),
+      tap(() => this.store.dispatch(categoryIsLoading({ isLoading: true }))),
+      switchMap(({categoryName, categoryId}) => from(this.categoryService.updateCategory(categoryName, categoryId)).pipe(
+        map(() => {
+          this.store.dispatch(categoryIsLoading({ isLoading: false }))
+          return updateCategorySuccess({categoryName, categoryId})
+        }),
+        catchError((error) => {
+          this.store.dispatch(categoryIsLoading({ isLoading: false }))
+          return of(updateCategoryFailure({error}))
+        })
+      ))
+    )
+  })
 }
