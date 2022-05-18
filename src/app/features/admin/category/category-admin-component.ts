@@ -78,10 +78,6 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeCategory(categoryId: string): void {
-    this.store.dispatch(removeCategory({ categoryId }));
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
