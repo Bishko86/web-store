@@ -40,7 +40,7 @@ export const getProductsFailure = createAction(
 //add product
 export const addProducts = createAction(
   ProductActions.ADD_PRODUCTS,
-  props<{products: Product[]}>()
+  props<{product: Product}>()
 );
 
 export const addProductsSuccess = createAction(
