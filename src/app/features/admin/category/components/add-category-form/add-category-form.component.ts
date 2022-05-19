@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -17,13 +18,14 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 })
 export class AddCategoryFormComponent implements OnInit {
   readonly isLoading$: Observable<boolean>;
-
   private destroy$ = new Subject<boolean>();
-
-  public visible = true;
   public categoryForm: FormGroup;
   
-  constructor(private store: Store<IAppState>, private actions: Actions) {
+  constructor(
+    private store: Store<IAppState>,
+    private actions: Actions,
+    private dialogRef: MatDialogRef<AddCategoryFormComponent>,
+    ) {
     this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
   }
 
@@ -44,8 +46,12 @@ export class AddCategoryFormComponent implements OnInit {
       .pipe(ofType(addCategorySuccess), takeUntil(this.destroy$))
       .subscribe(() => {
         this.categoryForm.reset();
-        this.visible = true;
+        this.closeDialog();
       });
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {
