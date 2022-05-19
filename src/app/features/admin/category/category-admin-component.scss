@@ -1,12 +1,7 @@
 @import "colors";
-.add_btn {
-  background-color: $aliceblue;
-  color: $gray;
-  font-size: 38px;
-}
-
-.delete-item {
-  color: red;
-  margin-left: 10px;
-  cursor: pointer;
+.content-wrapper {
+  .add-category {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

@@ -1,60 +1,67 @@
-<ng-container *ngIf="categories$ | async as categories">
-  <div class="table-wrap" *ngIf="categories.length > 0; else noCategories">
-    <table
-      mat-table
-      [dataSource]="categories"
-      aria-describedby="category-table"
-    >
-      <!-- Name Column -->
-      <ng-container matColumnDef="categoryName">
-        <th mat-header-cell *matHeaderCellDef>Category Name</th>
-        <td mat-cell *matCellDef="let category">
-          <span *ngIf="category.id !== editedCategoryId">{{category.name}}</span>
-          <app-update-category
-            *ngIf="editMode && category.id === editedCategoryId"
-            [name]="category.name"
-            (toViewMode)="toViewMode()"
-            (update)="updateCategory($event)"
-          ></app-update-category>
-        </td>
-      </ng-container>
-
-      <!-- Created at Column -->
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>Created at</th>
-        <td mat-cell *matCellDef="let category">
-          {{category.createdAt | date}}
-        </td>
-      </ng-container>
-
-      <!-- Category Id Column -->
-      <ng-container matColumnDef="categoryId">
-        <th mat-header-cell *matHeaderCellDef>Category id</th>
-        <td mat-cell *matCellDef="let category">{{category.id}}</td>
-      </ng-container>
-
-      <!-- More Option Column -->
-      <ng-container matColumnDef="options">
-        <th mat-header-cell *matHeaderCellDef class="more-options">
-          More options
-        </th>
-        <td mat-cell *matCellDef="let category" class="more-options">
-          <app-more-options
-            [category]="category"
-            (update)="editCategory($event)"
-          ></app-more-options>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="element-row"></tr>
-    </table>
+<div class="content-wrapper">
+  <div class="add-category">
+    <button mat-button class="add-category-btn" (click)="openCategoryForm()">Add Category</button>
   </div>
-</ng-container>
-<ng-template #noCategories>
-  <p>Category list is empty</p>
-</ng-template>
+  <ng-container *ngIf="categories$ | async as categories">
+    <div class="table-wrap" *ngIf="categories.length > 0; else noCategories">
+      <table
+        mat-table
+        [dataSource]="categories"
+        aria-describedby="category-table"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="categoryName">
+          <th mat-header-cell *matHeaderCellDef>Category Name</th>
+          <td mat-cell *matCellDef="let category">
+            <span *ngIf="category.id !== editedCategoryId"
+              >{{category.name}}</span
+            >
+            <app-update-category
+              *ngIf="editMode && category.id === editedCategoryId"
+              [name]="category.name"
+              (toViewMode)="toViewMode()"
+              (update)="updateCategory($event)"
+            ></app-update-category>
+          </td>
+        </ng-container>
 
-<app-add-category-form></app-add-category-form>
+        <!-- Created at Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Created at</th>
+          <td mat-cell *matCellDef="let category">
+            {{category.createdAt | date}}
+          </td>
+        </ng-container>
 
-<router-outlet></router-outlet>
+        <!-- Category Id Column -->
+        <ng-container matColumnDef="categoryId">
+          <th mat-header-cell *matHeaderCellDef>Category id</th>
+          <td mat-cell *matCellDef="let category">{{category.id}}</td>
+        </ng-container>
+
+        <!-- More Option Column -->
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef class="more-options">
+            More options
+          </th>
+          <td mat-cell *matCellDef="let category" class="more-options">
+            <app-more-options
+              [category]="category"
+              (update)="editCategory($event)"
+            ></app-more-options>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+          class="element-row"
+        ></tr>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #noCategories>
+    <p>Category list is empty</p>
+  </ng-template>
+</div>

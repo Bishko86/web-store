@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
@@ -11,15 +12,14 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 
 import { Category } from 'src/app/core/models';
 import {
-  removeCategory,
   updateCategory,
   updateCategorySuccess,
 } from 'src/app/core/store/actions/category.actions';
 import {
   selectCategories,
-  selectCategoryIsLoading,
 } from 'src/app/core/store/selectors/category.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { AddCategoryFormComponent } from './components/add-category-form/add-category-form.component';
 
 @Component({
   selector: 'app-category-admin',
@@ -41,7 +41,11 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
     'options',
   ];
 
-  constructor(private store: Store<IAppState>, private actions: Actions) {
+  constructor(
+    private store: Store<IAppState>,
+    private actions: Actions,
+    private dialog: MatDialog,
+    ) {
     this.categories$ = this.store.pipe(select(selectCategories));
   }
 
@@ -76,6 +80,13 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  openCategoryForm() {
+    this.dialog.open(AddCategoryFormComponent, {
+      height: '300px',
+      width: '400px',
+   })
   }
 
   ngOnDestroy(): void {
