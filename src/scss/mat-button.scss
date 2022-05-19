@@ -1,0 +1,20 @@
+@import "colors";
+
+.mat-button {
+  &.submit {
+    background-color: $white;
+    border: 1px solid $lightgrey;
+    width: 300px;
+    height: 50px;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $aliceblue;
+    }
+  }
+
+  &.add-category-btn {
+    background-color: $dusk-blue;
+    color: $snow;
+  }
+}
