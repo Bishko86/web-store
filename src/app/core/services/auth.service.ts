@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 
 import firebase from 'firebase/compat';
-import { filter, Subscription } from 'rxjs';
+import { filter, OperatorFunction, Subscription } from 'rxjs';
 
 import { IUser, User } from '../models';
 import { IAuthCredentials } from '../models/auth.model';
@@ -33,7 +33,7 @@ export class AuthService {
 
   private saveUser(userModel: firebase.User): void {
     this.subscription$ = this.firestore.collection('/users').doc(userModel.uid).valueChanges()
-    .pipe(filter((user: any) => typeof user?.role !== undefined))
+    .pipe(filter((user: IUser) => user?.role !== undefined) as OperatorFunction<IUser | unknown, IUser>)
     .subscribe((data: IUser) => {
         const user = new User(userModel, data.role)
         this.store.dispatch(updateUser({user}));
