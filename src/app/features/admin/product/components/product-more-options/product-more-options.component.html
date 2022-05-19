@@ -1,0 +1,22 @@
+<ng-container>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="more-options-button"
+    class="more-options-btn"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="updateProduct()">
+      <mat-icon>edit</mat-icon>
+      <span>Update product</span>
+    </button>
+
+    <button mat-menu-item (click)="removeProduct()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete product</span>
+    </button>
+  </mat-menu>
+</ng-container>
