@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 
 import { logout } from 'src/app/core/store/actions/auth.actions';
 import { selectUser, selectUserRole } from 'src/app/core/store/selectors/auth.selector';
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
-    this.cartService.getCart().pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.cartService.getCart().pipe(take(1)).subscribe(data => {
       if(data && Array.isArray(data.products)) {
         this.amountCartProducts = data.products.length
         this.cdr.markForCheck();

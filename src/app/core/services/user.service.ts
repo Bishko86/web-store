@@ -28,7 +28,7 @@ export class UserService {
   async createUser(user: IUser): Promise<void> {
     try {
       await this.cartRef.doc(user.id).set({ products: []});
-      await this.usersRef.doc(user.id).set({ ...user });
+      await this.usersRef.doc(user.id).set({ ...user, role: 1 });
     } catch (err: any) {
       this.snackBar.openSnackBar('Something went wrong', 'Error');
     }

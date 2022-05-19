@@ -1,0 +1,22 @@
+.dialog {
+  position: relative;
+
+  .dialog-title {
+    text-align: center;
+  }
+
+  .close-dialog {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+
+  form {
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center ;
+  }
+}

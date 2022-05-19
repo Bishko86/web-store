@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { MatTabChangeEvent } from "@angular/material/tabs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
+import { getCategories } from "src/app/core/store/actions/category.actions";
 import { getUsers } from "src/app/core/store/actions/users.actions";
 import { IAppState } from "src/app/core/store/state/app.state";
 
@@ -24,6 +25,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(getUsers());
+    this.store.dispatch(getCategories());
     this.setCurrentTabIndex();
   }
 

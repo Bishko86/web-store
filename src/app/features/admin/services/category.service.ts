@@ -1,22 +1,36 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Category } from 'src/app/core/models';
 
 @Injectable()
 export class CategoryService {
+  categoryRef: AngularFirestoreCollection<Category>;
+  
+  constructor(private firestore: AngularFirestore) { 
+      this.categoryRef = this.firestore.collection('/categories');
+    }
 
-  constructor(private http: HttpClient) { }
-
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>('/categories');
+  getCategories(): AngularFirestoreCollection<Category> {
+    return this.categoryRef;
   }
 
-  addCategory(categoryId: string): Observable<any> {
-    return this.http.post(`/categories`, { categoryId });
+  async addCategory(name: string): Promise<Category | undefined> {
+    const res = await this.categoryRef.add({name: name, createdAt: Date.now()});
+    
+    return  new Promise((resolve, reject) => {
+      res.onSnapshot((cat) => {
+        if(cat.exists) {
+          resolve({ ...cat.data(), id:cat.id } as Category );
+        }else {reject ('Somethig went wrong')}
+      })
+    });
   }
 
-  removeCategory(categoryId: string): Observable<any> {
-    return this.http.delete(`/categories/${categoryId}`);
+  removeCategory(categoryId: string): Promise<void> {
+    return this.categoryRef.doc(categoryId).delete();
+  }
+
+  updateCategory(categoryName: string, categoryId: string): Promise<void> {
+    return this.categoryRef.doc(categoryId).update({name: categoryName})
   }
 }

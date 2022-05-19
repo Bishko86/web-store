@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryAdminFormComponent } from './category-admin-form/category-admin-form.component';
-import { CategoryAdminItemComponent } from './category-admin-item/category-admin-item.component';
+import { AddCategoryFormComponent } from './components/add-category-form/add-category-form.component';
 import { CategoryAdminComponent } from './category-admin-component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
+import { MoreOptionsComponent } from './components/more-options/more-options.component';
 
 
 
@@ -12,11 +15,15 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     CategoryAdminComponent,
-    CategoryAdminFormComponent,
-    CategoryAdminItemComponent,
+    AddCategoryFormComponent,
+    UpdateCategoryComponent,
+    MoreOptionsComponent,
   ],
   imports: [
     CommonModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: CategoryAdminComponent}])
   ]
 })

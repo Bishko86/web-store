@@ -1,0 +1,27 @@
+<ng-container>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="more-options-button"
+    class="more-options-btn"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="updateCategory()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit Category</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>add_shopping_cart</mat-icon>
+      <span>Add product to</span>
+    </button>
+
+    <button mat-menu-item (click)="removeCategory()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete Category</span>
+    </button>
+  </mat-menu>
+</ng-container>
