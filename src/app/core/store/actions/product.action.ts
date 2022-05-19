@@ -15,9 +15,9 @@ export enum ProductActions {
   UPDATE_PRODUCTS_SUCCESS = '[Product] Update Product Success',
   UPDATE_PRODUCTS_FAILURE = '[Product] Update Product Failure',
 
-  REMOVE_PRODUCTS = '[Product] Remove Product',
-  REMOVE_PRODUCTS_SUCCESS = '[Product] Remove Product Success',
-  REMOVE_PRODUCTS_FAILURE = '[Product] Remove Product Failure',
+  REMOVE_PRODUCT = '[Product] Remove Product',
+  REMOVE_PRODUCT_SUCCESS = '[Product] Remove Product Success',
+  REMOVE_PRODUCT_FAILURE = '[Product] Remove Product Failure',
 
   PRODUCT_IS_LOADING = '[Product] Product Is Loading',
 }
@@ -70,18 +70,18 @@ export const updateProductsFailure = createAction(
 );
 
 //remove product
-export const removeProducts = createAction(
-  ProductActions.REMOVE_PRODUCTS,
+export const removeProduct = createAction(
+  ProductActions.REMOVE_PRODUCT,
   props<{productId: string}>()
 );
 
 export const removeProductsSuccess = createAction(
-  ProductActions.REMOVE_PRODUCTS_SUCCESS,
+  ProductActions.REMOVE_PRODUCT_SUCCESS,
   props<{productId: string}>()
 );
 
 export const removeProductsFailure = createAction(
-  ProductActions.REMOVE_PRODUCTS_FAILURE,
+  ProductActions.REMOVE_PRODUCT_FAILURE,
   props<{error: FirebaseError}>()
 );
 
