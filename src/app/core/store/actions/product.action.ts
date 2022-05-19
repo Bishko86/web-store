@@ -45,7 +45,7 @@ export const addProducts = createAction(
 
 export const addProductsSuccess = createAction(
   ProductActions.ADD_PRODUCTS_SUCCESS,
-  props<{products: Product[]}>()
+  props<{product: Product}>()
 );
 
 export const addProductsFailure = createAction(
@@ -61,7 +61,7 @@ export const updateProducts = createAction(
 
 export const updateProductsSuccess = createAction(
   ProductActions.UPDATE_PRODUCTS_SUCCESS,
-  props<{products: Product[]}>()
+  props<{product: Product}>()
 );
 
 export const updateProductsFailure = createAction(
