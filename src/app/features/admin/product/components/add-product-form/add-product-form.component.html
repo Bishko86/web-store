@@ -51,6 +51,9 @@
       <textarea matInput rows="5" formControlName="description"></textarea>
     </mat-form-field>
     <br />
-    <button mat-button type="submit">Add</button>
+    <button 
+    mat-button type="submit"
+    [disabled]="(isLoading$ | async) || productForm.invalid"
+    >Add</button>
   </form>
 </div>

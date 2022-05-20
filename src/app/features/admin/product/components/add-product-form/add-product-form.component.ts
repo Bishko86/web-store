@@ -24,6 +24,7 @@ import {
   updateProduct,
 } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
+import { selectProductIsLoading } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
@@ -35,6 +36,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 export class AddProductFormComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
   readonly accept = 'image/png, image/jpeg';
+  readonly isLoading$: Observable<boolean>;
 
   public productForm: FormGroup;
   public categories$: Observable<Category[]>;
@@ -44,7 +46,9 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<AddProductFormComponent>,
     private actions$: Actions,
     @Inject(MAT_DIALOG_DATA) public data: Product
-  ) {}
+  ) {
+    this.isLoading$ = this.store.pipe(select(selectProductIsLoading));
+  }
 
   get category(): AbstractControl {
     return this.productForm.controls['category'];
