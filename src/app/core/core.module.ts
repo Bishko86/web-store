@@ -7,6 +7,7 @@ import { AppInterceptor } from './interceptors/app.interceptor';
 import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
+import { ProductService } from '../features/admin/services/product.service';
 
 @NgModule({
   declarations: [],
@@ -19,7 +20,8 @@ import { CategoryService } from '../features/admin/services/category.service';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
-    CategoryService
+    CategoryService,
+    ProductService
   ]
 })
 export class CoreModule { }
