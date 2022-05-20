@@ -37,24 +37,41 @@ export class ProductEffects {
 
   addProduct$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductActions.addProducts),
+      ofType(ProductActions.addProduct),
       tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
       switchMap(({product}) => from(this.productService.addProduct(product)).pipe(
         map((product: Product) => {
           this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }))
-          return ProductActions.addProductsSuccess({product})
+          return ProductActions.addProductSuccess({product})
         }),
         catchError((error) => {
           this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return of(ProductActions.addProductsFailure({error}));
+          return of(ProductActions.addProductFailure({error}));
         })
       ))
     );
   });
 
+  updateProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.updateProduct),
+      tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
+      switchMap(({product}) => from(this.productService.updateProduct(product)).pipe(
+        map(() => {
+          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
+          return ProductActions.updateProductSuccess({product})
+        }),
+        catchError((error) => {
+          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
+          return of(ProductActions.updateProductFailure({error}));
+        })
+      ))
+    )
+  })
+
   removeProduct$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductActions.removeProducts),
+      ofType(ProductActions.removeProduct),
       tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
       switchMap(({productId}) => from(this.productService.removeProduct(productId)).pipe(
         map(() => {
