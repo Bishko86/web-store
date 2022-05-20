@@ -14,7 +14,7 @@ export class CategoryService {
     return this.categoryRef;
   }
 
-  async addCategory(name: string): Promise<Category | undefined> {
+  async addCategory(name: string): Promise<Category> {
     const res = await this.categoryRef.add({name: name, createdAt: Date.now()});
     
     return  new Promise((resolve, reject) => {

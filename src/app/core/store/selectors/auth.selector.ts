@@ -19,6 +19,11 @@ export const selectError = createSelector(
   (state: IAuthState) => state.error
 );
 
+export const selectAuthIsLoading = createSelector(
+  selectFeature,
+  (state: IAuthState) => state.isLoading
+);
+
 export const selectUserRole = createSelector(
   selectFeature,
   (state: IAuthState) => {

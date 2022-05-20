@@ -6,6 +6,7 @@ import { appReducer } from './reducers/app.reducer';
 import { AuthEffects } from './effects/auth.effects';
 import { UsersEffects } from './effects/users.effects';
 import { CategoryEffects } from './effects/category.effects';
+import { ProductEffects } from './effects/product.effects';
 
 
 
@@ -13,7 +14,7 @@ import { CategoryEffects } from './effects/category.effects';
   declarations: [],
   imports: [
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([AuthEffects, UsersEffects, CategoryEffects]),
+    EffectsModule.forRoot([AuthEffects, UsersEffects, CategoryEffects, ProductEffects]),
     StoreDevtoolsModule.instrument(),
   ]
 })

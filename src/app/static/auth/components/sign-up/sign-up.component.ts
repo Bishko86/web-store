@@ -20,7 +20,7 @@ import {
   registrate,
   AuthActions,
 } from 'src/app/core/store/actions/auth.actions';
-import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
+import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   hidePass1 = true;
   hidePass2 = true;
 
-  readonly isFetching$ = this.store.pipe(select(selectIsFetching));
+  readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
 
   constructor(
     private store: Store<IAppState>,

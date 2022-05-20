@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 
 const MAT_MODULES = [
   MatDialogModule,
@@ -18,7 +20,9 @@ const MAT_MODULES = [
   MatFormFieldModule,
   MatInputModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSelectModule,
+  NgxMatFileInputModule
 ];
 @NgModule({
   imports: [...MAT_MODULES],
