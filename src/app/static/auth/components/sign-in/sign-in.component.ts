@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { login } from 'src/app/core/store/actions/auth.actions';
-import { selectIsFetching } from 'src/app/core/store/selectors/common.selector';
+import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
 
 @Component({
@@ -14,7 +14,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
   hide = true;
-  readonly isFetching$ = this.store.pipe(select(selectIsFetching));
+  readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
 
   constructor(private store: Store<IAppState>) {}
 

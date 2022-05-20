@@ -10,9 +10,6 @@ export interface IAppState {
   product: IProductState;
   category: ICategoryState;
   order?: Order[];
-  common: {
-    isFetching: boolean;
-  }
 }
 
 export const initialState: IAppState = {
@@ -20,7 +17,4 @@ export const initialState: IAppState = {
   users: initialUsersState,
   product: initialProductState,
   category: initialCategoryState,
-  common: {
-    isFetching: false
-  },
 };

@@ -29,4 +29,9 @@ export const authReducer = createReducer(
     user: null,
     error: null
   })),
+
+  on(AuthActions.authIsLoading, (state, {isLoading}) => ({
+    ...state,
+    isLoading
+  }))
 );

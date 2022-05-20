@@ -4,6 +4,7 @@ import { FirebaseError } from 'firebase/app';
 export interface IAuthState {
   user: IUser | null;
   error: FirebaseError | null;
+  isLoading: boolean;
 }
 
 const setInitialState = () => {
@@ -14,4 +15,5 @@ const setInitialState = () => {
 export const initialAuthState = {
   user: setInitialState(),
   error: null,
+  isLoading: false,
 };
