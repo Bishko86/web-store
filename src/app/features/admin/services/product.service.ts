@@ -27,8 +27,8 @@ export class ProductService {
     });
   }
 
-  updateProduct(productId: string, productData: Product): Promise<void> {
-    return this.productRef.doc(productId).update(productData);
+  updateProduct(product: Product): Promise<void> {
+    return this.productRef.doc(product.id).update(product);
   }
 
   removeProduct(productId: string): Promise<void> {
