@@ -6,8 +6,7 @@ import { Category } from 'src/app/core/models';
 })
 export class GetCategoryNamePipe implements PipeTransform {
 
-  transform(id: string, categories: Category[]): unknown {
-    return categories.find((category) => category.id === id)?.name
+  transform(id: string, categories: Category[]): string {
+    return categories.find((category) => category.id === id)?.name || 'No category';
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/app/core/models';
@@ -12,14 +12,10 @@ import { AddProductFormComponent } from '../add-product-form/add-product-form.co
   styleUrls: ['./product-more-options.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductMoreOptionsComponent implements OnInit {
+export class ProductMoreOptionsComponent {
   @Input() product: Product;
 
   constructor(private store: Store<IAppState>, private dialog: MatDialog) { }
-
-  ngOnInit(): void {
-    
-  }
 
   updateProduct(): void {
     this.dialog.open(AddProductFormComponent, {data: this.product});

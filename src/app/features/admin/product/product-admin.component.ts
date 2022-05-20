@@ -37,7 +37,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy{
     this.store.pipe(takeUntil(this.destroy$),select(selectCategories)).subscribe((categories) => this.categories = categories)
   }
 
-  openProductForm() {
+  openProductForm(): void {
     this.dialog.open(AddProductFormComponent, {
       height: '100%',
       width: '100%',
