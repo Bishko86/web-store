@@ -7,7 +7,7 @@ export const productReducer = createReducer(
   on(
     ProductActions.getProductsFailure,
     ProductActions.addProductFailure,
-    ProductActions.removeProductsFailure,
+    ProductActions.removeProductFailure,
     ProductActions.updateProductFailure,
     (state, { error }) => ({
       ...state,
@@ -25,7 +25,7 @@ export const productReducer = createReducer(
     products: [...state.products, product],
   })),
 
-  on(ProductActions.removeProductsSuccess, (state, { productId }) => ({
+  on(ProductActions.removeProductSuccess, (state, { productId }) => ({
     ...state,
     products: state.products.filter((product) => product.id !== productId),
   })),

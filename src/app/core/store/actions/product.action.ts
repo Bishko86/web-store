@@ -75,12 +75,12 @@ export const removeProduct = createAction(
   props<{productId: string}>()
 );
 
-export const removeProductsSuccess = createAction(
+export const removeProductSuccess = createAction(
   ProductActions.REMOVE_PRODUCT_SUCCESS,
   props<{productId: string}>()
 );
 
-export const removeProductsFailure = createAction(
+export const removeProductFailure = createAction(
   ProductActions.REMOVE_PRODUCT_FAILURE,
   props<{error: FirebaseError}>()
 );

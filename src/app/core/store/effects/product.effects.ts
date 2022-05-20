@@ -76,11 +76,11 @@ export class ProductEffects {
       switchMap(({productId}) => from(this.productService.removeProduct(productId)).pipe(
         map(() => {
           this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return ProductActions.removeProductsSuccess({productId});
+          return ProductActions.removeProductSuccess({productId});
         }),
         catchError((error) => {
           this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return of(ProductActions.removeProductsFailure({error}))
+          return of(ProductActions.removeProductFailure({error}))
         })
       ))
     );
