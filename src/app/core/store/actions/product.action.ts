@@ -7,13 +7,13 @@ export enum ProductActions {
   GET_PRODUCTS_SUCCESS = '[Product] Get Product Success',
   GET_PRODUCTS_FAILURE = '[Product] Get Product Failure',
 
-  ADD_PRODUCTS = '[Product] Add Product',
-  ADD_PRODUCTS_SUCCESS = '[Product] Add Product Success',
-  ADD_PRODUCTS_FAILURE = '[Product] Add Product Failure',
+  ADD_PRODUCT = '[Product] Add Product',
+  ADD_PRODUCT_SUCCESS = '[Product] Add Product Success',
+  ADD_PRODUCT_FAILURE = '[Product] Add Product Failure',
 
-  UPDATE_PRODUCTS = '[Product] Update Product',
-  UPDATE_PRODUCTS_SUCCESS = '[Product] Update Product Success',
-  UPDATE_PRODUCTS_FAILURE = '[Product] Update Product Failure',
+  UPDATE_PRODUCT = '[Product] Update Product',
+  UPDATE_PRODUCT_SUCCESS = '[Product] Update Product Success',
+  UPDATE_PRODUCT_FAILURE = '[Product] Update Product Failure',
 
   REMOVE_PRODUCT = '[Product] Remove Product',
   REMOVE_PRODUCT_SUCCESS = '[Product] Remove Product Success',
@@ -38,34 +38,34 @@ export const getProductsFailure = createAction(
 );
 
 //add product
-export const addProducts = createAction(
-  ProductActions.ADD_PRODUCTS,
+export const addProduct = createAction(
+  ProductActions.ADD_PRODUCT,
   props<{product: Product}>()
 );
 
-export const addProductsSuccess = createAction(
-  ProductActions.ADD_PRODUCTS_SUCCESS,
+export const addProductSuccess = createAction(
+  ProductActions.ADD_PRODUCT_SUCCESS,
   props<{product: Product}>()
 );
 
-export const addProductsFailure = createAction(
-  ProductActions.ADD_PRODUCTS_FAILURE,
+export const addProductFailure = createAction(
+  ProductActions.ADD_PRODUCT_FAILURE,
   props<{error: FirebaseError}>()
 );
 
 //update product
-export const updateProducts = createAction(
-  ProductActions.UPDATE_PRODUCTS,
-  props<{products: Product[]}>()
-);
-
-export const updateProductsSuccess = createAction(
-  ProductActions.UPDATE_PRODUCTS_SUCCESS,
+export const updateProduct = createAction(
+  ProductActions.UPDATE_PRODUCT,
   props<{product: Product}>()
 );
 
-export const updateProductsFailure = createAction(
-  ProductActions.UPDATE_PRODUCTS_FAILURE,
+export const updateProductSuccess = createAction(
+  ProductActions.UPDATE_PRODUCT_SUCCESS,
+  props<{product: Product}>()
+);
+
+export const updateProductFailure = createAction(
+  ProductActions.UPDATE_PRODUCT_FAILURE,
   props<{error: FirebaseError}>()
 );
 

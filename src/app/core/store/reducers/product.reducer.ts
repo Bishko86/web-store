@@ -6,9 +6,9 @@ export const productReducer = createReducer(
   initialState.product,
   on(
     ProductActions.getProductsFailure,
-    ProductActions.addProductsFailure,
+    ProductActions.addProductFailure,
     ProductActions.removeProductsFailure,
-    ProductActions.updateProductsFailure,
+    ProductActions.updateProductFailure,
     (state, { error }) => ({
       ...state,
       error,
@@ -20,7 +20,7 @@ export const productReducer = createReducer(
     products,
   })),
 
-  on(ProductActions.addProductsSuccess, (state, { product }) => ({
+  on(ProductActions.addProductSuccess, (state, { product }) => ({
     ...state,
     products: [...state.products, product],
   })),
@@ -30,7 +30,7 @@ export const productReducer = createReducer(
     products: state.products.filter((product) => product.id !== productId),
   })),
 
-  on(ProductActions.updateProductsSuccess, (state, { product }) => ({
+  on(ProductActions.updateProductSuccess, (state, { product }) => ({
     ...state,
     products: state.products.map((prod) => {
       return prod.id === product.id
