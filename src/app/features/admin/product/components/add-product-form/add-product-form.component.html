@@ -1,1 +1,56 @@
-<p>add-product-form works!</p>
+<div class="product-form-wrap">
+  <h2 mat-dialog-title class="dialog-title">Product form</h2>
+  <form [formGroup]="productForm" (submit)="saveProduct()">
+    <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Product name</mat-label>
+      <input  
+      matInput 
+      placeholder="Enter product name" 
+      required
+      formControlName="name"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Product price</mat-label>
+      <input
+        matInput
+        type="number"
+        class="example-right-align"
+        placeholder="0"
+        formControlName="price"
+      />
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+    </mat-form-field>
+  </div>
+  <div class="form-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="categoryId">
+        <ng-container *ngFor="let category of categories$ | async">
+          <mat-option [value]="category.id">{{ category.name }}</mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Add Photos</mat-label>
+      <ngx-mat-file-input
+        formControlName="photo"
+        [multiple]="true"
+        [accept]="accept"
+      >
+      </ngx-mat-file-input>
+    </mat-form-field>
+  </div>
+
+    <mat-form-field appearance="outline" class="text-area">
+      <mat-label>Textarea</mat-label>
+      <textarea matInput rows="5" formControlName="description"></textarea>
+    </mat-form-field>
+    <br />
+    <button mat-button type="submit">Add</button>
+  </form>
+</div>

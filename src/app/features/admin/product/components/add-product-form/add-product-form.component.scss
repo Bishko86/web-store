@@ -1,0 +1,23 @@
+.product-form-wrap {
+  .dialog-title {
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+
+    .form-container {
+      width: 630px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-area {
+      width: 630px;
+    }
+  }
+}
