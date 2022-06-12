@@ -9,6 +9,11 @@
   </button>
 
   <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToProduct()">
+      <mat-icon>picture_in_picture</mat-icon>
+      <span>Go to Product</span>
+    </button>
+
     <button mat-menu-item (click)="updateProduct()">
       <mat-icon>edit</mat-icon>
       <span>Update product</span>

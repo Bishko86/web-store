@@ -17,6 +17,10 @@ export class ProductMoreOptionsComponent {
 
   constructor(private store: Store<IAppState>, private dialog: MatDialog) { }
 
+  goToProduct() {
+    console.log('Go to Product');
+  }
+
   updateProduct(): void {
     this.dialog.open(AddProductFormComponent, {data: this.product});
   }

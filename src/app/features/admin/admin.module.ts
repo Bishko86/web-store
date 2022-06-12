@@ -7,6 +7,7 @@ import { ProductService } from './services/product.service';
 import { AdminComponent } from './admin.component';
 import { OrderService } from './services/order.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UploadFileService } from './services/upload-file.service';
 
 @NgModule({
   declarations: [AdminComponent],
@@ -15,6 +16,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AdminRoutingModule,
     SharedModule
   ],
-  providers: [CategoryService, OrderService, ProductService,]
+  providers: [CategoryService, OrderService, ProductService, UploadFileService]
 })
 export class AdminModule { }

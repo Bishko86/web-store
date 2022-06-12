@@ -18,6 +18,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 import { Category, Product } from 'src/app/core/models';
+import { FileUpload } from 'src/app/core/models/image.model';
 import {
   addProduct,
   ProductActions,
@@ -26,6 +27,7 @@ import {
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
 import { selectProductIsLoading } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { UploadFileService } from '../../../services/upload-file.service';
 
 @Component({
   selector: 'app-add-product-form',
@@ -38,6 +40,9 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   readonly accept = 'image/png, image/jpeg';
   readonly isLoading$: Observable<boolean>;
 
+  selectedFiles?: FileList;
+  currentFileUpload?: FileUpload;
+
   public productForm: FormGroup;
   public categories$: Observable<Category[]>;
 
@@ -45,6 +50,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     private store: Store<IAppState>,
     private dialogRef: MatDialogRef<AddProductFormComponent>,
     private actions$: Actions,
+    private uploadFile: UploadFileService,
     @Inject(MAT_DIALOG_DATA) public data: Product
   ) {
     this.isLoading$ = this.store.pipe(select(selectProductIsLoading));
@@ -52,6 +58,10 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
 
   get category(): AbstractControl {
     return this.productForm.controls['category'];
+  }
+
+  get photo() {
+    return this.productForm.controls['photo'];
   }
 
   private initProductForm() {
@@ -69,10 +79,33 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     this.categories$ = this.store.pipe(select(selectCategories));
   }
 
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
+    
+  }
+
+  upload() {
+    if(this.photo.valid){
+      const file: File | null = this.photo.value[0];
+      this.selectedFiles = undefined;
+      if (file) {
+        this.currentFileUpload = new FileUpload(file);
+        this.uploadFile.pushFileToStorage(this.currentFileUpload).subscribe((data)  => console.log(data)
+        );
+      }
+    }
+    else{
+      console.log('no data'); 
+    }
+    
+  }
+
   saveProduct(): void {
+    
     const product: Product = {
       ...this.data,
       ...this.productForm.value,
+      photos: [],
       createdAt: Date.now(),
     };
     if (this.data) {
@@ -86,7 +119,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
           ProductActions.UPDATE_PRODUCT_SUCCESS,
           ProductActions.ADD_PRODUCT_SUCCESS),
           takeUntil(this.destroy$)
-        ).subscribe(() => this.dialogRef.close());
+        ).subscribe(() => {console.log(this.photo); this.dialogRef.close(); });
   }
 
   ngOnDestroy(): void {

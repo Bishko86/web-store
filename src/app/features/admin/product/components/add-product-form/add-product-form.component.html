@@ -41,6 +41,7 @@
         formControlName="photo"
         [multiple]="true"
         [accept]="accept"
+        (change)="selectFile($event)"
       >
       </ngx-mat-file-input>
     </mat-form-field>
@@ -56,4 +57,5 @@
     [disabled]="(isLoading$ | async) || productForm.invalid"
     >Add</button>
   </form>
+  <button (click)="upload()">upload</button>
 </div>

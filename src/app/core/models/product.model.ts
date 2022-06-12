@@ -3,7 +3,12 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  photo?: string;
+  photos: DbFileModel[];
   categoryId: string;
   createdAt: number;
+}
+
+export interface DbFileModel {
+  name: string;
+  url: string;
 }
