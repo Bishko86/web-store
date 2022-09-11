@@ -26,6 +26,7 @@ import {
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
 import { selectProductIsLoading } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { AddProductFormModel } from '../../models/add-product-form.model';
 
 @Component({
   selector: 'app-add-product-form',
@@ -38,38 +39,38 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   readonly accept = 'image/png, image/jpeg';
   readonly isLoading$: Observable<boolean>;
 
-  public productForm: FormGroup;
+  public productForm: FormGroup<AddProductFormModel>;
   public categories$: Observable<Category[]>;
 
   constructor(
-    private store: Store<IAppState>,
-    private dialogRef: MatDialogRef<AddProductFormComponent>,
-    private actions$: Actions,
-    @Inject(MAT_DIALOG_DATA) public data: Product
+    private readonly store: Store<IAppState>,
+    private readonly dialogRef: MatDialogRef<AddProductFormComponent>,
+    private readonly actions$: Actions,
+    @Inject(MAT_DIALOG_DATA) private readonly data: Product
   ) {
     this.isLoading$ = this.store.pipe(select(selectProductIsLoading));
   }
 
-  get category(): AbstractControl {
-    return this.productForm.controls['category'];
+  get category(): AbstractControl<string> {
+    return this.productForm.controls['categoryId'];
   }
 
-  private initProductForm() {
+  private initProductForm(): void {
     this.productForm = new FormGroup({
-      name: new FormControl(this.data?.name, Validators.required),
-      price: new FormControl(this.data?.price, Validators.required),
-      categoryId: new FormControl(this.data?.categoryId, Validators.required),
-      description: new FormControl(this.data?.description, Validators.required),
-      photo: new FormControl(null),
+      name: new FormControl(this.data?.name || '', Validators.required) as AbstractControl,
+      price: new FormControl(this.data?.price || 0, Validators.required) as AbstractControl,
+      categoryId: new FormControl(this.data?.categoryId || '', Validators.required) as AbstractControl,
+      description: new FormControl(this.data?.description || '', Validators.required) as AbstractControl,
+      photo: new FormControl('') as AbstractControl,
     });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initProductForm();
     this.categories$ = this.store.pipe(select(selectCategories));
   }
 
-  saveProduct(): void {
+  public saveProduct(): void {
     const product: Product = {
       ...this.data,
       ...this.productForm.value,
@@ -89,7 +90,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
         ).subscribe(() => this.dialogRef.close());
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }

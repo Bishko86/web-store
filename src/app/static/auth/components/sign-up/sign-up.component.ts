@@ -12,7 +12,8 @@ import {
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { IUser } from 'src/app/core/models';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -22,6 +23,7 @@ import {
 } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { SignUpFormModel } from '../../models/sign-up.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,59 +32,53 @@ import { IAppState } from 'src/app/core/store/state/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<boolean>();
-  signUpForm: FormGroup;
-  hidePass1 = true;
-  hidePass2 = true;
+  public signUpForm: FormGroup<SignUpFormModel>;
+  public hidePass1 = true;
+  public hidePass2 = true;
 
-  readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
+  public readonly getErrorMessage = getErrorMessage;
+  public readonly isLoading$: Observable<boolean>;
+
+  private readonly destroy$ = new Subject<boolean>();
 
   constructor(
-    private store: Store<IAppState>,
-    private updates$: Actions,
-    private userService: UserService,
-    private snackBar: SnackBarService,
-  ) {}
+    private readonly store: Store<IAppState>,
+    private readonly updates$: Actions,
+    private readonly userService: UserService,
+    private readonly snackBar: SnackBarService,
+  ) {
+    this.isLoading$ = this.store.pipe(select(selectAuthIsLoading));
+  }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initForm();
     this.saveUser();
   }
 
-  get username(): AbstractControl {
+  public get username(): AbstractControl {
     return this.signUpForm.controls['username'];
   }
 
-  get email(): AbstractControl {
+  public get email(): AbstractControl {
     return this.signUpForm.controls['email'];
   }
 
-  get password(): AbstractControl {
-    return this.signUpForm.controls['password'];
-  }
 
-  get confirmPassword(): AbstractControl {
+  public get confirmPassword(): AbstractControl {
     return this.signUpForm.controls['confirmPassword'];
   }
 
   private initForm(): void {
     this.signUpForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required) as AbstractControl,
+      email: new FormControl('', [Validators.required, Validators.email]) as AbstractControl,
+      password: new FormControl('', Validators.required) as AbstractControl,
+      confirmPassword: new FormControl('', Validators.required) as AbstractControl,
     });
   }
 
-  getErrorMessage(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return control.hasError('email') ? 'Not a valid email' : '';
-  }
-
-  submit(): void {
-    const { username, email, password, confirmPassword } = this.signUpForm.value;
+  public submit(): void {
+    const { username, email, password, confirmPassword } = this.signUpForm.getRawValue();
     if(password === confirmPassword) {
       this.store.dispatch(registrate({ username, email, password }));
     } else {
@@ -103,7 +99,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }

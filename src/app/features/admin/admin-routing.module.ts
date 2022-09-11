@@ -8,10 +8,13 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      {path: '', redirectTo: 'users'},
       {
-        path: 'users', 
-        loadChildren: () => import('./users/users.module').then((mod) => mod.UsersModule)
+        path: '', redirectTo: 'users',
+        pathMatch: 'full'
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./users/users.module').then((mod) => mod.UsersModule),
       },
       {
         path: 'orders',
@@ -29,11 +32,11 @@ const routes: Routes = [
       { path: '**', redirectTo: '/admin/users' },
     ],
   },
-  
+
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class AdminRoutingModule { }

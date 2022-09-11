@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
@@ -9,6 +9,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { addCategory, addCategorySuccess } from 'src/app/core/store/actions/category.actions';
 import { selectCategoryIsLoading } from 'src/app/core/store/selectors/category.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { CategoryFormModel } from '../../models/category-form.model';
 
 @Component({
   selector: 'app-add-category-form',
@@ -17,30 +18,30 @@ import { IAppState } from 'src/app/core/store/state/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCategoryFormComponent implements OnInit {
-  readonly isLoading$: Observable<boolean>;
+  public readonly isLoading$: Observable<boolean>;
   private destroy$ = new Subject<boolean>();
-  public categoryForm: FormGroup;
-  
+  public categoryForm: FormGroup<CategoryFormModel>;
+
   constructor(
-    private store: Store<IAppState>,
-    private actions: Actions,
-    private dialogRef: MatDialogRef<AddCategoryFormComponent>,
-    ) {
+    private readonly store: Store<IAppState>,
+    private readonly actions: Actions,
+    private readonly dialogRef: MatDialogRef<AddCategoryFormComponent>,
+  ) {
     this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initCategoryForm();
   }
 
   private initCategoryForm(): void {
     this.categoryForm = new FormGroup({
-      categoryName: new FormControl('', Validators.required),
+      categoryName: new FormControl('', Validators.required) as AbstractControl,
     });
   }
 
-  addCategory(): void {
-    const { categoryName } = this.categoryForm.value;
+  public addCategory(): void {
+    const { categoryName } = this.categoryForm.getRawValue();
     this.store.dispatch(addCategory({ name: categoryName }));
     this.actions
       .pipe(ofType(addCategorySuccess), takeUntil(this.destroy$))
@@ -50,11 +51,11 @@ export class AddCategoryFormComponent implements OnInit {
       });
   }
 
-  closeDialog() {
+  public closeDialog(): void {
     this.dialogRef.close();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
