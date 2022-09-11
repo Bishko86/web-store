@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 
 import firebase from 'firebase/compat';
-import { filter, OperatorFunction, Subscription } from 'rxjs';
+import { filter, OperatorFunction, Subscription, throttleTime } from 'rxjs';
 
 import { IUser, User } from '../models';
 import { IAuthCredentials } from '../models/auth.model';
@@ -20,8 +20,8 @@ export class AuthService {
     private readonly afAuth: AngularFireAuth,
     private readonly firestore: AngularFirestore,
     private readonly store: Store<IAppState>
-    ) {
-    this.afAuth.authState.subscribe((user) => {
+  ) {
+    this.afAuth.authState.pipe(throttleTime(50)).subscribe((user) => {
       if (user) {
         this.saveUser(user);
       } else {
@@ -33,19 +33,19 @@ export class AuthService {
 
   private saveUser(userModel: firebase.User): void {
     this.subscription$ = this.firestore.collection('/users').doc(userModel.uid).valueChanges()
-    .pipe(filter((user: IUser) => user?.role !== undefined) as OperatorFunction<IUser | unknown, IUser>)
-    .subscribe((data: IUser) => {
+      .pipe(filter((user: IUser) => user?.role !== undefined) as OperatorFunction<IUser | unknown, IUser>)
+      .subscribe((data: IUser) => {
         const user = new User(userModel, data.role)
-        this.store.dispatch(updateUser({user}));
+        this.store.dispatch(updateUser({ user }));
         localStorage.setItem('user', JSON.stringify(user));
-    })
+      });
   }
 
   public login({ email, password }: IAuthCredentials): Promise<firebase.auth.UserCredential> {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  public async registrate({email, password, username}: IAuthCredentials): Promise<firebase.User | null> {
+  public async registrate({ email, password, username }: IAuthCredentials): Promise<firebase.User | null> {
     await this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((d) => d.user?.updateProfile({ displayName: username }));
