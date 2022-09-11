@@ -15,11 +15,11 @@ import { IAppState } from '../store/state/app.state';
   providedIn: 'root',
 })
 export class AuthService {
-  subscription$ = new Subscription();
+  private subscription$ = new Subscription();
   constructor(
-    private afAuth: AngularFireAuth,
-    private firestore: AngularFirestore,
-    private store: Store<IAppState>
+    private readonly afAuth: AngularFireAuth,
+    private readonly firestore: AngularFirestore,
+    private readonly store: Store<IAppState>
     ) {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
@@ -41,11 +41,11 @@ export class AuthService {
     })
   }
 
-  login({ email, password }: IAuthCredentials): Promise<firebase.auth.UserCredential> {
+  public login({ email, password }: IAuthCredentials): Promise<firebase.auth.UserCredential> {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
-  async registrate({email, password, username}: IAuthCredentials): Promise<firebase.User | null> {
+  public async registrate({email, password, username}: IAuthCredentials): Promise<firebase.User | null> {
     await this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((d) => d.user?.updateProfile({ displayName: username }));
@@ -54,7 +54,7 @@ export class AuthService {
     return user;
   }
 
-  logout(): Promise<void> {
+  public logout(): Promise<void> {
     return this.afAuth.signOut();
   }
 }
