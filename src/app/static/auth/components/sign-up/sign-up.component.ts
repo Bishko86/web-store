@@ -13,6 +13,7 @@ import {
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { IUser } from 'src/app/core/models';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -35,6 +36,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public hidePass1 = true;
   public hidePass2 = true;
 
+  public readonly getErrorMessage = getErrorMessage;
   public readonly isLoading$: Observable<boolean>;
 
   private readonly destroy$ = new Subject<boolean>();
@@ -73,13 +75,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
       password: new FormControl('', Validators.required) as AbstractControl,
       confirmPassword: new FormControl('', Validators.required) as AbstractControl,
     });
-  }
-
-  public getErrorMessage(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return control.hasError('email') ? 'Not a valid email' : '';
   }
 
   public submit(): void {

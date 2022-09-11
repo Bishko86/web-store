@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { login } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
 import { IAppState } from 'src/app/core/store/state/app.state';
@@ -15,6 +16,8 @@ import { SignInFormModel } from '../../models/sign-in.model';
 export class SignInComponent implements OnInit {
   public signInForm: FormGroup<SignInFormModel>;
   public hide = true;
+
+  public readonly getErrorMessage = getErrorMessage;
   readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
 
   constructor(private readonly store: Store<IAppState>) { }
@@ -23,11 +26,11 @@ export class SignInComponent implements OnInit {
     this.initForm();
   }
 
-  get email(): AbstractControl<string> {
+  public get email(): AbstractControl<string> {
     return this.signInForm.controls['email'];
   }
 
-  get password(): AbstractControl<string> {
+  public get password(): AbstractControl<string> {
     return this.signInForm.controls['password'];
   }
 
@@ -38,12 +41,6 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  public getErrorMessage(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return control.hasError('email') ? 'Not a valid email' : '';
-  }
 
   public submit(): void {
     const { email, password } = this.signInForm.getRawValue();
