@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { login } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
@@ -12,7 +12,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent implements OnInit {
-  signInForm: FormGroup;
+  signInForm: UntypedFormGroup;
   hide = true;
   readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
 
@@ -31,9 +31,9 @@ export class SignInComponent implements OnInit {
   }
 
   private initForm(): void {
-    this.signInForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+    this.signInForm = new UntypedFormGroup({
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', Validators.required),
     });
   }
 

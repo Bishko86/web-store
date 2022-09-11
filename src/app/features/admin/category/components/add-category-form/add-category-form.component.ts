@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
@@ -19,7 +19,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 export class AddCategoryFormComponent implements OnInit {
   readonly isLoading$: Observable<boolean>;
   private destroy$ = new Subject<boolean>();
-  public categoryForm: FormGroup;
+  public categoryForm: UntypedFormGroup;
   
   constructor(
     private store: Store<IAppState>,
@@ -34,8 +34,8 @@ export class AddCategoryFormComponent implements OnInit {
   }
 
   private initCategoryForm(): void {
-    this.categoryForm = new FormGroup({
-      categoryName: new FormControl('', Validators.required),
+    this.categoryForm = new UntypedFormGroup({
+      categoryName: new UntypedFormControl('', Validators.required),
     });
   }
 

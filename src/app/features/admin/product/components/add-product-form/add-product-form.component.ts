@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -38,7 +38,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   readonly accept = 'image/png, image/jpeg';
   readonly isLoading$: Observable<boolean>;
 
-  public productForm: FormGroup;
+  public productForm: UntypedFormGroup;
   public categories$: Observable<Category[]>;
 
   constructor(
@@ -55,12 +55,12 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   }
 
   private initProductForm() {
-    this.productForm = new FormGroup({
-      name: new FormControl(this.data?.name, Validators.required),
-      price: new FormControl(this.data?.price, Validators.required),
-      categoryId: new FormControl(this.data?.categoryId, Validators.required),
-      description: new FormControl(this.data?.description, Validators.required),
-      photo: new FormControl(null),
+    this.productForm = new UntypedFormGroup({
+      name: new UntypedFormControl(this.data?.name, Validators.required),
+      price: new UntypedFormControl(this.data?.price, Validators.required),
+      categoryId: new UntypedFormControl(this.data?.categoryId, Validators.required),
+      description: new UntypedFormControl(this.data?.description, Validators.required),
+      photo: new UntypedFormControl(null),
     });
   }
 

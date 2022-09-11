@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
@@ -31,7 +31,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
-  signUpForm: FormGroup;
+  signUpForm: UntypedFormGroup;
   hidePass1 = true;
   hidePass2 = true;
 
@@ -66,11 +66,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.signUpForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
+    this.signUpForm = new UntypedFormGroup({
+      username: new UntypedFormControl('', Validators.required),
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('', Validators.required),
+      confirmPassword: new UntypedFormControl('', Validators.required),
     });
   }
 
