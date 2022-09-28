@@ -1,13 +1,13 @@
 import { createAction, props } from "@ngrx/store";
 import { FirebaseError } from "firebase/app";
 
-import {Category} from 'src/app/core/models'
+import { Category } from 'src/app/core/models'
 
 export enum CategoryActions {
   GET_CATEGORIES = '[Category] Get Categories',
   GET_CATEGORIES_SUCCESS = '[Category] Get Categories Success',
   GET_CATEGORIES_FAILURE = '[Category] Get Categories Failure',
-  
+
   ADD_CATEGORY = '[Category] Add Category',
   ADD_CATEGORY_SUCCESS = '[Category] Add Category Success',
   ADD_CATEGORY_FAILURE = '[Category] Add Category Failure',
@@ -30,65 +30,65 @@ export const getCategories = createAction(
 
 export const getCategoriesSuccess = createAction(
   CategoryActions.GET_CATEGORIES_SUCCESS,
-  props<{categories: Category[]}>()
+  props<{ categories: Category[] }>()
 );
 
 export const getCategoriesFailure = createAction(
   CategoryActions.GET_CATEGORIES_FAILURE,
-  props<{error: FirebaseError}>()
+  props<{ error: FirebaseError }>()
 );
 
 //add category
 export const addCategory = createAction(
   CategoryActions.ADD_CATEGORY,
-  props<{name: string}>()
+  props<{ name: string }>()
 );
 
 export const addCategorySuccess = createAction(
   CategoryActions.ADD_CATEGORY_SUCCESS,
-  props<{category: Category}>()
+  props<{ category: Category }>()
 );
 
 export const addCategoryFailure = createAction(
   CategoryActions.ADD_CATEGORY_FAILURE,
-  props<{error: FirebaseError}>()
+  props<{ error: FirebaseError }>()
 );
 
 //update category
 export const updateCategory = createAction(
   CategoryActions.UPDATE_CATEGORY,
-  props<{categoryName: string, categoryId: string}>()
+  props<{ categoryName: string, categoryId: string }>()
 );
 
 export const updateCategorySuccess = createAction(
   CategoryActions.UPDATE_CATEGORY_SUCCESS,
-  props<{categoryName: string, categoryId: string}>()
+  props<{ categoryName: string, categoryId: string }>()
 );
 
 export const updateCategoryFailure = createAction(
   CategoryActions.UPDATE_CATEGORY_FAILURE,
-  props<{error: FirebaseError}>()
+  props<{ error: FirebaseError }>()
 );
 
 
 //remove category
 export const removeCategory = createAction(
   CategoryActions.REMOVE_CATEGORY,
-  props<{categoryId: string}>()
+  props<{ categoryId: string }>()
 );
 
 export const removeCategorySuccess = createAction(
   CategoryActions.REMOVE_CATEGORY_SUCCESS,
-  props<{categoryId: string}>()
+  props<{ categoryId: string }>()
 );
 
 export const removeCategoryFailure = createAction(
   CategoryActions.REMOVE_CATEGORY_FAILURE,
-  props<{error: FirebaseError}>()
+  props<{ error: FirebaseError }>()
 );
 
 //loading category
 export const categoryIsLoading = createAction(
   CategoryActions.CATEGORY_IS_LOADING,
-  props<{isLoading: boolean}>()
+  props<{ isLoading: boolean }>()
 );

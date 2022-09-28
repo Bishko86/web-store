@@ -4,33 +4,34 @@ import { Category } from 'src/app/core/models';
 
 @Injectable()
 export class CategoryService {
-  categoryRef: AngularFirestoreCollection<Category>;
-  
-  constructor(private firestore: AngularFirestore) { 
-      this.categoryRef = this.firestore.collection('/categories');
-    }
+  private categoryRef: AngularFirestoreCollection<Category>;
 
-  getCategories(): AngularFirestoreCollection<Category> {
+  constructor(private readonly firestore: AngularFirestore) {
+    this.categoryRef = this.firestore.collection('/categories');
+  }
+
+  public getCategories(): AngularFirestoreCollection<Category> {
     return this.categoryRef;
   }
 
-  async addCategory(name: string): Promise<Category> {
-    const res = await this.categoryRef.add({name: name, createdAt: Date.now()});
-    
-    return  new Promise((resolve, reject) => {
+  public async addCategory(name: string): Promise<Category> {
+    const res = await this.categoryRef.add({ name: name, createdAt: Date.now() });
+    console.error(res, 'gg');
+
+    return new Promise((resolve, reject) => {
       res.onSnapshot((cat) => {
-        if(cat.exists) {
-          resolve({ ...cat.data(), id:cat.id } as Category );
-        }else {reject ('Somethig went wrong')}
+        if (cat.exists) {
+          resolve({ ...cat.data(), id: cat.id } as Category);
+        } else { reject('Somethig went wrong') }
       })
     });
   }
 
-  removeCategory(categoryId: string): Promise<void> {
+  public removeCategory(categoryId: string): Promise<void> {
     return this.categoryRef.doc(categoryId).delete();
   }
 
-  updateCategory(categoryName: string, categoryId: string): Promise<void> {
-    return this.categoryRef.doc(categoryId).update({name: categoryName})
+  public updateCategory(categoryName: string, categoryId: string): Promise<void> {
+    return this.categoryRef.doc(categoryId).update({ name: categoryName })
   }
 }

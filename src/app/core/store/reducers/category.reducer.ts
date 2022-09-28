@@ -43,9 +43,9 @@ export const categoryReducer = createReducer(
     categories: state.categories.map((category) => {
       return category.id === categoryId
         ? {
-            ...category,
-            name: categoryName,
-          }
+          ...category,
+          name: categoryName,
+        }
         : category;
     }),
   })),
