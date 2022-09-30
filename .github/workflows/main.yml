@@ -8,10 +8,6 @@ on:
   pull_request:
     branches: [master]
 
-#environment variables
-env:
-  ## Sets environment variable
-  FIREBASE_API_KEY: 'SECRET_KEY_OF_ROMAN_BISHKO'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
