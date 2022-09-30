@@ -8,6 +8,11 @@ on:
   pull_request:
     branches: [master]
 
+#environment variables
+env:
+  ## Sets environment variable
+  FIREBASE_API_KEY: 'SECRET_KEY_OF_ROMAN_BISHKO'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -34,3 +39,7 @@ jobs:
       - name: Build
         run: |
           npm run build
+          
+      - name: step 1
+        ## Another way reference your environment variables
+        run: echo "The API key is:$FIREBASE_API_KEY"
