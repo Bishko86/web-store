@@ -1,5 +1,5 @@
 const fs = require('file-system');
-const basePath = './dist/web-store/';
+const basePath = './docs/web-store/';
 
 const content = fs.readFileSync(`${basePath}index.html`, 'utf8');
 const path = './src/new';
