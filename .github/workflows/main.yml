@@ -44,6 +44,7 @@ jobs:
         run: |
           npm run build
           
-      - name: env
-        ## Another way reference your environment variables
-        run: echo "The API key is:${{env.FIREBASE_API_KEY}}"
+      - name: Deploy
+        run: |
+          npm run deploy
+
