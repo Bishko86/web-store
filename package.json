@@ -5,11 +5,11 @@
     "ng": "ng",
     "config": "ts-node ./src/setenv.ts",
     "start": "npm run config && ng serve --configuration=custom",
-    "build": "npm run config && ng build --configuration=custom",
+    "build": "npm run config && ng build --configuration=custom --output-path docs --base-href /web-store/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "stylelint": "npx stylelint \"src/**/*.scss\"",
-    "build:prod": "npm run config && ng build --configuration=custom --output-path docs --base-href /web-store/ && npm run gh-pages-bundle-config",
+    "build:prod": "npm run build && npm run gh-pages-bundle-config",
     "gh-pages-bundle-config": "ts-node ./src/build.ts"
   },
   "private": true,

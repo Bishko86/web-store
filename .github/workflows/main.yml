@@ -44,6 +44,7 @@ jobs:
         run: npm run build:prod
 
       - name: Deploy to GitHub Pages
+        if: ${{ github.event.pull_request.merged == 'true' }}
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
