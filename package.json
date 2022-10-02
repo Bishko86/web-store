@@ -9,7 +9,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "stylelint": "npx stylelint \"src/**/*.scss\"",
-    "deploy": "npm run config && ng build --configuration=custom --output-path docs --base-href /web-store/",
     "build:prod": "npm run config && ng build --configuration=custom --deploy-url /web-store/"
   },
   "private": true,
