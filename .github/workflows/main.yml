@@ -3,9 +3,10 @@ name: CI/CD ClienAppUa
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events
-  push:
-    branches: [master]
+  # push:
+  #   branches: [master]
   pull_request:
+    types: [closed]
     branches: [master]
 
 env:
@@ -47,6 +48,6 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
-          build_dir: dist/web-store
+          build_dir: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
