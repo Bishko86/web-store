@@ -9,7 +9,7 @@ on:
     branches: [master]
 
 env: 
-## Sets environment variable
+# Sets environment variable
   FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
   FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
   FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
@@ -32,19 +32,42 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Install
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
-          npm install
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
+          npm ci
+
+      #- name: Install
+      #  run: |
+      #   npm install
+      #    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #    sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
       - name: CSS Linter
         run: npm run stylelint
 
       - name: Build
-        run: |
-          npm run build
-          
-      - name: Deploy
-        run: |
-          npm run deploy
+        run: npm run build:prod
+
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: dist/web-store
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
