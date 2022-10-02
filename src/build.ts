@@ -1,4 +1,4 @@
-const fs = require('file-system');
+const fs = require('fs');
 const basePath = './docs/';
 
 const content = fs.readFileSync(`${basePath}index.html`, 'utf8');
