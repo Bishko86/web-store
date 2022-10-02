@@ -9,7 +9,7 @@ on:
     branches: [master]
 
 env: 
-## Sets environment variable
+# Sets environment variable
   FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
   FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
   FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
@@ -40,11 +40,16 @@ jobs:
       - name: CSS Linter
         run: npm run stylelint
 
-      - name: Build
-        run: |
-          npm run build
-          
       - name: Deploy
         run: |
           npm run deploy
+
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: gh-pages
+          build_dir: dist/weather-app
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
