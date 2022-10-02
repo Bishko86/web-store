@@ -8,7 +8,8 @@
     "build": "npm run config && ng build --configuration=custom",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "stylelint": "npx stylelint \"src/**/*.scss\""
+    "stylelint": "npx stylelint \"src/**/*.scss\"",
+    "deploy": "npm run config && ng build --configuration=custom --output-path docs --base-href /web-store/"
   },
   "private": true,
   "dependencies": {
