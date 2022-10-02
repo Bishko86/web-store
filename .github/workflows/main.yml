@@ -8,8 +8,8 @@ on:
   pull_request:
     branches: [master]
 
-env: 
-# Sets environment variable
+env:
+  # Sets environment variable
   FIREBASE_API_KEY: ${{secrets.FIREBASE_API_KEY}}
   FIREBASE_APP_ID: ${{secrets.FIREBASE_APP_ID}}
   FIREBASE_AUTH_DOMAIN: ${{secrets.FIREBASE_AUTH_DOMAIN}}
@@ -21,23 +21,22 @@ env:
 jobs:
   # This workflow contains a single job called "build"
   build:
-  # The type of runner that the job will run on
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [14.x]
-  #Steps
+    #Steps
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under
       - uses: actions/checkout@v3
 
       - name: Install
-       run: |
-        npm install
-         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-         sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
-         
+        run: |
+          npm install
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
       - name: CSS Linter
         run: npm run stylelint
 
@@ -51,5 +50,3 @@ jobs:
           build_dir: dist/web-store
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
