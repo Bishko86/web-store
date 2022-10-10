@@ -8,9 +8,10 @@ import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
+import { DragDropFileUploadDirective } from './directives/drag-drop-file-upload.directive';
 
 @NgModule({
-  declarations: [],
+  declarations: [DragDropFileUploadDirective],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -19,9 +20,9 @@ import { ProductService } from '../features/admin/services/product.service';
     FirebaseModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     CategoryService,
-    ProductService
-  ]
+    ProductService,
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

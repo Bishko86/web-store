@@ -16,6 +16,12 @@
         },
         "@schematics/angular:service": {
           "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -130,5 +136,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "eb3c207b-fb55-45e1-a05b-4cfcd8960277"
   }
 }
