@@ -10,18 +10,18 @@ import { AddProductFormComponent } from '../add-product-form/add-product-form.co
   selector: 'app-product-more-options',
   templateUrl: './product-more-options.component.html',
   styleUrls: ['./product-more-options.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductMoreOptionsComponent {
   @Input() product: Product;
 
-  constructor(private store: Store<IAppState>, private dialog: MatDialog) { }
+  constructor(private store: Store<IAppState>, private dialog: MatDialog) {}
 
   updateProduct(): void {
-    this.dialog.open(AddProductFormComponent, {data: this.product});
+    this.dialog.open(AddProductFormComponent, { data: this.product });
   }
 
   removeProduct(): void {
-    this.store.dispatch(removeProduct({productId: this.product.id!}));
+    this.store.dispatch(removeProduct({ productId: this.product.id! }));
   }
 }
