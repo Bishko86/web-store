@@ -5,63 +5,88 @@
     </button>
   </div>
   <h2 mat-dialog-title class="dialog-title">Product form</h2>
-  <form [formGroup]="productForm" (submit)="saveProduct()">
-    <div class="form-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Product name</mat-label>
-        <input
-          matInput
-          placeholder="Enter product name"
-          required
-          formControlName="name"
-        />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Product price</mat-label>
-        <input
-          matInput
-          type="number"
-          class="example-right-align"
-          placeholder="0"
-          formControlName="price"
-        />
-        <span matPrefix>$&nbsp;</span>
-        <span matSuffix>.00</span>
-      </mat-form-field>
-    </div>
-    <div class="form-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="categoryId">
-          <ng-container *ngFor="let category of categories$ | async">
-            <mat-option [value]="category.id">{{ category.name }}</mat-option>
-          </ng-container>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Add Photos</mat-label>
-        <ngx-mat-file-input
-          formControlName="photo"
-          [multiple]="true"
-          [accept]="accept"
+  <div class="form-container">
+    <form [formGroup]="productForm" (submit)="saveProduct()">
+      <div class="row">
+        <div class="input-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Product name</mat-label>
+            <input
+              matInput
+              placeholder="Enter product name"
+              required
+              formControlName="name"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Product price</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Enter product price"
+              required
+              formControlName="price"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="categoryId">
+              <ng-container *ngFor="let category of categories$ | async">
+                <mat-option [value]="category.id">{{
+                  category.name
+                }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div
+          class="drag-and-drop-area"
+          appDragDropFileUpload
+          (fileDropped)="onFileDropped($event)"
         >
-        </ngx-mat-file-input>
-      </mat-form-field>
-    </div>
+          <input
+            type="file"
+            #fileDropRef
+            id="fileDropRef"
+            multiple
+            (change)="fileBrowseHandler($event.target)"
+          />
+          <img src="assets/icons/drag-and-drop.svg" alt="drag-and-drop" />
 
-    <mat-form-field appearance="outline" class="text-area">
-      <mat-label>Textarea</mat-label>
-      <textarea matInput rows="5" formControlName="description"></textarea>
-    </mat-form-field>
-    <br />
-    <button
-      mat-button
-      type="submit"
-      [disabled]="(isLoading$ | async) || productForm.invalid"
-    >
-      Add
-    </button>
-  </form>
+          <h3>Drag and drop file here</h3>
+          <h3>or</h3>
+          <label for="fileDropRef">Browse for file</label>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="text-area">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput rows="10" formControlName="description"></textarea>
+      </mat-form-field>
+      <br />
+      <button
+        mat-button
+        color="primary"
+        class="add-product-btn submit"
+        [disabled]="(isLoading$ | async) || productForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+
+    <div class="image-list">
+      <div class="image-container" *ngFor="let file of files; let i = index">
+        <img src="assets/icons/file.svg" alt="file"> 
+        <div class="info">
+          <h4 class="name">
+            {{ file?.name }}
+          </h4>
+          <p class="size">
+            {{ formatBytes(file?.size) }}
+          </p>
+          <!-- <app-progress [progress]="file?.progress"></app-progress> -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

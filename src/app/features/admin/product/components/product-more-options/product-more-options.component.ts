@@ -18,7 +18,12 @@ export class ProductMoreOptionsComponent {
   constructor(private store: Store<IAppState>, private dialog: MatDialog) {}
 
   updateProduct(): void {
-    this.dialog.open(AddProductFormComponent, { data: this.product });
+    this.dialog.open(AddProductFormComponent, { 
+      data: this.product,
+      maxWidth: '100vw',
+      height: '100%',
+      width: '100%',
+    });
   }
 
   removeProduct(): void {

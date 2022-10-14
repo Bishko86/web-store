@@ -13,7 +13,6 @@ export class DragDropFileUploadDirective {
   @Output() private readonly fileDropped = new EventEmitter<FileList>();
 
   @HostBinding('style.background-color') private backgroundColor = '#ffffff';
-  @HostBinding('style.border') private border = 'dashed';
 
   @HostListener('dragover', ['$event']) private dragOver(
     event: DragEvent
@@ -21,6 +20,8 @@ export class DragDropFileUploadDirective {
     event.preventDefault();
     event.stopPropagation();
     this.backgroundColor = '#fcfcfc';
+    console.error('fff');
+    
   }
 
   @HostListener('dragleave', ['$event']) private dragLeave(
@@ -35,7 +36,6 @@ export class DragDropFileUploadDirective {
     event.preventDefault();
     event.stopPropagation();
     this.backgroundColor = '#cccccc';
-    this.border = 'solid';
 
     const files = event?.dataTransfer?.files as FileList;
     if (files?.length > 0) {

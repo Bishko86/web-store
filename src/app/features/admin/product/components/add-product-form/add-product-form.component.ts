@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormControl,
   FormGroup,
   Validators,
@@ -27,7 +28,6 @@ import { selectCategories } from 'src/app/core/store/selectors/category.selector
 import { selectProductIsLoading } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
 import { AddProductFormModel } from '../../models/add-product-form.model';
-
 @Component({
   selector: 'app-add-product-form',
   templateUrl: './add-product-form.component.html',
@@ -41,6 +41,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
 
   public productForm: FormGroup<AddProductFormModel>;
   public categories$: Observable<Category[]>;
+  public files: any[] = [];
 
   constructor(
     private readonly store: Store<IAppState>,
@@ -58,7 +59,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   private initProductForm(): void {
     this.productForm = new FormGroup({
       name: new FormControl(this.data?.name || '', Validators.required) as AbstractControl,
-      price: new FormControl(this.data?.price || 0, Validators.required) as AbstractControl,
+      price: new FormControl(this.data?.price || null, Validators.required) as AbstractControl,
       categoryId: new FormControl(this.data?.categoryId || '', Validators.required) as AbstractControl,
       description: new FormControl(this.data?.description || '', Validators.required) as AbstractControl,
       photo: new FormControl('') as AbstractControl,
@@ -90,8 +91,38 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
         ).subscribe(() => this.dialogRef.close());
   }
 
+  onFileDropped(event: FileList){
+    console.error(event);
+    this.prepareFilesList(Object.values(event))
+    
+  }
+
+  fileBrowseHandler(event: any){
+    console.error(event);
+    
+  }
+
+  private prepareFilesList(files: File[]) {
+    for (const item of files) {
+      this.files.push(item);
+    }
+    console.error(this.files);
+    
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
+  }
+
+  formatBytes(bytes: number, decimals = 0) {
+    if (bytes === 0) {
+      return '0 Bytes';
+    }
+    const k = 1024;
+    const dm = decimals <= 0 ? 0 : decimals || 2;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 }

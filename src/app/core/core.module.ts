@@ -8,10 +8,8 @@ import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
-import { DragDropFileUploadDirective } from './directives/drag-drop-file-upload.directive';
 
 @NgModule({
-  declarations: [DragDropFileUploadDirective],
   imports: [
     CommonModule,
     HttpClientModule,
