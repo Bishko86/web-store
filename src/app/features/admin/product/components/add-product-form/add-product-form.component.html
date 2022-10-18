@@ -49,7 +49,7 @@
             #fileDropRef
             id="fileDropRef"
             multiple
-            (change)="fileBrowseHandler($event.target)"
+            (change)="fileBrowseHandler($event)"
           />
           <img src="assets/icons/drag-and-drop.svg" alt="drag-and-drop" />
 
@@ -74,18 +74,44 @@
       </button>
     </form>
 
-    <div class="image-list">
-      <div class="image-container" *ngFor="let file of files; let i = index">
-        <img src="assets/icons/file.svg" alt="file"> 
-        <div class="info">
-          <h4 class="name">
-            {{ file?.name }}
-          </h4>
-          <p class="size">
-            {{ formatBytes(file?.size) }}
-          </p>
-          <!-- <app-progress [progress]="file?.progress"></app-progress> -->
+    <div class="image__list">
+      <div class="image__container" *ngFor="let file of files; let i = index">
+        <div class="image__content">
+          <ng-container *ngIf="photoControl!.value[i] as value; else noImage">
+            <img [src]="value.url" alt="file" width="160" height="160" />
+          </ng-container>
+          <ng-template #noImage>
+            <img
+              src="assets/icons/no-file.svg"
+              alt="file"
+              width="160"
+              height="160"
+            />
+          </ng-template>
+          <div class="info">
+            <h4 class="image__name">
+              {{ file.name }}
+            </h4>
+            <p class="image__size">
+              {{ file.size }}
+            </p>
+          </div>
+
+          <button
+            *ngIf="photoControl!.value[i] as value"
+            mat-icon-button
+            aria-label="delete"
+            class="image__delete-btn"
+            (click)="deleteImage(value)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
+
+        <app-progress
+          *ngIf="!photoControl!.value[i]"
+          [progress]="file.progress$ | async"
+        ></app-progress>
       </div>
     </div>
   </div>
