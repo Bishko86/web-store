@@ -1,0 +1,15 @@
+@import "colors";
+progress[value] {
+  width: 100%;
+  height: 10px;
+  border: 1px solid $secondary-dark-blue-15;
+  border-radius: 2ps;
+
+  &::-webkit-progress-bar {
+    background-color: $white;
+  }
+
+  &::-webkit-progress-value {
+    background-color: $red;
+  }
+}
