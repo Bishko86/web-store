@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { FirebaseError } from "firebase/app";
+import { ProductImage } from "src/app/features/admin/product/models/product-image.model";
 import { Product } from "../../models";
 
 export enum ProductActions {
@@ -72,7 +73,7 @@ export const updateProductFailure = createAction(
 //remove product
 export const removeProduct = createAction(
   ProductActions.REMOVE_PRODUCT,
-  props<{productId: string}>()
+  props<{productId: string, photos: ProductImage[]}>()
 );
 
 export const removeProductSuccess = createAction(
