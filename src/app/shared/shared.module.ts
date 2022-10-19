@@ -5,13 +5,15 @@ import { MaterialModule } from './material/material.module';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { DragDropFileUploadDirective } from '../core/directives/drag-drop-file-upload.directive';
 import { ProgressComponent } from './components/progress/progress.component';
+import { FileFormatPipe } from './pipes/file-format.pipe';
 
 
 const SHARED_COMPONENNTS = [
   SpinnerComponent,
   ConfirmComponent,
   DragDropFileUploadDirective,
-  ProgressComponent
+  ProgressComponent,
+  FileFormatPipe
 ]
 
 @NgModule({
