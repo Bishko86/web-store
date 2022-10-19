@@ -41,15 +41,15 @@ import { ProductImage } from '../../models/product-image.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddProductFormComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<boolean>();
-  readonly accept = 'image/png, image/jpeg';
-  readonly isLoading$: Observable<boolean>;
+  private readonly destroy$ = new Subject<boolean>();
+  public readonly accept = 'image/png, image/jpeg';
+  public readonly isLoading$: Observable<boolean>;
 
-  public productForm: FormGroup<AddProductFormModel>;
   public categories$: Observable<Category[]>;
+  public productForm: FormGroup<AddProductFormModel>;
   public files: any[] = [];
 
-  get photoControl() {
+  get photoControl(): AbstractControl<ProductImage[]> | null {
     return this.productForm.get('photo');
   }
 
@@ -60,7 +60,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     private readonly fileUploadService: UploadFileService,
     private readonly cdr: ChangeDetectorRef,
     private readonly snackbarService: SnackBarService,
-    @Inject(MAT_DIALOG_DATA) private readonly data: Product
+    @Inject(MAT_DIALOG_DATA) private readonly dialogData: Product
   ) {
     this.isLoading$ = this.store.pipe(select(selectProductIsLoading));
   }
@@ -71,11 +71,11 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
 
   private initProductForm(): void {
     this.productForm = new FormGroup({
-      name: new FormControl(this.data?.name || '', Validators.required) as AbstractControl,
-      price: new FormControl(this.data?.price || null, Validators.required) as AbstractControl,
-      categoryId: new FormControl(this.data?.categoryId || '', Validators.required) as AbstractControl,
-      description: new FormControl(this.data?.description || '', Validators.required) as AbstractControl,
-      photo: new FormControl('') as AbstractControl,
+      name: new FormControl(this.dialogData?.name || '', Validators.required) as AbstractControl,
+      price: new FormControl(this.dialogData?.price || null, Validators.required) as AbstractControl,
+      categoryId: new FormControl(this.dialogData?.categoryId || '', Validators.required) as AbstractControl,
+      description: new FormControl(this.dialogData?.description || '', Validators.required) as AbstractControl,
+      photo: new FormControl<ProductImage[]>(this.dialogData?.photo || []) as AbstractControl,
     });
   }
 
@@ -83,15 +83,19 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     this.initProductForm();
     this.categories$ = this.store.pipe(select(selectCategories));
     this.updateFileList();
+
+    if(this.dialogData) {
+      this.files = [...this.dialogData.photo];
+    }
   }
 
   public saveProduct(): void {
     const product: Product = {
-      ...this.data,
+      ...this.dialogData,
       ...this.productForm.value,
       createdAt: Date.now(),
     };
-    if (this.data) {
+    if (this.dialogData) {
       this.store.dispatch(updateProduct({ product }));
     } else {
       this.store.dispatch(addProduct({ product }));
@@ -127,7 +131,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
       const progress$ = this.uploadFile(file);
       const viewData = {
         name: file.name,
-        size: this.formatBytes(file.size),
+        size: file.size,
         progress$,
       };
       this.files.push(viewData);
@@ -144,7 +148,8 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
       .subscribe((data: ProductImage[]) => {
         if (!data.length) return;
         const photoControl = this.productForm.get('photo');
-        photoControl?.setValue([...data]);
+        const photos = [...this.dialogData.photo, ...data];
+        photoControl?.setValue(photos);
         this.cdr.markForCheck();
       });
   }
@@ -152,18 +157,6 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
-  }
-
-  //TODO move this method to pipe
-  public formatBytes(bytes: number, decimals = 0) {
-    if (bytes === 0) {
-      return '0 Bytes';
-    }
-    const k = 1024;
-    const dm = decimals <= 0 ? 0 : decimals || 2;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
   public deleteImage(value: ProductImage): void {

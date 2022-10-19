@@ -19,7 +19,7 @@ export class UploadFileService {
         finalize(() => {
           storageRef.getDownloadURL().subscribe((downloadUrl) => {
             const uploadedFiles = this.uploadedFiles$.getValue();
-            const fileUploaded = { url: downloadUrl, name: file.name };
+            const fileUploaded = { url: downloadUrl, name: file.name, size: file.size };
             this.uploadedFiles$.next([...uploadedFiles, fileUploaded]);
           });
         })
