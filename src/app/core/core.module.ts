@@ -8,12 +8,14 @@ import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatDialogModule,
     NgRxModule,
     FirebaseModule,
   ],
