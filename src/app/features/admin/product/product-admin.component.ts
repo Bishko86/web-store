@@ -8,10 +8,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Category, Product } from 'src/app/core/models';
+import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { removeProduct } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
 import { selectProducts } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
 
 @Component({
@@ -28,7 +30,11 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
 
   public categories: Category[];
 
-  constructor(private readonly store: Store<IAppState>, private readonly dialog: MatDialog) {
+  constructor(
+    private readonly store: Store<IAppState>,
+    private readonly dialog: MatDialog,
+    private readonly confirmService: ConfirmService
+    ) {
     this.products$ = this.store.pipe(select(selectProducts));
   }
 
@@ -42,29 +48,33 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
       .subscribe((categories) => (this.categories = categories));
   }
 
-  public openProductForm(): void {
-    this.dialog.open(AddProductFormComponent, {
-      maxWidth: '100vw',
-      height: '100%',
-      width: '100%',
-    });
+  public onAddProduct(): void {
+    this.openProductForm();
   }
 
   public removeProduct(product: Product): void {
-    this.store.dispatch(removeProduct({ productId: product.id!, photos: product.photo }));
+    this.confirmService.confirm(DELETE_RECORD_TEXT).subscribe((isConfirmed) => {
+      if(isConfirmed) {
+        this.store.dispatch(removeProduct({ productId: product.id!, photos: product.photo }));
+      }
+    })
   }
 
   public updateProduct(product: Product): void {
+    this.openProductForm(product);
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
+  private openProductForm(product?: Product): void {
     this.dialog.open(AddProductFormComponent, { 
       data: product,
       maxWidth: '100vw',
       height: '100%',
       width: '100%',
     });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

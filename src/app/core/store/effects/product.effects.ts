@@ -120,7 +120,7 @@ export class ProductEffects {
         )
       ),
       switchMap(({ productId, photos }) => {
-        photos?.forEach((photo) => this.uploadFileService.deleteFile(photo.name));
+        photos && photos.forEach((photo) => this.uploadFileService.deleteFile(photo.name));
         return from(this.productService.removeProduct(productId)).pipe(
           map(() => {
             this.store.dispatch(
