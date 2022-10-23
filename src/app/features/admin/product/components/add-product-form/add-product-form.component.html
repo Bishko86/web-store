@@ -1,6 +1,6 @@
 <div class="product-form-wrap">
   <div class="close-dialog">
-    <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+    <button mat-icon-button aria-label="close dialog" (click)="closeDialog()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -39,6 +39,7 @@
             </mat-select>
           </mat-form-field>
         </div>
+
         <div
           class="drag-and-drop-area"
           appDragDropFileUpload
@@ -52,7 +53,6 @@
             (change)="fileBrowseHandler($event)"
           />
           <img src="assets/icons/drag-and-drop.svg" alt="drag-and-drop" />
-
           <h3>Drag and drop file here</h3>
           <h3>or</h3>
           <label for="fileDropRef">Browse for file</label>
@@ -74,45 +74,13 @@
       </button>
     </form>
 
-    <div class="image__list">
-      <div class="image__container" *ngFor="let file of files; let i = index">
-        <div class="image__content">
-          <ng-container *ngIf="photoControl!.value[i] as value; else noImage">
-            <img [src]="value.url" alt="file" width="160" height="160" />
-          </ng-container>
-          <ng-template #noImage>
-            <img
-              src="assets/icons/no-file.svg"
-              alt="file"
-              width="160"
-              height="160"
-            />
-          </ng-template>
-          <div class="info">
-            <h4 class="image__name">
-              {{ file.name }}
-            </h4>
-            <p class="image__size">
-              {{ file.size | fileFormat}}
-            </p>
-          </div>
-
-          <button
-            *ngIf="photoControl!.value[i] as value"
-            mat-icon-button
-            aria-label="delete"
-            class="image__delete-btn"
-            (click)="deleteImage(value)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-
-        <app-progress
-          *ngIf="!photoControl!.value[i]"
-          [progress]="file.progress$ | async"
-        ></app-progress>
-      </div>
+    <div class="image-list">
+      <app-upload-image-card
+        *ngFor="let file of files"
+        [file]="file"
+        (cancelUpload)="cancelUploadImage($event)"
+        (deleteProduct)="onDeleteProductPhoto($event)"
+      ></app-upload-image-card>
     </div>
   </div>
 </div>

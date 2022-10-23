@@ -1,0 +1,39 @@
+<div class="image">
+  <div class="image__content">
+      <img [src]="file.url ? file.url : 'assets/icons/no-file.svg'" alt="file" width="160" height="160" />
+    <div class="info">
+      <h4 class="image__name">
+        {{ file.name }}
+      </h4>
+      <p class="image__size">
+        {{ file.size | fileFormat }}
+      </p>
+    </div>
+
+    <button
+      *ngIf="file.url; else cancel"
+      mat-icon-button
+      aria-label="delete"
+      class="image__delete-btn"
+      (click)="onDeleteProductPhoto(file.name)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <ng-template #cancel>
+      <button
+        mat-icon-button
+        aria-label="cancel"
+        class="image__cancel-btn"
+        (click)="cancelUploadImage(file)"
+      >
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+
+  <app-progress
+    *ngIf="!file?.url"
+    [progress]="file.progress$ | async"
+  ></app-progress>
+</div>
