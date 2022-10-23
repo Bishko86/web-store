@@ -1,0 +1,22 @@
+@import "colors";
+.confirm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__dialog {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__btn {
+    color: $white;
+    font-size: 18px;
+    width: 90px;
+    height: 32px;
+    border: 1px solid $black;
+    border-radius: 16px;
+    background-color: $red;
+    margin-top: 30px;
+  }
+}

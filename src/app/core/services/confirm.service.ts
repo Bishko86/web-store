@@ -15,6 +15,8 @@ export class ConfirmService {
     this.dialog
       .open(ConfirmComponent, {
         data: message,
+        width: 'auto',
+        height: '180px',
       })
       .afterClosed()
       .subscribe((confirm: boolean) => {
