@@ -1,9 +1,10 @@
 @import "colors";
+
 progress[value] {
   width: 100%;
   height: 10px;
   border: 1px solid $secondary-dark-blue-15;
-  border-radius: 2ps;
+  border-radius: 2px;
 
   &::-webkit-progress-bar {
     background-color: $white;
