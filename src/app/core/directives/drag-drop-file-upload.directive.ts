@@ -20,8 +20,6 @@ export class DragDropFileUploadDirective {
     event.preventDefault();
     event.stopPropagation();
     this.backgroundColor = '#fcfcfc';
-    console.error('fff');
-    
   }
 
   @HostListener('dragleave', ['$event']) private dragLeave(
