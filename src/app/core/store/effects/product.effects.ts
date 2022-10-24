@@ -1,88 +1,141 @@
-import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { Store } from "@ngrx/store";
-import { ProductService } from "src/app/features/admin/services/product.service";
-import { IAppState } from "../state/app.state";
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { ProductService } from 'src/app/features/admin/services/product.service';
+import { IAppState } from '../state/app.state';
 import * as ProductActions from '../actions/product.action';
-import { catchError, from, map, of, switchMap, take, tap } from "rxjs";
-import { Product } from "../../models";
-import { FirebaseError } from "firebase/app";
+import { catchError, from, map, of, switchMap, take, tap } from 'rxjs';
+import { Product } from '../../models';
+import { FirebaseError } from 'firebase/app';
+import { UploadFileService } from '../../services/upload-file.service';
 
 @Injectable()
 export class ProductEffects {
   constructor(
-    private store: Store<IAppState>,
-    private actions$: Actions,
-    private productService: ProductService,
+    private readonly store: Store<IAppState>,
+    private readonly actions$: Actions,
+    private readonly productService: ProductService,
+    private readonly uploadFileService: UploadFileService
   ) {}
 
-  getProducts$ = createEffect(() => {
+  public getProducts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.getProducts),
-      tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
-      switchMap(() => 
-      this.productService.getProducts().snapshotChanges().pipe(
-        take(1),
-            map((changes) => changes.map((c) => ({ id: c.payload.doc.id, ...c.payload.doc.data() }))),
-            map((products: Product[]) => ProductActions.getProductsSuccess({ products })),
-            tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }))),
+      tap(() =>
+        this.store.dispatch(
+          ProductActions.productIsLoading({ isLoading: true })
+        )
+      ),
+      switchMap(() =>
+        this.productService
+          .getProducts()
+          .snapshotChanges()
+          .pipe(
+            take(1),
+            map((changes) =>
+              changes.map((c) => ({
+                id: c.payload.doc.id,
+                ...c.payload.doc.data(),
+              }))
+            ),
+            map((products: Product[]) =>
+              ProductActions.getProductsSuccess({ products })
+            ),
+            tap(() =>
+              this.store.dispatch(
+                ProductActions.productIsLoading({ isLoading: false })
+              )
+            ),
             catchError((error: FirebaseError) => {
-              this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
+              this.store.dispatch(
+                ProductActions.productIsLoading({ isLoading: false })
+              );
               return of(ProductActions.getProductsFailure({ error }));
             })
+          )
+      )
+    );
+  });
+
+  public addProduct$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.addProduct),
+      tap(() =>
+        this.store.dispatch(
+          ProductActions.productIsLoading({ isLoading: true })
+        )
+      ),
+      switchMap(({ product }) =>
+        from(this.productService.addProduct(product)).pipe(
+          map((product: Product) => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return ProductActions.addProductSuccess({ product });
+          }),
+          catchError((error) => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return of(ProductActions.addProductFailure({ error }));
+          })
         )
       )
     );
   });
 
-  addProduct$ = createEffect(() => {
+  public updateProduct$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(ProductActions.addProduct),
-      tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
-      switchMap(({product}) => from(this.productService.addProduct(product)).pipe(
-        map((product: Product) => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }))
-          return ProductActions.addProductSuccess({product})
-        }),
-        catchError((error) => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return of(ProductActions.addProductFailure({error}));
-        })
-      ))
+      ofType(ProductActions.updateProduct),
+      tap(() =>
+        this.store.dispatch(
+          ProductActions.productIsLoading({ isLoading: true })
+        )
+      ),
+      switchMap(({ product }) =>
+        from(this.productService.updateProduct(product)).pipe(
+          map(() => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return ProductActions.updateProductSuccess({ product });
+          }),
+          catchError((error) => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return of(ProductActions.updateProductFailure({ error }));
+          })
+        )
+      )
     );
   });
 
-  updateProduct$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(ProductActions.updateProduct),
-      tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
-      switchMap(({product}) => from(this.productService.updateProduct(product)).pipe(
-        map(() => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return ProductActions.updateProductSuccess({product})
-        }),
-        catchError((error) => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return of(ProductActions.updateProductFailure({error}));
-        })
-      ))
-    )
-  })
-
-  removeProduct$ = createEffect(() => {
+  public removeProduct$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.removeProduct),
-      tap(() => this.store.dispatch(ProductActions.productIsLoading({ isLoading: true }))),
-      switchMap(({productId}) => from(this.productService.removeProduct(productId)).pipe(
-        map(() => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return ProductActions.removeProductSuccess({productId});
-        }),
-        catchError((error) => {
-          this.store.dispatch(ProductActions.productIsLoading({ isLoading: false }));
-          return of(ProductActions.removeProductFailure({error}))
-        })
-      ))
+      tap(() =>
+        this.store.dispatch(
+          ProductActions.productIsLoading({ isLoading: true })
+        )
+      ),
+      switchMap(({ productId, photos }) => {
+        photos && photos.forEach((photo) => this.uploadFileService.deleteFile(photo.name));
+        return from(this.productService.removeProduct(productId)).pipe(
+          map(() => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return ProductActions.removeProductSuccess({ productId });
+          }),
+          catchError((error) => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+            return of(ProductActions.removeProductFailure({ error }));
+          })
+        );
+      })
     );
   });
 }

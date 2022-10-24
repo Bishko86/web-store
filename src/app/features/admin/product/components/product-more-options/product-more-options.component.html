@@ -9,12 +9,12 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="updateProduct()">
+    <button mat-menu-item (click)="updateProduct.emit(product)">
       <mat-icon>edit</mat-icon>
       <span>Update product</span>
     </button>
 
-    <button mat-menu-item (click)="removeProduct()">
+    <button mat-menu-item (click)="removeProduct.emit(product)">
       <mat-icon>delete</mat-icon>
       <span>Delete product</span>
     </button>

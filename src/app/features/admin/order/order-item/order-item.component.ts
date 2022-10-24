@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component,  ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-order-item',
@@ -6,8 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./order-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderItemComponent implements OnInit {
+export class OrderItemComponent {
   constructor() {}
-
-  ngOnInit(): void {}
 }

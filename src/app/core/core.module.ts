@@ -8,20 +8,21 @@ import { NgRxModule } from './store/ngrx.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatDialogModule,
     NgRxModule,
     FirebaseModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     CategoryService,
-    ProductService
-  ]
+    ProductService,
+  ],
 })
-export class CoreModule { }
+export class CoreModule {}

@@ -8,6 +8,7 @@ import { ProductMoreOptionsComponent } from './components/product-more-options/p
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
 import { GetCategoryNamePipe } from './pipes/get-category-name.pipe';
+import { UploadImageCardComponent } from './components/upload-image-card/upload-image-card.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { GetCategoryNamePipe } from './pipes/get-category-name.pipe';
     ProductMoreOptionsComponent,
     AddProductFormComponent,
     GetCategoryNamePipe,
+    UploadImageCardComponent,
   ],
   imports: [
     CommonModule,

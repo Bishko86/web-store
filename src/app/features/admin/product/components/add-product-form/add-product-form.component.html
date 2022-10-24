@@ -1,59 +1,86 @@
 <div class="product-form-wrap">
+  <div class="close-dialog">
+    <button mat-icon-button aria-label="close dialog" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <h2 mat-dialog-title class="dialog-title">Product form</h2>
-  <form [formGroup]="productForm" (submit)="saveProduct()">
-    <div class="form-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Product name</mat-label>
-      <input  
-      matInput 
-      placeholder="Enter product name" 
-      required
-      formControlName="name"
-      />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Product price</mat-label>
-      <input
-        matInput
-        type="number"
-        class="example-right-align"
-        placeholder="0"
-        formControlName="price"
-      />
-      <span matPrefix>$&nbsp;</span>
-      <span matSuffix>.00</span>
-    </mat-form-field>
-  </div>
   <div class="form-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Category</mat-label>
-      <mat-select formControlName="categoryId">
-        <ng-container *ngFor="let category of categories$ | async">
-          <mat-option [value]="category.id">{{ category.name }}</mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
+    <form [formGroup]="productForm" (submit)="saveProduct()">
+      <div class="row">
+        <div class="input-container">
+          <mat-form-field appearance="outline">
+            <mat-label>Product name</mat-label>
+            <input
+              matInput
+              placeholder="Enter product name"
+              required
+              formControlName="name"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Product price</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="Enter product price"
+              required
+              formControlName="price"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="categoryId">
+              <ng-container *ngFor="let category of categories$ | async">
+                <mat-option [value]="category.id">{{
+                  category.name
+                }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Add Photos</mat-label>
-      <ngx-mat-file-input
-        formControlName="photo"
-        [multiple]="true"
-        [accept]="accept"
+        <div
+          class="drag-and-drop-area"
+          appDragDropFileUpload
+          (fileDropped)="onFileDropped($event)"
+        >
+          <input
+            type="file"
+            #fileDropRef
+            id="fileDropRef"
+            multiple
+            (change)="fileBrowseHandler($event)"
+          />
+          <img src="assets/icons/drag-and-drop.svg" alt="drag-and-drop" />
+          <h3>Drag and drop file here</h3>
+          <h3>or</h3>
+          <label for="fileDropRef">Browse for file</label>
+        </div>
+      </div>
+
+      <mat-form-field appearance="outline" class="text-area">
+        <mat-label>Textarea</mat-label>
+        <textarea matInput rows="10" formControlName="description"></textarea>
+      </mat-form-field>
+      <br />
+      <button
+        mat-button
+        color="primary"
+        class="add-product-btn submit"
+        [disabled]="(isLoading$ | async) || productForm.invalid"
       >
-      </ngx-mat-file-input>
-    </mat-form-field>
-  </div>
+        Submit
+      </button>
+    </form>
 
-    <mat-form-field appearance="outline" class="text-area">
-      <mat-label>Textarea</mat-label>
-      <textarea matInput rows="5" formControlName="description"></textarea>
-    </mat-form-field>
-    <br />
-    <button 
-    mat-button type="submit"
-    [disabled]="(isLoading$ | async) || productForm.invalid"
-    >Add</button>
-  </form>
+    <div class="image-list">
+      <app-upload-image-card
+        *ngFor="let file of files"
+        [file]="file"
+        (cancelUpload)="cancelUploadImage($event)"
+        (deleteProduct)="onDeleteProductPhoto($event)"
+      ></app-upload-image-card>
+    </div>
+  </div>
 </div>

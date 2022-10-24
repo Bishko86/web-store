@@ -3,10 +3,9 @@ name: CI/CD ClienAppUa
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events
-  # push:
-  #   branches: [master]
   pull_request:
-    types: [closed]
+    branches: [master]
+  push:
     branches: [master]
 
 env:
@@ -35,16 +34,20 @@ jobs:
 
       - name: Install
         run: |
-          npm install
+          npm install --save --legacy-peer-deps
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get install ./google-chrome-stable_current_amd64.deb -y
       - name: CSS Linter
         run: npm run stylelint
 
+      - name: ES-Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build:prod
 
       - name: Deploy to GitHub Pages
+        if: github.event.pull_request.merged == true
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
