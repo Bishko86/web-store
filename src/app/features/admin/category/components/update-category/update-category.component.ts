@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   Input,
+  OnDestroy,
 } from '@angular/core';
 import { filter, fromEvent, skip, Subject, take } from 'rxjs';
 
@@ -15,7 +16,7 @@ import { filter, fromEvent, skip, Subject, take } from 'rxjs';
   styleUrls: ['./update-category.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UpdateCategoryComponent implements OnInit {
+export class UpdateCategoryComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   private get element() {
     return this.host.nativeElement;
@@ -23,9 +24,9 @@ export class UpdateCategoryComponent implements OnInit {
 
   public editMode$ = new Subject<boolean>();
 
-  @Input("name") categoryName: string;
-  @Output() toViewMode = new EventEmitter<boolean>();
-  @Output() update = new EventEmitter<string>();
+  @Input() public categoryName: string;
+  @Output() private toViewMode = new EventEmitter<boolean>();
+  @Output() private update = new EventEmitter<string>();
 
   constructor(private host: ElementRef) {}
 

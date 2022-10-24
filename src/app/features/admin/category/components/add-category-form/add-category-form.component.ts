@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { CategoryFormModel } from '../../models/category-form.model';
   styleUrls: ['./add-category-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddCategoryFormComponent implements OnInit {
+export class AddCategoryFormComponent implements OnInit, OnDestroy {
   public readonly isLoading$: Observable<boolean>;
   private destroy$ = new Subject<boolean>();
   public categoryForm: FormGroup<CategoryFormModel>;
