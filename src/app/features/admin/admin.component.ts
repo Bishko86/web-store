@@ -40,4 +40,8 @@ export class AdminComponent implements OnInit {
     const url = [this.tabs[tab.index]];
     this.router.navigate(url, {relativeTo: this.route});
   }
+
+  public toMainPage(): void {
+    this.router.navigateByUrl('/');
+  }
 }

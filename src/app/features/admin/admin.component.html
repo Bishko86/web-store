@@ -1,4 +1,5 @@
-<div class="admin-page">
+<div class="admin-page column">
+  <div class="row space-between">
   <mat-tab-group
     animationDuration="0ms"
     mat-align-tabs="start"
@@ -10,5 +11,8 @@
       </mat-tab>
     </ng-container>
   </mat-tab-group>
+
+  <button mat-raised-button class="to-main-btn" (click)="toMainPage()">On the Main</button>
+</div>
   <router-outlet></router-outlet>
 </div>

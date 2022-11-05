@@ -1,6 +1,6 @@
 <div class="content-wrapper">
   <div class="add-category">
-    <button mat-button class="add-category-btn" (click)="openCategoryForm()">Add Category</button>
+    <button mat-raised-button color="primary" (click)="openCategoryForm()">Add Category</button>
   </div>
   <ng-container *ngIf="categories$ | async as categories">
     <div class="table-wrap" *ngIf="categories.length > 0; else noCategories">
