@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { FirebaseError } from 'firebase/app';
-import { catchError, filter, from, map, of, OperatorFunction, switchMap, take, tap } from 'rxjs';
+import { catchError, filter, from, map, of, switchMap, take, tap } from 'rxjs';
 
 import { CategoryService } from 'src/app/features/admin/services/category.service';
 import { Category } from '../../models';
@@ -56,7 +56,7 @@ export class CategoryEffects {
       ofType(addCategory),
       tap(() => this.store.dispatch(categoryIsLoading({ isLoading: true }))),
       switchMap(({ name }) => from(this.categoryService.addCategory(name)).pipe(
-        filter((data: Category) => typeof data !== 'undefined') as OperatorFunction<Category | undefined, Category>,
+        filter((data: Category) => !!data),
         map((category: Category) => {
           this.store.dispatch(categoryIsLoading({ isLoading: false }));
           return addCategorySuccess({ category });
