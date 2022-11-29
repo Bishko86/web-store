@@ -4,8 +4,6 @@ name: CI/CD ClienAppUa
 on:
   # Triggers the workflow on push or pull request events
   pull_request:
-    types: 
-    - closed
     branches: [master]
   push:
     branches: [master]

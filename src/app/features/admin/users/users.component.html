@@ -31,7 +31,7 @@
      <td mat-cell *matCellDef="let user" class="more-options">
       <app-more-options
         [moreOptions]="moreOptions"
-        (open)="openUserProfile(user)"
+        (onOpen)="openUserProfile(user)"
         (showUp)="showUpUserCart(user.cart)"
         (delete)="deleteUser(user.id)"
       ></app-more-options>
