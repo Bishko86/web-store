@@ -9,6 +9,7 @@ import { FirebaseModule } from './firebase/firebase.module';
 import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DestroyableDirective } from './directives/destroyable.directive';
 
 @NgModule({
   imports: [
@@ -23,6 +24,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     CategoryService,
     ProductService,
+  ],
+  declarations: [
+    DestroyableDirective
   ],
 })
 export class CoreModule {}

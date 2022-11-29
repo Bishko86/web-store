@@ -6,10 +6,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
-import { MoreOptionsComponent } from './components/more-options/more-options.component';
-
-
-
 
 
 @NgModule({
@@ -17,7 +13,6 @@ import { MoreOptionsComponent } from './components/more-options/more-options.com
     CategoryAdminComponent,
     AddCategoryFormComponent,
     UpdateCategoryComponent,
-    MoreOptionsComponent,
   ],
   imports: [
     CommonModule,

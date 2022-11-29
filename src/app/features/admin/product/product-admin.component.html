@@ -33,11 +33,11 @@
             More options
           </th>
           <td mat-cell *matCellDef="let product" class="more-options">
-            <app-product-more-options
-              [product]="product"
-              (removeProduct)="removeProduct($event)"
-              (updateProduct)="updateProduct($event)"
-            ></app-product-more-options>
+            <app-more-options
+              [moreOptions]="moreOptions"
+              (update)="updateProduct(product)"
+              (remove)="removeProduct(product)"
+            ></app-more-options>
           </td>
         </ng-container>
 

@@ -16,7 +16,6 @@ export class CategoryService {
 
   public async addCategory(name: string): Promise<Category> {
     const res = await this.categoryRef.add({ name: name, createdAt: Date.now() });
-    console.error(res, 'gg');
 
     return new Promise((resolve, reject) => {
       res.onSnapshot((cat) => {

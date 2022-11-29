@@ -9,9 +9,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { MatIcon } from 'src/app/core/enums/material-icon.enum';
+import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
 
 import { Category } from 'src/app/core/models';
+import { MoreOptions } from 'src/app/core/models/more-options.model';
+import { ConfirmService } from 'src/app/core/services/confirm.service';
 import {
+  removeCategory,
   updateCategory,
   updateCategorySuccess,
 } from 'src/app/core/store/actions/category.actions';
@@ -19,6 +24,7 @@ import {
   selectCategories,
 } from 'src/app/core/store/selectors/category.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
+import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddCategoryFormComponent } from './components/add-category-form/add-category-form.component';
 
 @Component({
@@ -28,8 +34,8 @@ import { AddCategoryFormComponent } from './components/add-category-form/add-cat
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryAdminComponent implements OnInit, OnDestroy {
-  readonly categories$: Observable<Category[]>;
-  private destroy$ = new Subject<boolean>();
+  public readonly categories$: Observable<Category[]>;
+  private readonly destroy$ = new Subject<boolean>();
 
   public editedCategoryId: string | undefined;
   public editMode = false;
@@ -41,15 +47,22 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
     'options',
   ];
 
+  public moreOptions: MoreOptions[] = [
+    { icon: MatIcon.EDIT, text: 'Edit Category', action: MoreOptionAction.Update },
+    { icon: MatIcon.ADD_SHOPPING_CART, text: 'Add product to', action: MoreOptionAction.Add },
+    { icon: MatIcon.DELETE, text: 'Delete Category', action: MoreOptionAction.Delete },
+  ]
+
   constructor(
-    private store: Store<IAppState>,
-    private actions: Actions,
-    private dialog: MatDialog,
+    private readonly store: Store<IAppState>,
+    private readonly actions: Actions,
+    private readonly dialog: MatDialog,
+    private readonly confirmService: ConfirmService
     ) {
     this.categories$ = this.store.pipe(select(selectCategories));
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.isCategoryUpdated();
   }
 
@@ -61,17 +74,17 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
       });
   }
 
-  toViewMode(): void {
+  public toViewMode(): void {
     this.editMode = false;
     this.editedCategoryId = undefined;
   }
 
-  editCategory(category: Category): void {
+  public editCategory(category: Category): void {
     this.editedCategoryId = category.id;
     this.editMode = true;
   }
 
-  updateCategory(event: string): void {
+  public updateCategory(event: string): void {
     if (this.editedCategoryId) {
       this.store.dispatch(
         updateCategory({
@@ -82,14 +95,22 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  openCategoryForm() {
+  public removeCategory(category: Category): void {
+    this.confirmService.confirm(DELETE_RECORD_TEXT).pipe(takeUntil(this.destroy$)).subscribe((isConfirmed) => {
+      if(isConfirmed) {
+        this.store.dispatch(removeCategory({ categoryId: category.id! }));
+      }
+    });
+  }
+
+  public openCategoryForm() {
     this.dialog.open(AddCategoryFormComponent, {
       height: '300px',
       width: '400px',
-   })
+   });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
   }

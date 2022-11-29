@@ -6,6 +6,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { DragDropFileUploadDirective } from '../core/directives/drag-drop-file-upload.directive';
 import { ProgressComponent } from './components/progress/progress.component';
 import { FileFormatPipe } from './pipes/file-format.pipe';
+import { MoreOptionsComponent } from './components/more-option/more-options.component';
+
 
 
 const SHARED_COMPONENNTS = [
@@ -13,12 +15,13 @@ const SHARED_COMPONENNTS = [
   ConfirmComponent,
   DragDropFileUploadDirective,
   ProgressComponent,
-  FileFormatPipe
+  FileFormatPipe,
+  MoreOptionsComponent
 ]
 
 @NgModule({
   declarations: [
-    ...SHARED_COMPONENNTS
+    ...SHARED_COMPONENNTS,
   ],
   imports: [
     CommonModule,
