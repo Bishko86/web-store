@@ -7,7 +7,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { MatIcon } from 'src/app/core/enums/material-icon.enum';
+import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
 import { Category, Product } from 'src/app/core/models';
+import { MoreOptions } from 'src/app/core/models/more-options.model';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { removeProduct } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
@@ -26,7 +29,17 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<boolean>();
 
   public readonly products$: Observable<Product[]>;
-  public readonly displayedColumns = ['productName', 'category', 'price', 'options'];
+  public readonly displayedColumns = [
+    'productName',
+    'category',
+    'price',
+    'options',
+  ];
+
+  public moreOptions: MoreOptions[] = [
+    { icon: MatIcon.EDIT, text: 'Update product', action: MoreOptionAction.Update },
+    { icon: MatIcon.DELETE, text: 'Delete product', action: MoreOptionAction.Delete },
+  ];
 
   public categories: Category[];
 
@@ -34,7 +47,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
     private readonly store: Store<IAppState>,
     private readonly dialog: MatDialog,
     private readonly confirmService: ConfirmService
-    ) {
+  ) {
     this.products$ = this.store.pipe(select(selectProducts));
   }
 
@@ -54,10 +67,12 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
 
   public removeProduct(product: Product): void {
     this.confirmService.confirm(DELETE_RECORD_TEXT).subscribe((isConfirmed) => {
-      if(isConfirmed) {
-        this.store.dispatch(removeProduct({ productId: product.id!, photos: product.photo }));
+      if (isConfirmed) {
+        this.store.dispatch(
+          removeProduct({ productId: product.id!, photos: product.photo })
+        );
       }
-    })
+    });
   }
 
   public updateProduct(product: Product): void {
@@ -70,7 +85,7 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   }
 
   private openProductForm(product?: Product): void {
-    this.dialog.open(AddProductFormComponent, { 
+    this.dialog.open(AddProductFormComponent, {
       data: product,
       maxWidth: '100vw',
       height: '100%',

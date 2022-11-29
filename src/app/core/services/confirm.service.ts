@@ -7,7 +7,7 @@ import { ConfirmComponent } from 'src/app/shared/components/confirm/confirm.comp
   providedIn: 'root',
 })
 export class ConfirmService {
-  public readonly isAllowed: Subject<boolean> = new Subject();
+  private readonly isAllowed: Subject<boolean> = new Subject();
 
   constructor(private readonly dialog: MatDialog) {}
 
