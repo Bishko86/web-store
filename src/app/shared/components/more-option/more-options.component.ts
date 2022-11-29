@@ -19,8 +19,8 @@ export class MoreOptionsComponent {
   @Input() moreOptions: MoreOptions[];
 
   @Output() public add: EventEmitter<void> = new EventEmitter<void>();
-  @Output() public open: EventEmitter<void> = new EventEmitter<void>();
-  @Output() public close: EventEmitter<void> = new EventEmitter<void>();
+  @Output() public onOpen: EventEmitter<void> = new EventEmitter<void>();
+  @Output() public onClose: EventEmitter<void> = new EventEmitter<void>();
   @Output() public update: EventEmitter<void> = new EventEmitter<void>();
   @Output() public delete: EventEmitter<void> = new EventEmitter<void>();
   @Output() public showUp: EventEmitter<void> = new EventEmitter<void>();
@@ -33,10 +33,10 @@ export class MoreOptionsComponent {
         this.add.emit();
         break;
       case MoreOptionAction.Open:
-        this.open.emit();
+        this.onOpen.emit();
         break;
       case MoreOptionAction.Close:
-        this.close.emit();
+        this.onClose.emit();
         break;
       case MoreOptionAction.Update:
         this.update.emit();
