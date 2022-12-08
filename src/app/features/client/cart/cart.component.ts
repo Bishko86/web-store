@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { CartService } from '../services/cart.service';
 
 @Component({
@@ -8,15 +9,14 @@ import { CartService } from '../services/cart.service';
   styleUrls: ['./cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CartComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject();
+export class CartComponent extends DestroyableDirective implements OnInit, OnDestroy {
   public products: string[];
 
   constructor(
     private cartService: CartService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef) { super() }
   
-  ngOnInit(): void {
+  public ngOnInit(): void {
       this.cartService.getCart().pipe(takeUntil(this.destroy$)).subscribe(data => {
         if(data && Array.isArray(data.products)) {
           this.products = data.products
@@ -25,16 +25,11 @@ export class CartComponent implements OnInit, OnDestroy {
       });
   }
   
-  addToCart(): void {
+  public addToCart(): void {
     this.cartService.addToCart(Date.now().toString());
   }
 
-  removeFromCart(productId: string): void {
+  public removeFromCart(productId: string): void {
     this.cartService.removeFromCart(productId);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

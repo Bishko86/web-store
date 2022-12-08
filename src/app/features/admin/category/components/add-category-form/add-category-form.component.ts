@@ -3,8 +3,10 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { MatDialogRef } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, takeUntil } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 
 import { addCategory, addCategorySuccess } from 'src/app/core/store/actions/category.actions';
 import { selectCategoryIsLoading } from 'src/app/core/store/selectors/category.selectors';
@@ -17,18 +19,15 @@ import { CategoryFormModel } from '../../models/category-form.model';
   styleUrls: ['./add-category-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddCategoryFormComponent implements OnInit, OnDestroy {
-  public readonly isLoading$: Observable<boolean>;
-  private destroy$ = new Subject<boolean>();
+export class AddCategoryFormComponent extends DestroyableDirective implements OnInit, OnDestroy {
+  @State(selectCategoryIsLoading) public readonly isLoading$: Observable<boolean>;
   public categoryForm: FormGroup<CategoryFormModel>;
 
   constructor(
     private readonly store: Store<IAppState>,
     private readonly actions: Actions,
     private readonly dialogRef: MatDialogRef<AddCategoryFormComponent>,
-  ) {
-    this.isLoading$ = this.store.pipe(select(selectCategoryIsLoading));
-  }
+  ) { super()}
 
   public ngOnInit(): void {
     this.initCategoryForm();
@@ -53,10 +52,5 @@ export class AddCategoryFormComponent implements OnInit, OnDestroy {
 
   public closeDialog(): void {
     this.dialogRef.close();
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

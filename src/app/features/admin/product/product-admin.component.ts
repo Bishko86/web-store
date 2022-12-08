@@ -1,12 +1,15 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  OnInit,
   OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  State,
+} from 'src/app/core/decorators/ngrx-selector.decorator';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { MatIcon } from 'src/app/core/enums/material-icon.enum';
 import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
 import { Category, Product } from 'src/app/core/models';
@@ -14,7 +17,6 @@ import { MoreOptions } from 'src/app/core/models/more-options.model';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { removeProduct } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
-import { selectProducts } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
 import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
@@ -25,10 +27,7 @@ import { AddProductFormComponent } from './components/add-product-form/add-produ
   styleUrls: ['./product-admin.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductAdminComponent implements OnInit, OnDestroy {
-  private readonly destroy$ = new Subject<boolean>();
-
-  public readonly products$: Observable<Product[]>;
+export class ProductAdminComponent extends DestroyableDirective implements OnDestroy {
   public readonly displayedColumns = [
     'productName',
     'category',
@@ -37,29 +36,26 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
   ];
 
   public moreOptions: MoreOptions[] = [
-    { icon: MatIcon.EDIT, text: 'Update product', action: MoreOptionAction.Update },
-    { icon: MatIcon.DELETE, text: 'Delete product', action: MoreOptionAction.Delete },
+    {
+      icon: MatIcon.EDIT,
+      text: 'Update product',
+      action: MoreOptionAction.Update,
+    },
+    {
+      icon: MatIcon.DELETE,
+      text: 'Delete product',
+      action: MoreOptionAction.Delete,
+    },
   ];
 
-  public categories: Category[];
+  @State(selectCategories) public readonly products$: Observable<Product[]>;
+  @State(selectCategories) public readonly categories$: Observable<Category[]>;
 
   constructor(
     private readonly store: Store<IAppState>,
     private readonly dialog: MatDialog,
     private readonly confirmService: ConfirmService
-  ) {
-    this.products$ = this.store.pipe(select(selectProducts));
-  }
-
-  public ngOnInit(): void {
-    this.getCategories();
-  }
-
-  private getCategories(): void {
-    this.store
-      .pipe(takeUntil(this.destroy$), select(selectCategories))
-      .subscribe((categories) => (this.categories = categories));
-  }
+  ) { super() }
 
   public onAddProduct(): void {
     this.openProductForm();
@@ -77,11 +73,6 @@ export class ProductAdminComponent implements OnInit, OnDestroy {
 
   public updateProduct(product: Product): void {
     this.openProductForm(product);
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 
   private openProductForm(product?: Product): void {

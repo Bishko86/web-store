@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { MatIcon } from 'src/app/core/enums/material-icon.enum';
 import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
 
@@ -29,14 +31,12 @@ import { AddCategoryFormComponent } from './components/add-category-form/add-cat
 
 @Component({
   selector: 'app-category-admin',
-  templateUrl: './category-admin-component.html',
-  styleUrls: ['./category-admin-component.scss'],
+  templateUrl: './category-admin.component.html',
+  styleUrls: ['./category-admin.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryAdminComponent implements OnInit, OnDestroy {
-  public readonly categories$: Observable<Category[]>;
-  private readonly destroy$ = new Subject<boolean>();
-
+export class CategoryAdminComponent extends DestroyableDirective implements OnInit, OnDestroy {
+  @State(selectCategories) public readonly categories$: Observable<Category[]>;
   public editedCategoryId: string | undefined;
   public editMode = false;
 
@@ -58,9 +58,7 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
     private readonly actions: Actions,
     private readonly dialog: MatDialog,
     private readonly confirmService: ConfirmService
-    ) {
-    this.categories$ = this.store.pipe(select(selectCategories));
-  }
+    ) { super() }
 
   public ngOnInit(): void {
     this.isCategoryUpdated();
@@ -108,10 +106,5 @@ export class CategoryAdminComponent implements OnInit, OnDestroy {
       height: '300px',
       width: '400px',
    });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

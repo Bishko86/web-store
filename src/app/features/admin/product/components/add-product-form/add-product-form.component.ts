@@ -18,6 +18,8 @@ import { Actions, ofType } from '@ngrx/effects';
 
 import { select, Store } from '@ngrx/store';
 import { filter, Observable, Subject, take, takeUntil } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 
 import { Category, Product } from 'src/app/core/models';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
@@ -46,20 +48,19 @@ import { UploadFile } from '../../models/upload-file.model';
   styleUrls: ['./add-product-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddProductFormComponent implements OnInit, OnDestroy {
-  private readonly destroy$ = new Subject<boolean>();
+export class AddProductFormComponent extends DestroyableDirective implements OnInit, OnDestroy {
   public readonly accept = 'image/png, image/jpeg';
-  public readonly isLoading$: Observable<boolean>;
 
   private isEditMode: boolean = false;
-
-  public categories$: Observable<Category[]>;
   public productForm: FormGroup<AddProductFormModel>;
   public files: UploadFile[] = [];
 
   get photoControl(): AbstractControl<ProductImage[]> {
     return this.productForm.controls['photo'];
   }
+
+  @State(selectProductIsLoading) public readonly isLoading$: Observable<boolean>;
+  @State(selectCategories) public categories$: Observable<Category[]>;
 
   constructor(
     private readonly store: Store<IAppState>,
@@ -70,9 +71,7 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
     private readonly snackbarService: SnackBarService,
     private readonly confirmService: ConfirmService,
     @Inject(MAT_DIALOG_DATA) private readonly dialogData: Product
-  ) {
-    this.isLoading$ = this.store.pipe(select(selectProductIsLoading));
-  }
+  ) { super() }
 
   get category(): AbstractControl<string> {
     return this.productForm.controls['categoryId'];
@@ -90,7 +89,6 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initProductForm();
-    this.categories$ = this.store.pipe(select(selectCategories));
     this.updateFileList();
 
     if (this.dialogData) {
@@ -184,11 +182,6 @@ export class AddProductFormComponent implements OnInit, OnDestroy {
           return file;
         });
       });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 
   public onDeleteProductPhoto(photoName: string): void {

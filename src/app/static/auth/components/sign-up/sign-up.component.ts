@@ -13,6 +13,8 @@ import {
 import { Actions, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
+import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { IUser } from 'src/app/core/models';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
@@ -31,15 +33,13 @@ import { SignUpFormModel } from '../../models/sign-up.model';
   styleUrls: ['../sign-in/sign-in.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class SignUpComponent extends DestroyableDirective implements OnInit, OnDestroy {
   public signUpForm: FormGroup<SignUpFormModel>;
   public hidePass1 = true;
   public hidePass2 = true;
 
   public readonly getErrorMessage = getErrorMessage;
-  public readonly isLoading$: Observable<boolean>;
-
-  private readonly destroy$ = new Subject<boolean>();
+  @State(selectAuthIsLoading) public readonly isLoading$: Observable<boolean>;
 
   constructor(
     private readonly store: Store<IAppState>,
@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private readonly userService: UserService,
     private readonly snackBar: SnackBarService,
   ) {
-    this.isLoading$ = this.store.pipe(select(selectAuthIsLoading));
+    super();
   }
 
   public ngOnInit(): void {
@@ -97,10 +97,5 @@ export class SignUpComponent implements OnInit, OnDestroy {
           this.snackBar.openSnackBar('Something went wrong', 'Error');
         },
       });
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
   }
 }

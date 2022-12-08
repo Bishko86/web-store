@@ -7,6 +7,7 @@ import { AuthEffects } from './effects/auth.effects';
 import { UsersEffects } from './effects/users.effects';
 import { CategoryEffects } from './effects/category.effects';
 import { ProductEffects } from './effects/product.effects';
+import { ExtraModuleInjector } from '../injector/injector.module';
 
 
 
@@ -16,6 +17,7 @@ import { ProductEffects } from './effects/product.effects';
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([AuthEffects, UsersEffects, CategoryEffects, ProductEffects]),
     StoreDevtoolsModule.instrument(),
-  ]
+  ],
+  providers: [ExtraModuleInjector]
 })
 export class NgRxModule { }
