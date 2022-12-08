@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { login } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
@@ -18,7 +20,8 @@ export class SignInComponent implements OnInit {
   public hide = true;
 
   public readonly getErrorMessage = getErrorMessage;
-  readonly isLoading$ = this.store.pipe(select(selectAuthIsLoading));
+  @State(selectAuthIsLoading) public readonly isLoading$: Observable<boolean>;
+  
 
   constructor(private readonly store: Store<IAppState>) { }
 
@@ -40,7 +43,6 @@ export class SignInComponent implements OnInit {
       password: new FormControl('', Validators.required) as AbstractControl,
     });
   }
-
 
   public submit(): void {
     const { email, password } = this.signInForm.getRawValue();

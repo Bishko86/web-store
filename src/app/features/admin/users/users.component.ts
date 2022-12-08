@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { Store } from '@ngrx/store';
 import { Observable, takeUntil } from 'rxjs';
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { MatIcon } from 'src/app/core/enums/material-icon.enum';
 import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
@@ -10,7 +10,6 @@ import { IUser } from 'src/app/core/models';
 import { MoreOptions } from 'src/app/core/models/more-options.model';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { selectGetUsers } from 'src/app/core/store/selectors/users.selectors';
-import { IAppState } from 'src/app/core/store/state/app.state';
 import { DELETE_CONFIRM_TEXT } from 'src/app/shared/constants/messages';
 
 @Component({
@@ -44,14 +43,12 @@ export class UsersComponent extends DestroyableDirective {
       action: MoreOptionAction.Delete,
     },
   ];
-  public users$: Observable<IUser[]>;
+  @State(selectGetUsers) public readonly users$: Observable<IUser[]>;
 
   constructor(
-    private readonly store: Store<IAppState>,
     private readonly confirmService: ConfirmService
   ) {
     super();
-    this.users$ = this.store.select(selectGetUsers);
   }
 
   public openUserProfile(user: IUser): void {

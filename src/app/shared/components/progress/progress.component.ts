@@ -7,5 +7,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProgressComponent {
-  @Input() public progress: number | null | undefined= 0;
+  @Input() public progress: number | null | undefined = 0;
 }
