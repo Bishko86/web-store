@@ -17,6 +17,7 @@ import { MoreOptions } from 'src/app/core/models/more-options.model';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { removeProduct } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
+import { selectProducts } from 'src/app/core/store/selectors/product.selectors';
 import { IAppState } from 'src/app/core/store/state/app.state';
 import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
@@ -48,7 +49,7 @@ export class ProductAdminComponent extends DestroyableDirective implements OnDes
     },
   ];
 
-  @State(selectCategories) public readonly products$: Observable<Product[]>;
+  @State(selectProducts) public readonly products$: Observable<Product[]>;
   @State(selectCategories) public readonly categories$: Observable<Category[]>;
 
   constructor(

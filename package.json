@@ -5,6 +5,7 @@
     "ng": "ng",
     "config": "ts-node ./src/setenv.ts",
     "start": "npm run config && ng serve --configuration=custom",
+    "host": "npm run config && ng serve --host 192.168.0.151 --port 4200 --configuration=custom",
     "build": "npm run config && ng build --configuration=custom --output-path docs --base-href /web-store/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
