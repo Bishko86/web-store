@@ -4,6 +4,7 @@ import { ShowcaseComponent } from './showcase.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FilterComponent } from './components/filter/filter.component';
 import { CategoryComponent } from './components/category/category.component';
+import { CategoryListComponent } from './components/category-list/category-list.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ShowcaseComponent, FilterComponent],
+  declarations: [ShowcaseComponent, FilterComponent, CategoryListComponent],
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
-export class ShowcaseModule {}
+export class ShowcaseModule { }
