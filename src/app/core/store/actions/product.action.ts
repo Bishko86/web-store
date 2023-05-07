@@ -8,6 +8,9 @@ export enum ProductActions {
   GET_PRODUCTS_SUCCESS = '[Product] Get Product Success',
   GET_PRODUCTS_FAILURE = '[Product] Get Product Failure',
 
+  GET_PRODUCTS_BY_CATEGORY = '[Product] Get Products By Category',
+  GET_PRODUCTS_BY_CATEGORY_SUCCESS = '[Product] Get Products By CategorySuccess',
+
   ADD_PRODUCT = '[Product] Add Product',
   ADD_PRODUCT_SUCCESS = '[Product] Add Product Success',
   ADD_PRODUCT_FAILURE = '[Product] Add Product Failure',
@@ -36,6 +39,16 @@ export const getProductsSuccess = createAction(
 export const getProductsFailure = createAction(
   ProductActions.GET_PRODUCTS_FAILURE,
   props<{error: FirebaseError}>()
+);
+
+export const getProductsByCategory = createAction(
+  ProductActions.GET_PRODUCTS_BY_CATEGORY,
+  props<{id: string}>()
+);
+
+export const getProductsByCategorySuccess = createAction(
+  ProductActions.GET_PRODUCTS_BY_CATEGORY_SUCCESS,
+  props<{products: Product[]}>()
 );
 
 //add product

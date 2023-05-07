@@ -16,7 +16,7 @@ export class ProductEffects {
     private readonly actions$: Actions,
     private readonly productService: ProductService,
     private readonly uploadFileService: UploadFileService
-  ) {}
+  ) { }
 
   public getProducts$ = createEffect(() => {
     return this.actions$.pipe(
@@ -114,10 +114,11 @@ export class ProductEffects {
   public removeProduct$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(ProductActions.removeProduct),
-      tap(() =>
+      tap(() => {
         this.store.dispatch(
           ProductActions.productIsLoading({ isLoading: true })
         )
+      }
       ),
       switchMap(({ productId, photos }) => {
         photos && photos.forEach((photo) => this.uploadFileService.deleteFile(photo.name));
@@ -138,4 +139,24 @@ export class ProductEffects {
       })
     );
   });
+
+  public getProductsByCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.getProductsByCategory),
+      tap(() => { this.store.dispatch(ProductActions.productIsLoading({ isLoading: true })) }
+      ),
+      switchMap(({ id }) => {
+        return this.productService.getProductsByCategory(id).pipe(
+          tap(() => {
+            this.store.dispatch(
+              ProductActions.productIsLoading({ isLoading: false })
+            );
+          }),
+          map((products: unknown) => {
+            return ProductActions.getProductsByCategorySuccess({ products: products as Product[] })
+          })
+        );
+      }),
+    )
+  })
 }
