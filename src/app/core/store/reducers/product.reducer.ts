@@ -15,10 +15,12 @@ export const productReducer = createReducer(
     })
   ),
 
-  on(ProductActions.getProductsSuccess, (state, { products }) => ({
-    ...state,
-    products,
-  })),
+  on(ProductActions.getProductsSuccess,
+    ProductActions.getProductsByCategorySuccess,
+    (state, { products }) => ({
+      ...state,
+      products,
+    })),
 
   on(ProductActions.addProductSuccess, (state, { product }) => ({
     ...state,
@@ -35,8 +37,8 @@ export const productReducer = createReducer(
     products: state.products.map((prod) => {
       return prod.id === product.id
         ? {
-            ...product,
-          }
+          ...product,
+        }
         : prod;
     }),
   })),

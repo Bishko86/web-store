@@ -152,8 +152,8 @@ export class ProductEffects {
               ProductActions.productIsLoading({ isLoading: false })
             );
           }),
-          map((products: unknown) => {
-            return ProductActions.getProductsByCategorySuccess({ products: products as Product[] })
+          map((products: Product[]) => {
+            return ProductActions.getProductsByCategorySuccess({ products })
           })
         );
       }),

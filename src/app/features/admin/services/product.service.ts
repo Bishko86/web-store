@@ -16,13 +16,14 @@ export class ProductService {
   }
 
   async addProduct(product: Product): Promise<Product> {
-    const res = await this.productRef.add({ ...product, createdAt: Date.now() })
-
+    const res = await this.productRef.add({ ...product, createdAt: Date.now() });
     return new Promise((resolve, reject) => {
       res.onSnapshot((prod) => {
         if (prod.exists) {
           resolve({ ...prod.data(), id: prod.id } as Product);
-        } else { reject('Somethig went wrong') }
+        } else {
+          reject('Somethig went wrong');
+        }
       })
     });
   }

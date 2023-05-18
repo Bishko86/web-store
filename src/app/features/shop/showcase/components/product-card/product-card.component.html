@@ -1,0 +1,8 @@
+<div class="product__container">
+  <h3>{{product.name}}</h3>
+  <ng-container *ngIf="product.photo[0] as photo">
+    <img [src]="photo.url" [alt]="photo.name" width="250" height="250">
+    <p class="product__price">{{product.price}} $</p>
+    <button mat-button class="add-category-btn" (click)="addToCart(product)">Add to Cart</button>
+  </ng-container>
+</div>

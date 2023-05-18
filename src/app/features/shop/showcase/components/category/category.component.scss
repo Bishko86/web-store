@@ -1,0 +1,10 @@
+.category {
+  &__container {
+    padding: 20px;
+  }
+
+  &__showcase {
+    display: flex;
+    gap: 12px;
+  }
+}
