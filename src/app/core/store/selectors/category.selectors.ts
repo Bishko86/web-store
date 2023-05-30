@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
-import { IAppState } from '../state/app.state';
+import { AppState } from '../state/app.state';
 import { ICategoryState } from '../state/category.state';
 
-const selectFeature = (state: IAppState) => state.category;
+const selectFeature = (state: AppState) => state.category;
 
 export const selectCategories = createSelector(
   selectFeature,

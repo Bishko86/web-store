@@ -2,7 +2,7 @@ import firebase from 'firebase/compat';
 import { UserRole } from '../enums/user-role.enum';
 import { Order } from './order.model';
 
-export interface IUser {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -11,13 +11,12 @@ export interface IUser {
   orderHistory?: Order[];
 }
 
-export class User implements IUser {
+export class User implements User {
   id: string;
   name: string;
   email: string;
   role: UserRole | undefined;
   createdAt: number;
-  orderHistory: Order[] | undefined;
 
   constructor(dto: firebase.User | null, role?: UserRole) {
     this.id = dto?.uid || '';

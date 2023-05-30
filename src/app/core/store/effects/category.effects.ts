@@ -22,12 +22,12 @@ import {
   updateCategoryFailure,
   updateCategorySuccess,
 } from '../actions/category.actions';
-import { IAppState } from '../state/app.state';
+import { AppState } from '../state/app.state';
 
 @Injectable()
 export class CategoryEffects {
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly actions$: Actions,
     private readonly categoryService: CategoryService
   ) { }

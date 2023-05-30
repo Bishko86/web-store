@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { ProductService } from 'src/app/features/admin/services/product.service';
-import { IAppState } from '../state/app.state';
+import { AppState } from '../state/app.state';
 import * as ProductActions from '../actions/product.action';
 import { catchError, from, map, of, switchMap, take, tap } from 'rxjs';
 import { Product } from '../../models';
@@ -12,7 +12,7 @@ import { UploadFileService } from '../../services/upload-file.service';
 @Injectable()
 export class ProductEffects {
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly actions$: Actions,
     private readonly productService: ProductService,
     private readonly uploadFileService: UploadFileService

@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 import { UserRole } from '../enums/user-role.enum';
 import { SnackBarService } from '../services/snackbar.service';
 import { selectUserRole } from '../store/selectors/auth.selector';
-import { IAppState } from '../store/state/app.state';
+import { AppState } from '../store/state/app.state';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AdminGuard implements CanActivate {
   constructor(
     private router: Router,
     private snackBarServise: SnackBarService,
-    private store: Store<IAppState>
+    private store: Store<AppState>
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean | Observable<boolean> {

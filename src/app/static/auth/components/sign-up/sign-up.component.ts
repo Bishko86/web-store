@@ -11,12 +11,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Actions, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, takeUntil } from 'rxjs';
 import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
-import { IUser } from 'src/app/core/models';
+import { User } from 'src/app/core/models';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
 import { UserService } from 'src/app/core/services/user.service';
 import {
@@ -24,7 +24,7 @@ import {
   AuthActions,
 } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { SignUpFormModel } from '../../models/sign-up.model';
 
 @Component({
@@ -42,7 +42,7 @@ export class SignUpComponent extends DestroyableDirective implements OnInit, OnD
   @State(selectAuthIsLoading) public readonly isLoading$: Observable<boolean>;
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly updates$: Actions,
     private readonly userService: UserService,
     private readonly snackBar: SnackBarService,
@@ -90,7 +90,7 @@ export class SignUpComponent extends DestroyableDirective implements OnInit, OnD
     this.updates$
       .pipe(ofType(AuthActions.REGISTRATION_SUCCESS), takeUntil(this.destroy$))
       .subscribe({
-        next: (action: { user: IUser; type: string }) => {
+        next: (action: { user: User; type: string }) => {
           this.userService.createUser(action.user);
         },
         error: () => {

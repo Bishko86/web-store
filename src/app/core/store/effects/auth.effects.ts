@@ -6,14 +6,14 @@ import { catchError, from, map, of, switchMap } from 'rxjs';
 import { User } from '../../models';
 import { AuthService } from '../../services/auth.service';
 import * as AuthActions from '../actions/auth.actions';
-import { IAppState } from '../state/app.state';
+import { AppState } from '../state/app.state';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private authService: AuthService,
     private actions$: Actions,
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
     private router: Router,
   ) {}
 

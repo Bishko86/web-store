@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 import firebase from 'firebase/compat';
 import { filter, OperatorFunction, Subscription, throttleTime } from 'rxjs';
 
-import { IUser, User } from '../models';
+import { User } from '../models';
 import { IAuthCredentials } from '../models/auth.model';
 import { updateUser } from '../store/actions/auth.actions';
-import { IAppState } from '../store/state/app.state';
+import { AppState } from '../store/state/app.state';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class AuthService {
   constructor(
     private readonly afAuth: AngularFireAuth,
     private readonly firestore: AngularFirestore,
-    private readonly store: Store<IAppState>
+    private readonly store: Store<AppState>,
   ) {
     this.afAuth.authState.pipe(throttleTime(50)).subscribe((user) => {
       if (user) {
@@ -33,8 +33,8 @@ export class AuthService {
 
   private saveUser(userModel: firebase.User): void {
     this.subscription$ = this.firestore.collection('/users').doc(userModel.uid).valueChanges()
-      .pipe(filter((user: IUser) => user?.role !== undefined) as OperatorFunction<IUser | unknown, IUser>)
-      .subscribe((data: IUser) => {
+      .pipe(filter((user: User) => user?.role !== undefined) as OperatorFunction<User | unknown, User>)
+      .subscribe((data: User) => {
         const user = new User(userModel, data.role)
         this.store.dispatch(updateUser({ user }));
         localStorage.setItem('user', JSON.stringify(user));

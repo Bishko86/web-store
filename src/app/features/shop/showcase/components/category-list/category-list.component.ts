@@ -41,7 +41,7 @@ export class CategoryListComponent extends DestroyableDirective implements OnIni
   }
 
   private subscribeForRoute(): void {
-    this.route.children[0].params
+    this.route.children[0]?.params
       .pipe(
         tap((data) => {
           this.categoryName = data.name;

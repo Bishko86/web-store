@@ -1,8 +1,8 @@
 import { createSelector } from "@ngrx/store";
-import { IAppState } from "../state/app.state";
+import { AppState } from "../state/app.state";
 import { IProductState } from "../state/product.state";
 
-const selectFeature = (state: IAppState) => state.product;
+const selectFeature = (state: AppState) => state.product;
 
 export const selectProducts = createSelector(
   selectFeature,

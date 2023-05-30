@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getCategories } from 'src/app/core/store/actions/category.actions';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 
 @Component({
   selector: 'app-showcase',
@@ -10,7 +10,7 @@ import { IAppState } from 'src/app/core/store/state/app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowcaseComponent implements OnInit {
-  constructor(private store: Store<IAppState>,) { }
+  constructor(private readonly store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.store.dispatch(getCategories());

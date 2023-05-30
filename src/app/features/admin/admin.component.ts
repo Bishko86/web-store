@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { MatTabChangeEvent } from "@angular/material/tabs";
 import { ActivatedRoute, Router } from "@angular/router";
+import { MatTabChangeEvent } from "@angular/material/tabs";
+
 import { Store } from "@ngrx/store";
+
 import { getCategories } from "src/app/core/store/actions/category.actions";
 import { getProducts } from "src/app/core/store/actions/product.action";
-import { getUsers } from "src/app/core/store/actions/users.actions";
-import { IAppState } from "src/app/core/store/state/app.state";
+import { getUsers } from "src/app/core/store/actions/admin.actions";
+import { AppState } from "src/app/core/store/state/app.state";
 
 @Component({
   selector: 'app-admin',
@@ -21,10 +23,10 @@ export class AdminComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
     ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.store.dispatch(getUsers());
     this.store.dispatch(getCategories());
     this.store.dispatch(getProducts());

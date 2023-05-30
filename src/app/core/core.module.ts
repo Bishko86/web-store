@@ -10,6 +10,7 @@ import { CategoryService } from '../features/admin/services/category.service';
 import { ProductService } from '../features/admin/services/product.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DestroyableDirective } from './directives/destroyable.directive';
+import { CartService } from '../features/client/services/cart.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { DestroyableDirective } from './directives/destroyable.directive';
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
     CategoryService,
     ProductService,
+    CartService,
   ],
   declarations: [
     DestroyableDirective

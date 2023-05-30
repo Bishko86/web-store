@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IUser } from '../../models';
+import { User } from '../../models';
 import firebase from 'firebase/compat';
 
 export enum AuthActions {
@@ -28,7 +28,7 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   AuthActions.LOGIN_SUCCESS,
-  props<{ user: IUser }>()
+  props<{ user: User }>()
 );
 
 export const loginFailure = createAction(
@@ -44,7 +44,7 @@ export const registrate = createAction(
 
 export const registrateSuccess = createAction(
   AuthActions.REGISTRATION_SUCCESS,
-  props<{ user: IUser }>()
+  props<{ user: User }>()
 );
 
 export const registrateFailure = createAction(
@@ -69,7 +69,7 @@ export const logoutFailure = createAction(
 //update
 export const updateUser = createAction(
   AuthActions.UPDATE_USER_DATA,
-  props<{ user: IUser }>()
+  props<{ user: User }>()
 );
 
 //is loading
