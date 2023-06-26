@@ -1,8 +1,13 @@
 <div class="product__container">
-  <h3>{{product.name}}</h3>
-  <ng-container *ngIf="product.photo[0] as photo">
-    <img [src]="photo.url" [alt]="photo.name" width="250" height="250">
-    <p class="product__price">{{product.price}} $</p>
-    <button mat-button class="add-category-btn" (click)="addToCart(product)">Add to Cart</button>
-  </ng-container>
+  <span (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <img [src]="'assets/icons/' + iconName" alt="save" width="20">
+  </span>
+  <div class="product__area" (click)="reviewProduct()">
+    <h3 class="product__title">{{product.name}}</h3>
+    <ng-container *ngIf="product.photo[0] as photo">
+      <img [src]="photo.url" [alt]="photo.name" width="250" height="250">
+      <p class="product__price">{{product.price}} $</p>
+    </ng-container>
+  </div>
+  <button mat-button class="add-category-btn" (click)="addToCart(product)">Add to Cart</button>
 </div>

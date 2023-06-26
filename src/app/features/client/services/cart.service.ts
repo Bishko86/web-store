@@ -7,43 +7,59 @@ import {
 } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 
-import { Cart } from 'src/app/core/models';
+import { Cart, Product } from 'src/app/core/models';
 import { selectUserId } from 'src/app/core/store/selectors/auth.selector';
-import { IAppState } from 'src/app/core/store/state/app.state';
-import { Observable } from 'rxjs';
+import { AppState } from 'src/app/core/store/state/app.state';
+import { Observable, combineLatest, map, tap } from 'rxjs';
 
 @Injectable()
 export class CartService {
-  cartRef: AngularFirestoreCollection<Cart>;
-  cartId: string | undefined;
+  private cartRef: AngularFirestoreCollection<Cart>;
+  private cartId: string | undefined;
+  private productRef: AngularFirestoreCollection<Product[]>;
 
   constructor(
     private firestore: AngularFirestore,
-    private store: Store<IAppState>
+    private store: Store<AppState>
   ) {
     this.getCartRef();
     this.getCartId();
+    this.getProductRef();
   }
 
   private getCartRef(): void {
     this.cartRef = this.firestore.collection('/cart');
   }
 
+  private getProductRef(): void {
+    this.productRef = this.firestore.collection('/products');
+  }
+
   private getCartId(): void {
     this.store.select(selectUserId).subscribe((id) => (this.cartId = id));
   }
 
-  getCart(): Observable<Cart | undefined> {
+  public getCart(): Observable<Cart | undefined> {
     return this.cartRef.doc(this.cartId).valueChanges();
   }
 
-  addToCart(productId: string): void {
-    this.cartRef.doc(this.cartId)
-    .update({ products: firebase.firestore.FieldValue.arrayUnion(productId) });
+  public addToCart(productId: string): Promise<void> {
+    return this.cartRef.doc(this.cartId)
+      .update({ products: firebase.firestore.FieldValue.arrayUnion(productId) });
   }
 
-  removeFromCart(productId: string): void {
-    this.cartRef.doc(this.cartId)
+  public removeFromCart(productId: string): Promise<void> {
+    return this.cartRef.doc(this.cartId)
       .update({ products: firebase.firestore.FieldValue.arrayRemove(productId) });
+  }
+
+  //TODO to avoid useless request
+  public getCartProducts(productIds: string[]): Observable<Product[]> {
+    const productObservables = productIds.map(productId => {
+      const productDoc = this.firestore.collection('products').doc(productId);
+      return productDoc.get().pipe(map(snapshot => ({ id: snapshot.id, ...snapshot.data() as Product })));
+    });
+
+    return combineLatest(productObservables);
   }
 }

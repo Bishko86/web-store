@@ -1,6 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { Product } from 'src/app/core/models';
+import { addProductToCart } from 'src/app/core/store/actions/user.actions';
+import { AppState } from 'src/app/core/store/state';
 
 @Component({
   selector: 'app-product-card',
@@ -8,20 +12,29 @@ import { Product } from 'src/app/core/models';
   styleUrls: ['./product-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent {
   @Input() public product: Product;
 
-  constructor() { }
+  public iconName = 'white-heart-50.png';
 
-  ngOnInit(): void {
-
-  }
-
-  ngOnChanges(): void {
-  }
+  constructor(
+    private readonly router: Router,
+    private readonly store: Store<AppState>,
+    ) { }
 
   public addToCart(product: Product): void {
-    console.error(product);
+    this.store.dispatch(addProductToCart({ productId: product.id as string }));
   }
 
+  public reviewProduct(): void {
+    console.error(this.product);
+    this.router.navigate([`product/${this.product.name}`]);
+  }
+
+  public onMouseEnter(): void {
+    this.iconName = 'black-heart-50.png';
+  }
+  public onMouseLeave(): void {
+    this.iconName = 'white-heart-50.png';
+  }
 }
