@@ -18,7 +18,7 @@ export const CategoryOptions: MoreOptions[] = [
     text: 'Delete Category',
     action: MoreOptionAction.Delete
   },
-]
+];
 
 export const UserGridOptions: MoreOptions[] = [
   {
