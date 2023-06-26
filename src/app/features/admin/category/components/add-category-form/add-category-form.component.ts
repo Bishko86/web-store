@@ -5,12 +5,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, takeUntil } from 'rxjs';
+
 import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
-
 import { addCategory, addCategorySuccess } from 'src/app/core/store/actions/category.actions';
 import { selectCategoryIsLoading } from 'src/app/core/store/selectors/category.selectors';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { CategoryFormModel } from '../../models/category-form.model';
 
 @Component({
@@ -24,10 +24,10 @@ export class AddCategoryFormComponent extends DestroyableDirective implements On
   public categoryForm: FormGroup<CategoryFormModel>;
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly actions: Actions,
     private readonly dialogRef: MatDialogRef<AddCategoryFormComponent>,
-  ) { super()}
+  ) { super() }
 
   public ngOnInit(): void {
     this.initCategoryForm();

@@ -7,7 +7,7 @@ import { User } from 'src/app/core/models';
 
 import { logout } from 'src/app/core/store/actions/auth.actions';
 import { selectUser, selectUserRole } from 'src/app/core/store/selectors/auth.selector';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { CartService } from 'src/app/features/client/services/cart.service';
 import { State } from 'src/app/core/decorators/ngrx-selector.decorator'
 import { UserRole } from 'src/app/core/enums/user-role.enum';
@@ -32,7 +32,7 @@ export class HeaderComponent extends DestroyableDirective implements OnInit, OnD
 
   constructor(
     private readonly router: Router,
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly cartService: CartService,
     private readonly cdr: ChangeDetectorRef
     ) { super() }

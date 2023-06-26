@@ -4,11 +4,11 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  State,
-} from 'src/app/core/decorators/ngrx-selector.decorator';
+
+import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
 import { MatIcon } from 'src/app/core/enums/material-icon.enum';
 import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
@@ -18,7 +18,7 @@ import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { removeProduct } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
 import { selectProducts } from 'src/app/core/store/selectors/product.selectors';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddProductFormComponent } from './components/add-product-form/add-product-form.component';
 
@@ -53,7 +53,7 @@ export class ProductAdminComponent extends DestroyableDirective implements OnDes
   @State(selectCategories) public readonly categories$: Observable<Category[]>;
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly dialog: MatDialog,
     private readonly confirmService: ConfirmService
   ) { super() }

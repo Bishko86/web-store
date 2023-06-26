@@ -1,8 +1,8 @@
-import { IUser } from '../../models';
+import { User } from '../../models';
 import { FirebaseError } from 'firebase/app';
 
 export interface IAuthState {
-  user: IUser | null;
+  user: User | null;
   error: FirebaseError | null;
   isLoading: boolean;
 }

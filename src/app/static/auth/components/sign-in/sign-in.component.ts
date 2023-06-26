@@ -6,7 +6,7 @@ import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { getErrorMessage } from 'src/app/core/helpers/error-message.helper';
 import { login } from 'src/app/core/store/actions/auth.actions';
 import { selectAuthIsLoading } from 'src/app/core/store/selectors/auth.selector';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { SignInFormModel } from '../../models/sign-in.model';
 
 @Component({
@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
   @State(selectAuthIsLoading) public readonly isLoading$: Observable<boolean>;
   
 
-  constructor(private readonly store: Store<IAppState>) { }
+  constructor(private readonly store: Store<AppState>) { }
 
   public ngOnInit(): void {
     this.initForm();

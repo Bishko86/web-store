@@ -1,6 +1,9 @@
 <h1>USER CART</h1>
-<button (click)="addToCart()">Add</button>
-
-  <div *ngFor="let prod of products">
-    <span>{{prod}}</span> <span class="delete-item" (click)="removeFromCart(prod)">&#10005;</span>
+<div class="cart">
+  <div class="cart__product" *ngFor="let product of cartProducts; let i=index">
+    <span>{{i + 1}}</span>
+    <span>{{product.name}}</span>
+    <span>{{product.price | currency}}</span>
+    <span class="delete-item" (click)="removeFromCart(product.id!)">&#10005;</span>
   </div>
+</div>

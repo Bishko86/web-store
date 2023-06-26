@@ -2,19 +2,22 @@ import { Order } from '../../models';
 import { initialAuthState, IAuthState } from './auth.state';
 import { ICategoryState, initialCategoryState } from './category.state';
 import { initialProductState, IProductState } from './product.state';
-import { initialUsersState, IUsersState } from './users.state';
+import { initialAdminState, AdminState } from './admin.state';
+import { initialUserState, UserState } from './user.state';
 
-export interface IAppState {
+export interface AppState {
   auth: IAuthState;
-  users: IUsersState;
+  user: UserState;
+  admin: AdminState;
   product: IProductState;
   category: ICategoryState;
   order?: Order[];
 }
 
-export const initialState: IAppState = {
+export const initialState: AppState = {
   auth: initialAuthState,
-  users: initialUsersState,
+  user: initialUserState,
+  admin: initialAdminState,
   product: initialProductState,
   category: initialCategoryState,
 };

@@ -3,14 +3,14 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Cart, IUser } from '../models';
+import { Cart, User } from '../models';
 import { SnackBarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  usersRef: AngularFirestoreCollection<IUser>;
+  usersRef: AngularFirestoreCollection<User>;
   cartRef: AngularFirestoreCollection<Cart>;
 
   constructor(
@@ -21,11 +21,11 @@ export class UserService {
     this.cartRef = this.firestore.collection('/cart');
   }
 
-  getAllUsers(): AngularFirestoreCollection<IUser> {
+  public getAllUsers(): AngularFirestoreCollection<User> {
     return this.usersRef;
   }
 
-  async createUser(user: IUser): Promise<void> {
+  public async createUser(user: User): Promise<void> {
     try {
       await this.cartRef.doc(user.id).set({ products: []});
       await this.usersRef.doc(user.id).set({ ...user, role: 1 });
@@ -34,11 +34,11 @@ export class UserService {
     }
   }
 
-  updateUser(id: string, data: any): Promise<void> {
+  public updateUser(id: string, data: any): Promise<void> {
     return this.usersRef.doc(id).update(data);
   }
 
-  deleteUser(id: string): Promise<void> {
+  public deleteUser(id: string): Promise<void> {
     return this.usersRef.doc(id).delete();
   }
 }

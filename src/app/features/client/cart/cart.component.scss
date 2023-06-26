@@ -1,3 +1,14 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+  &__product {
+    display: flex;
+    column-gap: 12px;
+  }
+}
+
 .delete-item {
   color: red;
   margin-left: 10px;

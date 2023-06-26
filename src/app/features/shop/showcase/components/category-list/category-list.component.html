@@ -1,0 +1,6 @@
+<ng-container *ngIf="categories$ | async as categories">
+  <section class="categories">
+    <div class="category" *ngFor="let category of categories" (click)="showCategory(category)">{{category.name}}
+    </div>
+  </section>
+</ng-container>

@@ -13,14 +13,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Actions, ofType } from '@ngrx/effects';
 
-import { select, Store } from '@ngrx/store';
-import { filter, Observable, Subject, take, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { filter, Observable, take, takeUntil } from 'rxjs';
+
 import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
-
 import { Category, Product } from 'src/app/core/models';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
 import { SnackBarService } from 'src/app/core/services/snackbar.service';
@@ -32,7 +33,7 @@ import {
 } from 'src/app/core/store/actions/product.action';
 import { selectCategories } from 'src/app/core/store/selectors/category.selectors';
 import { selectProductIsLoading } from 'src/app/core/store/selectors/product.selectors';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import {
   DELETE_CONFIRM_TEXT,
   TOO_MANY_FILES,
@@ -63,7 +64,7 @@ export class AddProductFormComponent extends DestroyableDirective implements OnI
   @State(selectCategories) public categories$: Observable<Category[]>;
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly dialogRef: MatDialogRef<AddProductFormComponent>,
     private readonly actions$: Actions,
     private readonly fileUploadService: UploadFileService,
@@ -72,10 +73,6 @@ export class AddProductFormComponent extends DestroyableDirective implements OnI
     private readonly confirmService: ConfirmService,
     @Inject(MAT_DIALOG_DATA) private readonly dialogData: Product
   ) { super() }
-
-  get category(): AbstractControl<string> {
-    return this.productForm.controls['categoryId'];
-  }
 
   private initProductForm(): void {
     this.productForm = new FormGroup({

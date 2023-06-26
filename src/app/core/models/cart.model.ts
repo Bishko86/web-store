@@ -1,5 +1,7 @@
 import firebase from 'firebase/compat';
+import { Product } from './product.model';
 
 export interface Cart {
-  products: string[] | firebase.firestore.FieldValue;
+  clientId?: string;
+  products: Product[] | string[] | firebase.firestore.FieldValue;
 }

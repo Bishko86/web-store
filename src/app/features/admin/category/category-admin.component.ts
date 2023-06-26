@@ -7,13 +7,11 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 
 import { Actions, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import {  Store } from '@ngrx/store';
+import { Observable, filter, take, takeUntil } from 'rxjs';
+
 import { State } from 'src/app/core/decorators/ngrx-selector.decorator';
 import { DestroyableDirective } from 'src/app/core/directives/destroyable.directive';
-import { MatIcon } from 'src/app/core/enums/material-icon.enum';
-import { MoreOptionAction } from 'src/app/core/enums/more-option-action.enum';
-
 import { Category } from 'src/app/core/models';
 import { MoreOptions } from 'src/app/core/models/more-options.model';
 import { ConfirmService } from 'src/app/core/services/confirm.service';
@@ -25,9 +23,10 @@ import {
 import {
   selectCategories,
 } from 'src/app/core/store/selectors/category.selectors';
-import { IAppState } from 'src/app/core/store/state/app.state';
+import { AppState } from 'src/app/core/store/state/app.state';
 import { DELETE_RECORD_TEXT } from 'src/app/shared/constants/messages';
 import { AddCategoryFormComponent } from './components/add-category-form/add-category-form.component';
+import { CategoryOptions } from '../constants/more-options.constant';
 
 @Component({
   selector: 'app-category-admin',
@@ -47,18 +46,14 @@ export class CategoryAdminComponent extends DestroyableDirective implements OnIn
     'options',
   ];
 
-  public moreOptions: MoreOptions[] = [
-    { icon: MatIcon.EDIT, text: 'Edit Category', action: MoreOptionAction.Update },
-    { icon: MatIcon.ADD_SHOPPING_CART, text: 'Add product to', action: MoreOptionAction.Add },
-    { icon: MatIcon.DELETE, text: 'Delete Category', action: MoreOptionAction.Delete },
-  ]
+  public moreOptions: MoreOptions[] = CategoryOptions;
 
   constructor(
-    private readonly store: Store<IAppState>,
+    private readonly store: Store<AppState>,
     private readonly actions: Actions,
     private readonly dialog: MatDialog,
     private readonly confirmService: ConfirmService
-    ) { super() }
+  ) { super() }
 
   public ngOnInit(): void {
     this.isCategoryUpdated();
@@ -94,10 +89,11 @@ export class CategoryAdminComponent extends DestroyableDirective implements OnIn
   }
 
   public removeCategory(category: Category): void {
-    this.confirmService.confirm(DELETE_RECORD_TEXT).pipe(takeUntil(this.destroy$)).subscribe((isConfirmed) => {
-      if(isConfirmed) {
-        this.store.dispatch(removeCategory({ categoryId: category.id! }));
-      }
+    this.confirmService.confirm(DELETE_RECORD_TEXT).pipe(
+      filter(Boolean),
+      take(1)
+    ).subscribe(() => {
+      this.store.dispatch(removeCategory({ categoryId: category.id! }));
     });
   }
 
@@ -105,6 +101,6 @@ export class CategoryAdminComponent extends DestroyableDirective implements OnIn
     this.dialog.open(AddCategoryFormComponent, {
       height: '300px',
       width: '400px',
-   });
+    });
   }
 }
